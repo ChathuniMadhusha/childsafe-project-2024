@@ -1,4 +1,4 @@
-package lk.childsafe;
+package lk.childsafe.WebConfiguration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
