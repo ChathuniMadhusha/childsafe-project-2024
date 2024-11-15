@@ -30,6 +30,26 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <!-- jquary -->
+    <script src="assets/Resourse/Jquary/jquary.js"></script>
+
+    <!--  Link scripts  -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/student.js"></script>
+
+    <!--iziToast-->
+    <link rel="stylesheet" href="assets/Resourse/iziToast-master/dist/css/iziToast.min.css">
+    <script src="assets/Resourse/iziToast-master/dist/js/iziToast.min.js"></script>
+
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="assets/Resourse/Datatables/datatables.min.css">
+
+    <script type="text/javascript" src="assets/Resourse/Datatables/datatables.min.js"></script>
+
+    <!--font awesome-->
+    <script src="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/js/all.js"></script>
+    <link rel="stylesheet" href="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/css/all.css">
+
 
 </head>
 
@@ -200,63 +220,61 @@
                         <div class="row">
 
                             <!-- Floating Labels Form -->
-                            <form class="row g-3">
+                            <form onsubmit="return false" class="row g-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingFName"
+                                        <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','student','first_name','old_student')" type="text" class="form-control" id="floatingFName"
                                                placeholder="Your Name">
                                         <label for="floatingFName">First Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingLName"
+                                        <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','student','last_name','old_student')" type="text" class="form-control" id="floatingLName"
                                                placeholder="Your Name">
                                         <label for="floatingLName">Last Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="floatingDOB"
-                                               placeholder="Your Name">
+                                        <input type="date" onchange="dateFeildValidate(floatingDOB,'','student','dob','old_student')" class="form-control" id="floatingDOB"
+                                               placeholder="Your DOB">
                                         <label for="floatingDOB">Date of Birth</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingEmail"
+                                        <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','student','email','old_student')" type="email" class="form-control" id="floatingEmail"
                                                placeholder="Your Email">
                                         <label for="floatingEmail">Email</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Address" id="floatingTextarea"
+                                        <textarea onkeyup="textFieldValidator(floatingTextarea,'','student','address','old_student')" class="form-control" placeholder="Address" id="floatingTextarea"
                                                   style="height: 100px;"></textarea>
                                         <label for="floatingTextarea">Address</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingMobile"
-                                               placeholder="Your Email">
+                                        <input onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','student','mobile_number','old_student')" type="text" class="form-control" id="floatingMobile"
+                                               placeholder="Your Mobile">
                                         <label for="floatingMobile">Mobile Number</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelect" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelect,'','student','student_status_id','old_student')" class="form-select" id="floatingSelect" aria-label="State">
                                             <option selected>Select Status</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
                                         </select>
                                         <label for="floatingSelect">Status</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="Password" class="form-control" id="floatingSPassword"
+                                        <input onkeyup="textFieldValidator(floatingSPassword,'','student','st_password','old_student')" type="Password" class="form-control" id="floatingSPassword"
                                                placeholder="Your Name">
                                         <label for="floatingSPassword">Create Password</label>
                                     </div>
@@ -275,8 +293,7 @@
 
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Address" id="floatingNIC"
-                                                  ></input>
+                                        <input type="text" class="form-control" placeholder="NIC" id="floatingNIC">
                                         <label for="floatingNIC">NIC</label>
                                     </div>
                                 </div>
@@ -339,7 +356,7 @@
 
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Add Student</button>
+                                    <button onclick="buttonAddMc()" type="submit" class="btn btn-primary">Add Student</button>
                                     <button type="reset" class="btn btn-secondary">Update Student</button>
                                 </div>
                             </form><!-- End floating Labels Form -->
@@ -354,13 +371,14 @@
                     <div class="card-body">
                         <h5 class="card-title">Student table</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatable">
+                        <table class="table datatable" id="std_table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Student ID</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Email</th>
                                 <th scope="col">Mobile</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Modify</th>
                             </tr>
                             </thead>
