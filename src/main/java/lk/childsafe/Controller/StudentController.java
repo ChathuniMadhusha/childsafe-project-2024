@@ -42,7 +42,7 @@ public class StudentController {
 
         try{
                 //set auto value
-                //student.setStudentid(studentDao.nextSupCode());
+                student.setStudentid(studentDao.nextStCode());
 
                 //save
                 studentDao.save(student);
@@ -54,7 +54,7 @@ public class StudentController {
 
     }
 
-    //get mapping service for get storage by given quary variable id[/student/getbyid?id=1]
+    //get mapping service for get student by given quary variable id[/student/getbyid?id=1]
     @GetMapping(value = "/getbyid" , produces = "application/json")
     public Student getStudentByQPId(@RequestParam("id") Integer id){
         return studentDao.getReferenceById(id);
@@ -71,7 +71,7 @@ public class StudentController {
                 studentDao.save(student);
                 return "0";
             }catch(Exception e){
-                return "Storage Update not complete :" + e.getMessage();
+                return "Student Update not complete :" + e.getMessage();
             }
     }
 
@@ -91,7 +91,7 @@ public class StudentController {
                     return "Delete not complete :"+e.getMessage();
                 }
             }else {
-                return "Delete not complete : Storage Device not exist";
+                return "Delete not complete : Student not exist";
             }
 
 
