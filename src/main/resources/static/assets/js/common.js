@@ -46,13 +46,6 @@ const textFieldValidator = (feildid, pattern, object, property,oldObject) => {
         }
     } else {
         ob[property] = null;
-        if (feildid.required) {
-
-            feildid.style.borderBottom='2px solid red';
-        } else {
-
-            feildid.style.borderBottom = 'rgb(206, 212, 218)';
-        }
 
     }
 }
@@ -72,12 +65,7 @@ const dateFeildValidate = (feildid, pattern, object, property,oldObject) => {
 
     } else {
         ob[property] = null;
-        if(feildid.required){
-            feildid.style.borderBottom = '2px solid red';
-        }else{
 
-            feildid.style.borderBottom = 'rgb(206, 212, 218)';
-        }
 
 
 

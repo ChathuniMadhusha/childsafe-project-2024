@@ -357,7 +357,7 @@
 
                                 <div class="text-center">
                                     <button onclick="buttonAddMc()" type="submit" class="btn btn-primary">Add Student</button>
-                                    <button type="reset" class="btn btn-secondary">Update Student</button>
+                                    <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary">Update Student</button>
                                 </div>
                             </form><!-- End floating Labels Form -->
                         </div>
@@ -387,7 +387,70 @@
                         <!-- End Table with stripped rows -->
                     </div>
                 </div>
+            </div>
+        </div>
 
+
+        <!--model for view with print-->
+        <div class="modal fade" id="studentViewModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Student Details</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="studentPrintTbl" class="table  table-striped table-hover">
+
+                            <tr>
+                                <th>Student ID</th>
+                                <td id="td_id"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student First Name</th>
+                                <td id="td_fname"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student Last name</th>
+                                <td id="td_lname"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student Mobile</th>
+                                <td id="td_smobile"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student Adress</th>
+                                <td id="td_sadd"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student DOB</th>
+                                <td id="td_sdob"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student Email</th>
+                                <td id="td_semail"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Student Status</th>
+                                <td id="td_sstatus"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="studentPrintModel()" type="button" class="btn btn-primary">Print</button>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -19,6 +19,9 @@ public class StudentController {
     @Autowired
     private StudentRepositiry studentDao;
 
+    @Autowired
+    private  StudentstatusRepositiry studentstatusDao;
+
     //Load UI
     @GetMapping(value = "")
     public ModelAndView studentUI() {
@@ -29,7 +32,9 @@ public class StudentController {
 
     //Get all date from table
     @GetMapping(value = "/findall", produces = "application/json")
-    public List<Student> student() {return studentDao.findAll();}
+    public List<Student> student() {
+        return studentDao.findAll();
+    }
 
     @PostMapping
     @Transactional
@@ -49,7 +54,47 @@ public class StudentController {
 
     }
 
+    //get mapping service for get storage by given quary variable id[/student/getbyid?id=1]
+    @GetMapping(value = "/getbyid" , produces = "application/json")
+    public Student getStudentByQPId(@RequestParam("id") Integer id){
+        return studentDao.getReferenceById(id);
+    }
+
+    //Update section
+    @PutMapping
+    @Transactional
+    public String putStudent(@RequestBody Student student){
+        //check privilage
+
+            //save operate
+        try {
+                studentDao.save(student);
+                return "0";
+            }catch(Exception e){
+                return "Storage Update not complete :" + e.getMessage();
+            }
+    }
+
+    //create delete mapping
+    @DeleteMapping
+    public String deleteStudent(@RequestBody Student student){
+            Student extstudent = studentDao.getReferenceById(student.getId());
+            if(extstudent != null){
+                try {
+
+                    extstudent.setStudent_status_id(studentstatusDao.getReferenceById(3));
+                    studentDao.save(extstudent);
+
+                    return "0";
+
+                }catch (Exception e){
+                    return "Delete not complete :"+e.getMessage();
+                }
+            }else {
+                return "Delete not complete : Storage Device not exist";
+            }
 
 
+    }
 
 }
