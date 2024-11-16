@@ -33,8 +33,8 @@ public class Institute {
 
 
     @ManyToOne
-    @JoinColumn(name = "status_id",referencedColumnName = "id")
-    private InstituteStatus status_id;
+    @JoinColumn(name = "institute_status_id",referencedColumnName = "id")
+    private InstituteStatus institute_status_id;
 
 
 

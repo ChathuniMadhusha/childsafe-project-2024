@@ -30,6 +30,26 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <!-- jquary -->
+    <script src="assets/Resourse/Jquary/jquary.js"></script>
+
+    <!--  Link scripts  -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/institute.js"></script>
+
+    <!--iziToast-->
+    <link rel="stylesheet" href="assets/Resourse/iziToast-master/dist/css/iziToast.min.css">
+    <script src="assets/Resourse/iziToast-master/dist/js/iziToast.min.js"></script>
+
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="assets/Resourse/Datatables/datatables.min.css">
+
+    <script type="text/javascript" src="assets/Resourse/Datatables/datatables.min.js"></script>
+
+    <!--font awesome-->
+    <script src="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/js/all.js"></script>
+    <link rel="stylesheet" href="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/css/all.css">
+
 
 </head>
 
@@ -200,41 +220,49 @@
                         <div class="row">
 
                             <!-- Floating Labels Form -->
-                            <form class="row g-3">
+                            <form onsubmit="return false" class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingFName"
+                                        <input onkeyup="textFieldValidator(floatingInsName,'','institute','inst_name','old_institute')" type="text" class="form-control" id="floatingInsName"
                                                placeholder="Your Name">
-                                        <label for="floatingFName">Institute Name</label>
+                                        <label for="floatingInsName">Institute Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingLName"
+                                        <input onkeyup="textFieldValidator(floatingLocation,'','institute','location','old_institute')" type="text" class="form-control" id="floatingLocation"
                                                placeholder="Your Name">
-                                        <label for="floatingLName">Location</label>
+                                        <label for="floatingLocation">Location</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingDOB"
+                                        <input onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','institute','contact_number','old_institute')" type="text" class="form-control" id="floatingMobile"
                                                placeholder="Your Name">
-                                        <label for="floatingDOB">Mobile Number</label>
+                                        <label for="floatingMobile">Mobile Number</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingEmail"
+                                        <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','institute','email','old_institute')" type="email" class="form-control" id="floatingEmail"
                                                placeholder="Your Email">
                                         <label for="floatingEmail">Email</label>
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select onchange="selectValidater(floatingSelectInsStatus,'','institute','institute_status_id','old_institute')" class="form-select" id="floatingSelectInsStatus" aria-label="State">
+                                            <option selected>Select Status</option>
 
+                                        </select>
+                                        <label for="floatingSelectInsStatus">Status</label>
+                                    </div>
+                                </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Add Institute</button>
-                                    <button type="reset" class="btn btn-secondary">Update Institute</button>
+                                    <button onclick="buttonAddMc()" type="submit" class="btn btn-primary">Add Institute</button>
+                                    <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary">Update Institute</button>
                                 </div>
                             </form><!-- End floating Labels Form -->
                         </div>
@@ -248,13 +276,14 @@
                     <div class="card-body">
                         <h5 class="card-title">Student table</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatable">
+                        <table class="table datatable" id="ins_table">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Institute name</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Mobile</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Modify</th>
                             </tr>
                             </thead>
@@ -266,6 +295,57 @@
 
             </div>
         </div>
+
+
+        <!--model for view with print-->
+        <div class="modal fade" id="instituteViewModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Student Details</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="institutePrintTbl" class="table  table-striped table-hover">
+
+                            <tr>
+                                <th>Institute Name</th>
+                                <td id="td_insname"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Location</th>
+                                <td id="td_location"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Contact Number</th>
+                                <td id="td_cnumber"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Email</th>
+                                <td id="td_email"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Institute Status</th>
+                                <td id="td_insstatus"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="institutePrintModel()" type="button" class="btn btn-primary">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
 
         <!-- End #main -->
