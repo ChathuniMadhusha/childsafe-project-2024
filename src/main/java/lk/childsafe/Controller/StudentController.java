@@ -60,6 +60,11 @@ public class StudentController {
         return studentDao.getReferenceById(id);
     }
 
+    //get student id for parent
+    @GetMapping (value = "/getbystudentno",produces = "application/json")
+    public Student getByStudentno(@RequestParam("studentno") String studentno){
+        return studentDao.findStudentByStudentno(studentno);}
+
     //Update section
     @PutMapping
     @Transactional

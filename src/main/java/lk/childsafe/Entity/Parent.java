@@ -1,5 +1,6 @@
 package lk.childsafe.Entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Parent {
 
     @Id
@@ -34,8 +36,18 @@ public class Parent {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "nic")
+    private String nic;
+
+    @Column(name = "pr_password")
+    private String pr_password;
+
     @ManyToOne
     @JoinColumn(name = "parent_status_id",referencedColumnName = "id")
     private ParentStatus parent_status_id;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id",referencedColumnName = "id")
+    private Student student_id;
 
 }

@@ -19,6 +19,8 @@ public class ParentStatusController {
     private ParentstatusRepository parentstatusDao;
 
     @GetMapping(value = "/findall", produces = "application/json")
-    public List<ParentStatus> parentStatus() {return parentstatusDao.findAll();}
+    public List<ParentStatus> parentStatus() {
+        return parentstatusDao.findByIdNot(2);
+    }
 
 }
