@@ -30,6 +30,26 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <!-- jquary -->
+    <script src="assets/Resourse/Jquary/jquary.js"></script>
+
+    <!--  Link scripts  -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/teacherregistration.js"></script>
+
+    <!--iziToast-->
+    <link rel="stylesheet" href="assets/Resourse/iziToast-master/dist/css/iziToast.min.css">
+    <script src="assets/Resourse/iziToast-master/dist/js/iziToast.min.js"></script>
+
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="assets/Resourse/Datatables/datatables.min.css">
+
+    <script type="text/javascript" src="assets/Resourse/Datatables/datatables.min.js"></script>
+
+    <!--font awesome-->
+    <script src="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/js/all.js"></script>
+    <link rel="stylesheet" href="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/css/all.css">
+
 
 </head>
 
@@ -229,30 +249,27 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="floatingSelectGrade" aria-label="State">
                                             <option selected>Select Grade</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+
                                         </select>
-                                        <label for="floatingSelectSub">Grade</label>
+                                        <label for="floatingSelectGrade">Grade</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="floatingSelectInstitute" aria-label="State">
                                             <option selected>Select Institute</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+
                                         </select>
                                         <label for="floatingSelectInstitute">Institute</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelect" aria-label="State">
+                                        <select class="form-select" id="floatingSelectStatus" aria-label="State">
                                             <option selected>Select Status</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+
                                         </select>
-                                        <label for="floatingSelect">State</label>
+                                        <label for="floatingSelectStatus">State</label>
                                     </div>
                                 </div>
                                 <div class="text-center">
@@ -271,7 +288,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Student table</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatable">
+                        <table class="table datatable" id="teacherregistration_tbl">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
