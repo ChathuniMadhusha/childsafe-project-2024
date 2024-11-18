@@ -101,6 +101,32 @@ const selectValidater = (fieldId, pattern, object, property, oldObject) => {
     }
 }
 
+const getDateFormat = (format, givenDate) =>{
+
+
+    let today;
+
+    if(givenDate != ""){
+        today = new Date(givenDate);
+    }else{
+        today = new Date();//auto load current date
+    }
+
+    let month =today.getMonth() + 1 ;//return 0-11
+    let date = today.getDate();//return 1-31
+
+    if(month <10) month="0"+month;
+    if(date < 10) date = "0"+date;
+    let full_date = today.getFullYear()+"-"+month+"-"+date;
+    let current_month = today.getFullYear()+"-"+month;
+    let current_year = today.getFullYear();
+
+    if(format == "date")return full_date;
+    if(format == "month")return current_month;
+    if(format == "year")return current_year;
+
+}
+
 
 
 
@@ -329,12 +355,9 @@ function disabledButton(addbutton,updbutton) {
 
     }else{
 
-
         addbtn.disabled = true;
         $('#addbtn').css("pointer-events","all")
         $('#addbtn').css("cursor","not-allowed")
-
-
 
     }
 
@@ -343,7 +366,6 @@ function disabledButton(addbutton,updbutton) {
         updatebtn.disabled = false;
         $('#updatebtn').css("pointer-events","all")
         $('#updatebtn').css("cursor","pointer")
-        $("#updatebtn").addClass("glow-on-hover");
 
 
     }else {

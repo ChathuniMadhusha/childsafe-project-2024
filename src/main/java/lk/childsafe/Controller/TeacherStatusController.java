@@ -1,9 +1,9 @@
 package lk.childsafe.Controller;
 
-import lk.childsafe.Dao.ParentstatusRepository;
 import lk.childsafe.Dao.StudentstatusRepositiry;
-import lk.childsafe.Entity.ParentStatus;
+import lk.childsafe.Dao.TeacherstatusRepository;
 import lk.childsafe.Entity.StudentStatus;
+import lk.childsafe.Entity.TeacherStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-@RestController //awashya services denna
-@RequestMapping("/studentstatus")
-public class StudentStatusController {
+@RestController
+@RequestMapping("/teacherstatus")
+public class TeacherStatusController {
 
 
     @Autowired
-    StudentstatusRepositiry studentstatusDao;
+    TeacherstatusRepository teacherstatusDao;
 
     @GetMapping(value = "/findall", produces = "application/json")
-    public List<StudentStatus> studentStatus() {
-        return studentstatusDao.findByIdNot(3);
+    public List<TeacherStatus> teacherStatus() {
+        return teacherstatusDao.findByIdNot(3);
     }
 
 }

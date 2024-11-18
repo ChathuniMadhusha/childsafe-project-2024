@@ -10,53 +10,54 @@ function refreshBrowser() {
 //define refresh table
 const refreshTable = () =>{
     //array for store processor data
-    student = new Array();
-    student=httpGetRequest("/student/findall")
+    teachers = new Array();
+    teachers=httpGetRequest("/teacher/findall")
 
     //create display property list
-    let display_property_list = ["studentid","first_name","mobile_number","student_status_id.name"]
+    let display_property_list = ["teacherid","first_name","mobile_number","teacher_status_id.name"]
 
     //cretae display property type list
     let display_property_datatype = ["text","text","text","object"]
 
     //calling fillTable function
-    fillTable(std_table,student,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
+    fillTable(tchr_table,teachers,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
 
-    for (let index in student){
-        if (student[index].student_status_id.name == "Deleted"){
-            std_table.children[1].children[index].children[5].children[2].disabled = true;
-            std_table.children[1].children[index].children[5].children[0].disabled = true;
+    for (let index in teachers){
+        if (teachers[index].teacher_status_id.name == "Deleted"){
+            tchr_table.children[1].children[index].children[5].children[2].disabled = true;
+            tchr_table.children[1].children[index].children[5].children[0].disabled = true;
         }
     }
-
 
 }
 
 const formReFill = (obj) =>{
-    student = httpGetRequest("/student/getbyid?id="+obj.id)
-    old_student = httpGetRequest("/student/getbyid?id="+obj.id)
+    teacher = httpGetRequest("/teacher/getbyid?id="+obj.id)
+    old_teacher = httpGetRequest("/teacher/getbyid?id="+obj.id)
 
 
     //set value in to text feild
-    floatingFName.value=student.first_name
-    floatingLName.value=student.last_name;
-    floatingDOB.value=student.dob;
-    floatingEmail.value=student.email;
-    floatingTextarea.value=student.address;
-    floatingMobile.value=student.mobile_number;
-    floatingSPassword.value=student.st_password;
+    floatingFName.value=teacher.first_name
+    floatingLName.value=teacher.last_name;
+    floatingDOB.value=teacher.dob;
+    floatingEmail.value=teacher.email;
+    floatingTextarea.value=teacher.address;
+    floatingNIC.value=teacher.nic;
+    floatingMobile.value=teacher.mobile_number;
+    floatingTPassword.value=teacher.te_password;
 
     //set value in to select feild
-    fillSelectField(floatingSelect,"",statuss,"name",student.student_status_id.name);
-
-
-    setStyle("2px solid green")
+    fillSelectField(floatingSelect,"",statuss,"name",teacher.teacher_status_id.name);
 
     //disable add button
     disabledButton(false,true);
 
+    //set style after refill
+    setStyle("2px solid green")
+
     //Enable status field
     $('#floatingSelect').prop('disabled', false);
+
     
 
 }
@@ -65,8 +66,8 @@ const rowDelete = (obj) => {
     //Show the confirmation box when the delete button is clicked
     iziToast.show({
         theme: 'dark',
-        title: 'Are you sure to delete the following Student...?',
-        message: "Student Id: " + obj.studentid + "<br>Student Name: " + obj.first_name,
+        title: 'Are you sure to delete the following Teacher...?',
+        message: "Teacher Id: " + obj.teacherid + "<br>Teacher Name: " + obj.first_name,
         layout: 2,
         position: 'topCenter',
         overlay: true,
@@ -80,7 +81,7 @@ const rowDelete = (obj) => {
 
                 let delete_server_responce;
 
-                $.ajax("/student",{
+                $.ajax("/teacher",{
                     async : false,
                     type:"DELETE",//Method
                     data:JSON.stringify(obj),//data that pass to backend
@@ -94,7 +95,7 @@ const rowDelete = (obj) => {
                 if(delete_server_responce == "0"){
                     iziToast.success({
                         theme: 'dark',
-                        title: 'Student Deleted',
+                        title: 'Teacher Deleted',
                         position: 'topRight',
                         overlay: true,
                         displayMode: 'once',
@@ -140,25 +141,26 @@ const rowDelete = (obj) => {
 }
 
 const rowView = (obj) =>{
-    printStudent = new Object();
-    printStudent = httpGetRequest("/student/getbyid?id="+obj.id);
+    printTeacher = new Object();
+    printTeacher = httpGetRequest("/teacher/getbyid?id="+obj.id);
 
-    td_id.innerHTML = printStudent.studentid;
-    td_fname.innerHTML = printStudent.first_name;
-    td_lname.innerHTML = printStudent.last_name;
-    td_smobile.innerHTML = printStudent.mobile_number;
-    td_sadd.innerHTML = printStudent.dob;
-    td_sdob.innerHTML = printStudent.address;
-    td_semail.innerHTML = printStudent.email;
-    td_sstatus.innerHTML = printStudent.student_status_id.name;
-    $('#studentViewModel').modal('show')
+    td_id.innerHTML = printTeacher.teacherid;
+    td_fname.innerHTML = printTeacher.first_name;
+    td_lname.innerHTML = printTeacher.last_name;
+    td_smobile.innerHTML = printTeacher.mobile_number;
+    td_snic.innerHTML = printTeacher.nic;
+    td_sadd.innerHTML = printTeacher.dob;
+    td_sdob.innerHTML = printTeacher.address;
+    td_semail.innerHTML = printTeacher.email;
+    td_sstatus.innerHTML = printTeacher.teacher_status_id.name;
+    $('#teacherViewModel').modal('show')
 }
 
-const studentPrintModel = () => {
+const teacherPrintModel = () => {
     let newWindow = window.open();
     newWindow.document.write(
         '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
-        +"<h2>Student Details</h2>"
+        +"<h2>Teacher Details</h2>"
         + tablePrintTbl.outerHTML);
     //newWindow.print();
     setTimeout(function() {
@@ -167,37 +169,37 @@ const studentPrintModel = () => {
 }
 
 
-//form
 const refreshForm = () =>{
-    student = new Object();
-    old_student = null;
+    teacher = new Object();
+    old_teacher = null;
 
     //create array for fill select element
 
     statuss = new Array();
-    statuss = httpGetRequest("/studentstatus/findall")
+    statuss = httpGetRequest("/teacherstatus/findall")
 
     //auto select value
     fillSelectField(floatingSelect,"",statuss,"name","In-active");
-    student.student_status_id = JSON.parse(floatingSelect.value);
+    teacher.teacher_status_id = JSON.parse(floatingSelect.value);
 
 
     //clear value after refesh
     floatingFName.value="";
     floatingLName.value="";
     floatingDOB.value="";
+    floatingNIC.value="";
     floatingEmail.value="";
     floatingTextarea.value="";
     floatingMobile.value="";
-    floatingSPassword.value="";
+    floatingTPassword.value="";
+
+    //Dissable update button
+    disabledButton(true,false);
 
     //set style to default
     setStyle("1px solid #ced4da")
 
-    //disable update button
-    disabledButton(true,false);
-
-    //dissable status field
+    //dissabl status field
     $('#floatingSelect').prop('disabled', true);
 
 
@@ -205,59 +207,121 @@ const refreshForm = () =>{
 
 function setStyle(style){
     floatingFName.style.borderBottom=style;
+    floatingNIC.style.borderBottom=style;
     floatingLName.style.borderBottom=style;
     floatingDOB.style.borderBottom=style;
     floatingEmail.style.borderBottom=style;
     floatingTextarea.style.borderBottom=style;
     floatingMobile.style.borderBottom=style;
-    floatingSPassword.style.borderBottom=style;
+    floatingTPassword.style.borderBottom=style;
 
 
 }
+
+function nicFieldValidator(){
+    let nic_pattern = new RegExp('^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$')
+
+    if(floatingNIC.value != ""){
+        if(nic_pattern.test(floatingNIC.value)){
+
+            if(floatingNIC.value.length == 10){
+                nic="19"+floatingNIC.value.substring(0,5)+"0"+floatingNIC.value.substring(5,9);
+
+
+            }else{
+                nic = floatingNIC.value
+            }
+
+            let empBirtyear = nic.substring(0,4);
+            let empBirthday = nic.substring(4,7);
+
+
+            let empdob = new Date(empBirtyear)
+
+            if(parseInt(empBirtyear) % 4 == 0){
+                empdob.setDate(empdob.getDate()-1 + parseInt(empBirthday))
+            }else{
+                empdob.setDate(empdob.getDate()-2 + parseInt(empBirthday))
+            }
+
+
+            floatingDOB.value = getDateFormat("date",empdob);
+
+            //update part
+            teacher.nic = floatingNIC.value
+            teacher.dob = floatingDOB.value;
+
+            if(old_teacher != null && teacher.nic != old_teacher.nic){
+                floatingNIC.style.borderBottom = "2px solid orange";
+                floatingDOB.style.borderBottom = "2px solid orange";
+            }else{
+                floatingNIC.style.borderBottom = "2px solid green";
+                floatingDOB.style.borderBottom = "2px solid green";
+
+            }
+
+
+
+        }else{
+            teacher.nic = null;
+            floatingNIC.style.borderBottom = "2px solid red";
+        }
+    }else{
+        teacher.nic = null;
+        floatingNIC.style.borderBottom = "2px solid red";
+
+    }
+}
+
 
 //function for check errors
 const checkErrors = () =>{
     console.log("check error")
     let errors = "";
 
-    if(student.first_name == null){
-        errors = errors+"Please enter Student First Name..<br>";
+    if(teacher.first_name == null){
+        errors = errors+"Please enter Teacher First Name..<br>";
         floatingFName.style.borderBottom="2px solid red";
     }
 
-    if(student.last_name == null){
-        errors = errors+"Please enter Student Last Name..<br>";
+    if(teacher.last_name == null){
+        errors = errors+"Please enter Teacher Last Name..<br>";
         floatingLName.style.borderBottom="2px solid red";
     }
 
-    if(student.email == null){
-        errors = errors+"Please enter Student Mail..<br>";
+    if(teacher.email == null){
+        errors = errors+"Please enter Teacher Mail..<br>";
         floatingEmail.style.borderBottom="2px solid red";
     }
 
-    if(student.mobile_number == null){
-        errors = errors+"Please enter Student Mobile..<br>";
+    if(teacher.nic == null){
+        errors = errors+"Please enter Teacher NIC..<br>";
+        floatingNIC.style.borderBottom="2px solid red";
+    }
+
+    if(teacher.mobile_number == null){
+        errors = errors+"Please enter Teacher Mobile..<br>";
         floatingMobile.style.borderBottom="2px solid red";
     }
 
-    if(student.address == null){
-        errors = errors+"Please enter Student Address..<br>";
+    if(teacher.address == null){
+        errors = errors+"Please enter Teacher Address..<br>";
         floatingTextarea.style.borderBottom="2px solid red";
     }
 
-    if(student.dob == null){
-        errors = errors+"Please enter Student DOB..<br>";
+    if(teacher.dob == null){
+        errors = errors+"Please enter Teacher DOB..<br>";
         floatingDOB.style.borderBottom="2px solid red";
     }
 
-    if(student.st_password == null){
-        errors = errors+"Please enter Student Password..<br>";
-        floatingSPassword.style.borderBottom="2px solid red";
+    if(teacher.te_password == null){
+        errors = errors+"Please enter Teacher Password..<br>";
+        floatingDOB.style.borderBottom="2px solid red";
     }
 
-    if(student.student_status_id == null){
-        errors = errors+"Please Select Student Status..<br>";
-        floatingSPassword.style.borderBottom="2px solid red";
+    if(teacher.teacher_status_id == null){
+        errors = errors+"Please Select Teacher Status..<br>";
+        floatingSelect.style.borderBottom="2px solid red";
     }
 
 
@@ -278,7 +342,7 @@ const buttonAddMc = () =>{
         iziToast.show({
             theme: 'dark',
             title: "Are You Suer To Register following Student ..?",
-            message: "Student Name: " + student.first_name,
+            message: "Teacher Name: " + teacher.first_name,
             layout: 2,
             position: 'topCenter',
             overlay: true,
@@ -292,10 +356,10 @@ const buttonAddMc = () =>{
 
                     let post_server_responce;
 
-                    $.ajax("/student",{
+                    $.ajax("/teacher",{
                         async : false,
                         type:"POST",//Method
-                        data:JSON.stringify(student),//data that pass to backend
+                        data:JSON.stringify(teacher),//data that pass to backend
                         contentType:"application/json",
                         success:function(succsessResData,successStatus,resObj){
                             post_server_responce = succsessResData;
@@ -307,7 +371,7 @@ const buttonAddMc = () =>{
 
                         iziToast.success({
                             theme: 'dark',
-                            title: 'Student Add Successfully',
+                            title: 'Teacher Add Successfully',
                             position: 'topRight',
                             overlay: true,
                             displayMode: 'once',
@@ -379,41 +443,45 @@ const buttonAddMc = () =>{
     }
 }
 
-//check updates for update object
+//Check updates for object
 const checkUpdates = () => {
     let updates = "";
-    if (student != null && old_student != null) {
+    if (teacher != null && old_teacher != null) {
 
-        if(student.first_name != old_student.first_name) {
-            updates = updates + "Student First Name  Has Changed..<br>"
+        if(teacher.first_name != old_teacher.first_name) {
+            updates = updates + "Teacher First Name  Has Changed..<br>"
         }
 
-        if (student.last_name != old_student.last_name) {
-            updates = updates + "Student Last Name Has Changed..<br>"
+        if (teacher.last_name != old_teacher.last_name) {
+            updates = updates + "Teacher Last Name Has Changed..<br>"
         }
 
-        if (student.mobile_number != old_student.mobile_number) {
-            updates = updates + "Student Mobile Has Changed..<br>"
+        if (teacher.mobile_number != old_teacher.mobile_number) {
+            updates = updates + "Teacher Mobile Has Changed..<br>"
         }
 
-        if (student.dob != old_student.dob) {
-            updates = updates + "Student DOB Has Changed..<br>"
+        if (teacher.dob != old_teacher.dob) {
+            updates = updates + "Teacher DOB Has Changed..<br>"
         }
 
-        if (student.address != old_student.address) {
-            updates = updates + "Student Address Has Changed..<br>"
+        if (teacher.address != old_teacher.address) {
+            updates = updates + "Teacher Address Has Changed..<br>"
         }
 
-        if (student.email != old_student.email) {
-            updates = updates + "Student Email Has Changed..<br>"
+        if (teacher.email != old_teacher.email) {
+            updates = updates + "Teacher Email Has Changed..<br>"
         }
 
-        if (student.st_password != old_student.st_password) {
-            updates = updates + "Student Password Has Changed..<br>"
+        if (teacher.nic != old_teacher.nic) {
+            updates = updates + "Teacher NIC Has Changed..<br>"
         }
 
-        if (student.student_status_id.name != old_student.student_status_id.name) {
-            updates = updates + "Student Status Has Changed..<br>"
+        if (teacher.st_password != old_teacher.st_password) {
+            updates = updates + "Teacher Password Has Changed..<br>"
+        }
+
+        if (teacher.teacher_status_id.name != old_teacher.teacher_status_id.name) {
+            updates = updates + "Teacher Status Has Changed..<br>"
         }
 
     }
@@ -426,10 +494,10 @@ const buttonUpdateMC = () =>{
     if (errors == ""){
         let updates = checkUpdates();
         if(updates != ""){
-            //Show the confirmation box when the Add button is clicked
+            //Show the confirmation box when the Update button is clicked
             iziToast.show({
                 theme: 'dark',
-                title: "Are You Suer Update Following Student?",
+                title: "Are You Suer Update Following Teacher?",
                 message: updates,
                 layout: 2,
                 position: 'topCenter',
@@ -444,10 +512,10 @@ const buttonUpdateMC = () =>{
 
                         let update_server_responce;
 
-                        $.ajax("/student",{
+                        $.ajax("/teacher",{
                             async : false,
                             type:"PUT",//Method
-                            data:JSON.stringify(student),//data that pass to backend
+                            data:JSON.stringify(teacher),//data that pass to backend
                             contentType:"application/json",
                             success:function(succsessResData,successStatus,resObj){
                                 update_server_responce = succsessResData;
@@ -459,7 +527,7 @@ const buttonUpdateMC = () =>{
 
                             iziToast.success({
                                 theme: 'dark',
-                                title: 'Student Update Successfully',
+                                title: 'Teacher Update Successfully',
                                 position: 'topRight',
                                 overlay: true,
                                 displayMode: 'once',
@@ -531,3 +599,4 @@ const buttonUpdateMC = () =>{
         });
     }
 }
+
