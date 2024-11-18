@@ -1,7 +1,8 @@
 package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
-import lk.childsafe.Dao.ParentRepositiry;
+import lk.childsafe.Dao.ParentRepository;
+import lk.childsafe.Dao.ParentRepository;
 import lk.childsafe.Dao.ParentstatusRepository;
 import lk.childsafe.Dao.StudentRepositiry;
 import lk.childsafe.Dao.TeacherstatusRepository;
@@ -22,7 +23,7 @@ public class ParentController {
 
 
     @Autowired
-    ParentRepositiry parentDao;
+    ParentRepository parentDao;
 
     @Autowired
     ParentstatusRepository parentstatusDao;
