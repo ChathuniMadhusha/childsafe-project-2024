@@ -31,6 +31,27 @@
     <link href="assets/css/style.css" rel="stylesheet">
 
 
+    <!-- jquary -->
+    <script src="assets/Resourse/Jquary/jquary.js"></script>
+
+    <!--  Link scripts  -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/classimplementation.js"></script>
+
+    <!--iziToast-->
+    <link rel="stylesheet" href="assets/Resourse/iziToast-master/dist/css/iziToast.min.css">
+    <script src="assets/Resourse/iziToast-master/dist/js/iziToast.min.js"></script>
+
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="assets/Resourse/Datatables/datatables.min.css">
+
+    <script type="text/javascript" src="assets/Resourse/Datatables/datatables.min.js"></script>
+
+    <!--font awesome-->
+    <script src="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/js/all.js"></script>
+    <link rel="stylesheet" href="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/css/all.css">
+
+
 </head>
 
 <body>
@@ -200,13 +221,12 @@
                         <div class="row">
 
                             <!-- Floating Labels Form -->
-                            <form class="row g-3">
+                            <form onsubmit="return false" class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectGrade" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectGrade,'','classimplementation','grade_id','old_classimplementation')" class="form-select" id="floatingSelectGrade" aria-label="State">
                                             <option selected>Select Grade</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+
                                         </select>
                                         <label for="floatingSelectGrade">Grade</label>
                                     </div>
@@ -214,18 +234,17 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectSubject" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectSubject,'','classimplementation','subject_id','old_classimplementation')" class="form-select" id="floatingSelectSubject" aria-label="State">
                                             <option selected>Select Subject</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+
                                         </select>
-                                        <label for="floatingSelectGrade">Subject</label>
+                                        <label for="floatingSelectSubject">Subject</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingCName"
+                                        <input onkeyup="textFieldValidator(floatingCName,'','classimplementation','class_name','old_classimplementation')" type="text" class="form-control" id="floatingCName"
                                                placeholder="Your Name">
                                         <label for="floatingCName">Class Name</label>
                                     </div>
@@ -233,7 +252,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingCCode"
+                                        <input onkeyup="textFieldValidator(floatingCCode,'','classimplementation','class_code','old_classimplementation')" type="text" class="form-control" id="floatingCCode"
                                                placeholder="Your Name">
                                         <label for="floatingCCode">Class Code</label>
                                     </div>
@@ -241,10 +260,9 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectTeacher" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectTeacher,'','classimplementation','teacher_id','old_classimplementation')" class="form-select" id="floatingSelectTeacher" aria-label="State">
                                             <option selected>Select Teacher</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+
                                         </select>
                                         <label for="floatingSelectTeacher">Teacher</label>
                                     </div>
@@ -253,11 +271,20 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="floatingSelectInstitute" aria-label="State">
-                                            <option selected>Select Institute</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
+                                            <option onchange="selectValidater(floatingSelectInstitute,'','classimplementation','institute_implementation_id','old_classimplementation')" selected>Select Institute</option>
+
                                         </select>
                                         <label for="floatingSelectInstitute">Institute</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelectClassStatus" aria-label="State">
+                                            <option onchange="selectValidater(floatingSelectClassStatus,'','classimplementation','class_status_id','old_classimplementation')" selected>Select Status</option>
+
+                                        </select>
+                                        <label for="floatingSelectClassStatus">Class Status</label>
                                     </div>
                                 </div>
 

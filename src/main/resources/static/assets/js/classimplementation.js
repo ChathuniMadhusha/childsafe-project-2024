@@ -133,7 +133,7 @@ const rowView = (obj) =>{
     td_location.innerHTML = printinstitute.location;
     td_cnumber.innerHTML = printinstitute.contact_number
     td_email.innerHTML = printinstitute.email
-    td_insstatus.innerHTML = printinstitute.institute_status_id.name;
+    td_insstatus.innerHTML = printinstitute.institute_status_id;
     $('#instituteViewModel').modal('show')
 }
 

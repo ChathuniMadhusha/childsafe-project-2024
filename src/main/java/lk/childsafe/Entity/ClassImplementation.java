@@ -41,6 +41,12 @@ public class ClassImplementation {
     @JoinColumn(name = "subject_id",referencedColumnName = "id")
     private Subject subject_id;
 
+    @ManyToOne
+    @JoinColumn(name = "class_status_id",referencedColumnName = "id")
+    private ClassImplementationStatus class_status_id;
+
+
+
 
 
 }
