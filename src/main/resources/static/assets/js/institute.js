@@ -22,6 +22,14 @@ const refreshTable = () =>{
     //calling fillTable function
     fillTable(ins_table,institute,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
 
+    for (let index in institute){
+        if (institute[index].institute_status_id.name == "Deleted"){
+            ins_table.children[1].children[index].children[5].children[2].disabled = true;
+            ins_table.children[1].children[index].children[5].children[0].disabled = true;
+        }
+    }
+
+
 }
 
 
@@ -41,8 +49,10 @@ const formReFill = (obj) =>{
     //set value in to select feild
     fillSelectField(floatingSelectInsStatus,"",int_status,"name",institute.institute_status_id.name);
 
-
     setStyle("2px solid green")
+
+    //disable add button
+    disabledButton(false,true);
 
 
 }
@@ -176,7 +186,8 @@ const refreshForm = () =>{
     //set style to default
     setStyle("1px solid #ced4da")
 
-
+//disable update button
+    disabledButton(true,false);
 
 
 }

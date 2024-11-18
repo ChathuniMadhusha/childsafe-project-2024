@@ -39,7 +39,21 @@ public class ClassImplementationsController {
     }
 
 
+    @PostMapping
+    @Transactional
+    public String addClass(@RequestBody ClassImplementation classImplementation){
 
+        try{
+
+            //save
+            classimplementationDao.save(classImplementation);
+            return "0";
+
+        }catch(Exception e){
+            return "Class Add not complete :" + e.getMessage();
+        }
+
+    }
 
 
 
