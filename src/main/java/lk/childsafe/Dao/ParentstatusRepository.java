@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ParentstatusRepository extends JpaRepository<ParentStatus,Integer> {
-
+    List<ParentStatus> findByIdNot(Integer id);
 
 
 }

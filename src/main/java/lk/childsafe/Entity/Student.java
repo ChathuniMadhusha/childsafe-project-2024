@@ -49,20 +49,6 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "student_status_id",referencedColumnName = "id")
     private StudentStatus student_status_id;
-
-    @ManyToOne
-    @JoinColumn(name = "parent_id",referencedColumnName = "id")
-    private Parent parent_id;
-
-
-    public Student(Integer id,String studentid,String first_name,String mobile_number,StudentStatus student_status_id){
-        this.id=id;
-        this.studentid=studentid;
-        this.first_name = first_name;
-        this.mobile_number = mobile_number;
-        this.student_status_id = student_status_id;
-
-
-    }
+    
 
 }
