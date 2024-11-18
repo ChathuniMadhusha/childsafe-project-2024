@@ -142,19 +142,32 @@ const rowDelete = (obj) => {
 }
 
 const rowView = (obj) =>{
-    // printTeacher = new Object();
-    // printTeacher = httpGetRequest("/teacher/getbyid?id="+obj.id);
-    //
-    // td_id.innerHTML = printTeacher.teacherid;
-    // td_fname.innerHTML = printTeacher.first_name;
-    // td_lname.innerHTML = printTeacher.last_name;
-    // td_smobile.innerHTML = printTeacher.mobile_number;
-    // td_snic.innerHTML = printTeacher.nic;
-    // td_sadd.innerHTML = printTeacher.dob;
-    // td_sdob.innerHTML = printTeacher.address;
-    // td_semail.innerHTML = printTeacher.email;
-    // td_sstatus.innerHTML = printTeacher.teacher_status_id.name;
-    // $('#teacherViewModel').modal('show')
+    printParent = new Object();
+    printParent = httpGetRequest("/parent/getbyid?id="+obj.id);
+
+
+    td_fname.innerHTML = printParent.first_name;
+    td_sadd.innerHTML = printParent.address;
+    td_id.innerHTML = printParent.nic;
+    td_lname.innerHTML = printParent.last_name;
+    td_smobile.innerHTML = printParent.mobile_number;
+    td_semail.innerHTML = printParent.email;
+    td_stid.innerHTML = printParent.student_id.studentid;
+    td_stname.innerHTML = printParent.student_id.first_name;
+    td_sstatus.innerHTML = printParent.parent_status_id.name;
+    $('#parentViewModel').modal('show')
+}
+
+const parentPrintModel = () => {
+    let newWindow = window.open();
+    newWindow.document.write(
+        '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
+        +"<h2>Parent Details</h2>"
+        + tablePrintTbl.outerHTML);
+    //newWindow.print();
+    setTimeout(function() {
+        newWindow.print();
+    },1000)
 }
 
 const refreshForm = () =>{
