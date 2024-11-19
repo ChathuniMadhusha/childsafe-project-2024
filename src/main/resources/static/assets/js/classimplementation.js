@@ -14,144 +14,182 @@ const refreshTable = () =>{
     classimplementation=httpGetRequest("/classImplementation/findall")
 
     //create display property list
-    let display_property_list = ["class_name","institute_implementation_id.inst_name"]
+    let display_property_list = ["class_name","institute_implementation_id.inst_name","class_status_id.name"]
 
     //cretae display property type list
-    let display_property_datatype = ["text","object"]
+    let display_property_datatype = ["text","object","object"]
 
     //calling fillTable function
     fillTable(classimple_table,classimplementation,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
 
+
+    for (let index in classimplementation){
+        if (classimplementation[index].class_status_id.name == "Deleted"){
+            classimple_table.children[1].children[index].children[4].children[2].disabled = true;
+            classimple_table.children[1].children[index].children[4].children[0].disabled = true;
+        }
+    }
+
+}
+
+const getClassCode = () => {
+
+
+
+    if (classimplementation.grade_id != null && classimplementation.subject_id != null && classimplementation.institute_implementation_id != null) {
+
+        name = "G-" + classimplementation.grade_id.name + "-" + classimplementation.subject_id.name + "-" + classimplementation.institute_implementation_id.inst_name;
+
+    }
+
+
+    floatingCCode.value = name;
+    classimplementation.class_code = floatingCCode.value;
+    floatingCCode.style.borderBottom = '2px solid green';
+
+
 }
 
 
-const formReFill = (obj) => {
+
+
+const getClassName = () => {
+
+    var name = "";
+
+    if(classimplementation.grade_id != null && classimplementation.subject_id != null){
+        name = "Grade " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
+    }
+
+    floatingCName.value = name;
+    classimplementation.class_name = floatingCName.value;
+    floatingCName.style.borderBottom = '2px solid green';
+
+
+}
+
+
+
+
+
+
+
+const formReFill = (obj) =>{
+    classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
+    old_classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
+
+
+    //set value in to text feild
+    floatingCCode.value=classimplementation.class_code;
+    floatingCName.value=classimplementation.class_name;
+
+
+
+    //set value in to select feild
+    fillSelectField(floatingSelectGrade,"",class_grade,"name",classimplementation.grade_id.name);
+    fillSelectField(floatingSelectSubject,"",class_subject,"name",classimplementation.subject_id.name);
+    fillSelectField(floatingSelectInstitute,"",institute,"inst_name",classimplementation.institute_implementation_id.inst_name);
+    fillSelectField(floatingSelectClassStatus,"",class_status,"name",classimplementation.class_status_id.name);
+
+
+    setStyle("2px solid green")
+
+    disabledButton(false,true);
+
 
 }
 
 const rowDelete = (obj) => {
+    //Show the confirmation box when the delete button is clicked
+    iziToast.show({
+        theme: 'dark',
+        title: 'Are you sure to delete the following Storage Device...?',
+        message: "Class Name: " + obj.class_name ,
+        layout: 2,
+        position: 'topCenter',
+        overlay: true,
+        timeout: false,
+        close:false,
+        closeOnEscape: false,
+        progressBar: false,
+        buttons: [
+            ['<button><b>Yes</b></button>', function (instance, toast) {
+                // Do something when the "Yes" button is clicked
 
+                let delete_server_responce;
+
+                $.ajax("/classImplementation",{
+                    async : false,
+                    type:"DELETE",//Method
+                    data:JSON.stringify(obj),//data that pass to backend
+                    contentType:"application/json",
+                    success:function(succsessResData,successStatus,resObj){
+                        delete_server_responce = succsessResData;
+                    },error:function (errorResOb,errorStatus,errorMsg){
+                        delete_server_responce = errorMsg;
+                    }
+                })
+                if(delete_server_responce == "0"){
+                    iziToast.success({
+                        theme: 'dark',
+                        title: 'Class Deleted',
+                        position: 'topRight',
+                        overlay: true,
+                        displayMode: 'once',
+                        zindex: 999,
+                        animateInside: true,
+                        closeOnEscape:true,
+                        timeout: 2000,
+                        closeOnClick: true,
+
+                    });
+                    refreshTable();
+                }else{
+                    iziToast.error({
+                        title: 'An error occurred',
+                        message: delete_server_responce,
+                        position: 'topRight',
+                        overlay: true,
+                        closeOnEscape: false,
+                        close: true,
+                        layout: 2,
+                        displayMode: 'once',
+                        zindex: 999,
+                        animateInside: true,
+                        buttons: [
+                            ['<button><b>OK</b></button>', function (instance, toast) {
+                                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                            }, true]
+                        ]
+                    });
+                }
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+            }, true],
+            ['<button>No</button>', function (instance, toast) {
+                // Do something when the "No" button is clicked
+                iziToast.warning({
+                    title: 'Cancel',
+                })
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            }]
+        ]
+    });
 }
 
-const rowView = (obj) => {
+const rowView = (obj) =>{
+    printclass = new Object();
+    printclass = httpGetRequest("/classImplementation/getbyid?id="+obj.id);
 
+    td_classname.innerHTML = printclass.class_name;
+    td_classcode.innerHTML = printclass.class_code;
+
+    td_grade.innerHTML = printclass.grade_id.name;
+    td_subject.innerHTML = printclass.subject_id.name;
+    td_institute.innerHTML = printclass.institute_implementation_id.inst_name;
+    td_classstatus.innerHTML = printclass.class_status_id.name;
+    $('#ClassViewModel').modal('show')
 }
-
-
-
-
-
-
-// const formReFill = (obj) =>{
-//     institute = httpGetRequest("/institute/getbyid?id="+obj.id)
-//     old_institute = httpGetRequest("/institute/getbyid?id="+obj.id)
-//
-//
-//     //set value in to text feild
-//     floatingInsName.value=institute.inst_name;
-//     floatingLocation.value=institute.location;
-//     floatingMobile.value=institute.contact_number;
-//     floatingEmail.value=institute.email;
-//
-//
-//     //set value in to select feild
-//     fillSelectField(floatingSelectInsStatus,"",int_status,"name",institute.institute_status_id.name);
-//
-//
-//     setStyle("2px solid green")
-//
-//
-// }
-
-// const rowDelete = (obj) => {
-//     //Show the confirmation box when the delete button is clicked
-//     iziToast.show({
-//         theme: 'dark',
-//         title: 'Are you sure to delete the following Storage Device...?',
-//         message: "Institute Name: " + obj.inst_name + "<br>Location: " + obj.location,
-//         layout: 2,
-//         position: 'topCenter',
-//         overlay: true,
-//         timeout: false,
-//         close:false,
-//         closeOnEscape: false,
-//         progressBar: false,
-//         buttons: [
-//             ['<button><b>Yes</b></button>', function (instance, toast) {
-//                 // Do something when the "Yes" button is clicked
-//
-//                 let delete_server_responce;
-//
-//                 $.ajax("/institute",{
-//                     async : false,
-//                     type:"DELETE",//Method
-//                     data:JSON.stringify(obj),//data that pass to backend
-//                     contentType:"application/json",
-//                     success:function(succsessResData,successStatus,resObj){
-//                         delete_server_responce = succsessResData;
-//                     },error:function (errorResOb,errorStatus,errorMsg){
-//                         delete_server_responce = errorMsg;
-//                     }
-//                 })
-//                 if(delete_server_responce == "0"){
-//                     iziToast.success({
-//                         theme: 'dark',
-//                         title: 'Institute Deleted',
-//                         position: 'topRight',
-//                         overlay: true,
-//                         displayMode: 'once',
-//                         zindex: 999,
-//                         animateInside: true,
-//                         closeOnEscape:true,
-//                         timeout: 2000,
-//                         closeOnClick: true,
-//
-//                     });
-//                     refreshTable();
-//                 }else{
-//                     iziToast.error({
-//                         title: 'An error occurred',
-//                         message: delete_server_responce,
-//                         position: 'topRight',
-//                         overlay: true,
-//                         closeOnEscape: false,
-//                         close: true,
-//                         layout: 2,
-//                         displayMode: 'once',
-//                         zindex: 999,
-//                         animateInside: true,
-//                         buttons: [
-//                             ['<button><b>OK</b></button>', function (instance, toast) {
-//                                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                             }, true]
-//                         ]
-//                     });
-//                 }
-//                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//
-//             }, true],
-//             ['<button>No</button>', function (instance, toast) {
-//                 // Do something when the "No" button is clicked
-//                 iziToast.warning({
-//                     title: 'Cancel',
-//                 })
-//                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//             }]
-//         ]
-//     });
-// }
-
-// const rowView = (obj) =>{
-//     printinstitute = new Object();
-//     printinstitute = httpGetRequest("/institute/getbyid?id="+obj.id);
-//
-//     td_insname.innerHTML = printinstitute.inst_name;
-//     td_location.innerHTML = printinstitute.location;
-//     td_cnumber.innerHTML = printinstitute.contact_number
-//     td_email.innerHTML = printinstitute.email
-//     td_insstatus.innerHTML = printinstitute.institute_status_id;
-//     $('#instituteViewModel').modal('show')
-// }
 
 // const studentPrintModel = () => {
 //     let newWindow = window.open();
@@ -174,332 +212,357 @@ const refreshForm = () =>{
 
     //create array for fill select element
 
-    // claa_grade = new Array();
-    // class_grade = httpGetRequest("/grade/findall")
-    //
-    // claa_subject = new Array();
-    // class_subject = httpGetRequest("/subject/findall")
-    //
-    // int_status = new Array();
-    // int_status = httpGetRequest("/institutestatus/findall")
-    //
-    // //auto select value
-    // fillSelectField(floatingSelectInsStatus,"",int_status,"name","Active");
-    // institute.institute_status_id = JSON.parse(floatingSelectInsStatus.value);
-    //
-    //
-    // //clear value after refesh
-    // floatingInsName.value="";
-    // floatingLocation.value="";
-    // floatingMobile.value="";
-    // floatingEmail.value="";
-    //
-    //
-    // //set style to default
-    // setStyle("1px solid #ced4da")
+    class_status = new Array();
+    class_status = httpGetRequest("/classimplestatus/findall")
+
+    //auto select value
+    fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");
+    classimplementation.class_status_id = JSON.parse(floatingSelectClassStatus.value);
+
+    class_grade = new Array();
+    class_grade = httpGetRequest("/grade/findall");
 
 
+    fillSelectField(floatingSelectGrade,"",class_grade,"name","");
+
+
+
+    class_subject = new Array();
+    class_subject = httpGetRequest("/subject/findall");
+
+    fillSelectField(floatingSelectSubject,"",class_subject,"name","");
+
+
+    institute = new Array();
+    institute = httpGetRequest("/institute/findall");
+
+    fillSelectField(floatingSelectInstitute,"",institute,"inst_name","");
+
+
+
+
+     //clear value after refesh
+    floatingSelectGrade.value="";
+    floatingSelectSubject.value="";
+    floatingCName.value="";
+    floatingSelectInstitute.value="";
+    floatingSelectClassStatus.value="";
+    floatingCCode.value="";
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+
+    disabledButton(true,false);
+
+}
+
+function setStyle(style){
+    floatingSelectGrade.style.borderBottom=style;
+    floatingSelectSubject.style.borderBottom=style;
+    floatingCName.style.borderBottom=style;
+    floatingSelectInstitute.style.borderBottom=style;
+    floatingSelectClassStatus.style.borderBottom=style;
+    floatingCCode.style.borderBottom=style;
 
 
 }
 
-// function setStyle(style){
-//     floatingInsName.style.borderBottom=style;
-//     floatingLocation.style.borderBottom=style;
-//     floatingMobile.style.borderBottom=style;
-//     floatingEmail.style.borderBottom=style;
-//
-//
-//
-// }
-
 //function for check errors
 
-// const checkErrors = () =>{
-//     console.log("check error")
-//     let errors = "";
-//
-//     if(institute.inst_name == null){
-//         errors = errors+"Please enter Institute name..<br>";
-//         floatingInsName.style.borderBottom="2px solid red";
-//     }
-//
-//     if(institute.location == null){
-//         errors = errors+"Please enter Location..<br>";
-//         floatingLocation.style.borderBottom="2px solid red";
-//     }
-//
-//     if(institute.contact_number == null){
-//         errors = errors+"Please enter Contact number..<br>";
-//         floatingMobile.style.borderBottom="2px solid red";
-//     }
-//
-//     if(institute.email == null){
-//         errors = errors+"Please enter Email..<br>";
-//         floatingEmail.style.borderBottom="2px solid red";
-//     }
-//
-//
-//     if(institute.institute_status_id == null){
-//         errors = errors+"Please Select Insitute Status..<br>";
-//         floatingSelectInsStatus.style.borderBottom="2px solid red";
-//     }
-//
-//
-//     return errors;
-//
-//
-// }
+const checkErrors = () =>{
+    console.log("check error")
+    let errors = "";
 
-// const buttonAddMc = () =>{
-//     console.log("submit")
-//
-//     let errors = checkErrors();
-//
-//
-//     if(errors == ""){
-//
-//         //Show the confirmation box when the Add button is clicked
-//         iziToast.show({
-//             theme: 'dark',
-//             title: "Are You Suer To Register following Institute ..?",
-//             message: "Institute Name: " + institute.inst_name,
-//             layout: 2,
-//             position: 'topCenter',
-//             overlay: true,
-//             timeout: false,
-//             close:false,
-//             closeOnEscape: false,
-//             progressBar: false,
-//             buttons: [
-//                 ['<button><b>Yes</b></button>', function (instance, toast) {
-//                     // Do something when the "Yes" button is clicked
-//
-//                     let post_server_responce;
-//
-//                     $.ajax("/institute",{
-//                         async : false,
-//                         type:"POST",//Method
-//                         data:JSON.stringify(institute),//data that pass to backend
-//                         contentType:"application/json",
-//                         success:function(succsessResData,successStatus,resObj){
-//                             post_server_responce = succsessResData;
-//                         },error:function (errorResOb,errorStatus,errorMsg){
-//                             post_server_responce = errorMsg;
-//                         }
-//                     })
-//                     if(post_server_responce == "0"){
-//
-//                         iziToast.success({
-//                             theme: 'dark',
-//                             title: 'Institute Add Successfully',
-//                             position: 'topRight',
-//                             overlay: true,
-//                             displayMode: 'once',
-//                             zindex: 999,
-//                             animateInside: true,
-//                             closeOnEscape:true,
-//                             timeout: 2000,
-//                             closeOnClick: true,
-//
-//                         });
-//                         refreshTable();
-//                         refreshForm();
-//
-//                     }else{
-//                         iziToast.error({
-//
-//                             title: 'An error occurred',
-//                             message: post_server_responce,
-//                             position: 'topRight',
-//                             overlay: true,
-//                             closeOnEscape: false,
-//                             close: true,
-//                             layout: 2,
-//                             displayMode: 'once',
-//                             zindex: 999,
-//                             animateInside: true,
-//                             buttons: [
-//                                 ['<button><b>OK</b></button>', function (instance, toast) {
-//                                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                                 }, true]
-//                             ]
-//                         });
-//
-//
-//                     }
-//                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//
-//                 }, true],
-//                 ['<button>No</button>', function (instance, toast) {
-//                     // Do something when the "No" button is clicked
-//                     iziToast.warning({
-//                         title: 'Cancel',
-//                     })
-//                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                 }]
-//             ]
-//         });
-//
-//
-//     }else{
-//         iziToast.error({
-//             title: 'You Have Following Error',
-//             message: errors,
-//             position: 'topCenter',
-//             overlay: true,
-//             closeOnEscape: false,
-//             close: true,
-//             layout: 2,
-//             displayMode: 'once',
-//             zindex: 999,
-//             animateInside: true,
-//             buttons: [
-//                 ['<button><b>OK</b></button>', function (instance, toast) {
-//                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                 }, true]
-//             ]
-//         });
-//
-//     }
-// }
+    if(classimplementation.class_name == null){
+        errors = errors+"Please enter Class Name..<br>";
+        floatingCName.style.borderBottom="2px solid red";
+    }
 
-// const checkUpdates = () => {
-//     let updates = "";
-//     if (institute != null && old_institute != null) {
-//
-//         if(institute.inst_name != old_institute.inst_name) {
-//             updates = updates + "Institute name  Has Changed..<br>"
-//         }
-//
-//         if (institute.location != old_institute.location) {
-//             updates = updates + "Location Has Changed..<br>"
-//         }
-//
-//         if (institute.contact_number != old_institute.contact_number) {
-//             updates = updates + "Contact Number Has Changed..<br>"
-//         }
-//
-//         if (institute.email != old_institute.email) {
-//             updates = updates + "Email Has Changed..<br>"
-//         }
-//
-//         if (institute.institute_status_id.name != old_institute.institute_status_id.name) {
-//             updates = updates + "Institute Status Has Changed..<br>"
-//         }
-//
-//     }
-//
-//     return updates;
-// }
+    if(classimplementation.class_code == null){
+        errors = errors+"Please enter Class Code..<br>";
+        floatingCCode.style.borderBottom="2px solid red";
+    }
 
-// const buttonUpdateMC = () =>{
-//     let errors = checkErrors();
-//     if (errors == ""){
-//         let updates = checkUpdates();
-//         if(updates != ""){
-//             //Show the confirmation box when the Add button is clicked
-//             iziToast.show({
-//                 theme: 'dark',
-//                 title: "Are You Suer Update Following Institute?",
-//                 message: updates,
-//                 layout: 2,
-//                 position: 'topCenter',
-//                 overlay: true,
-//                 timeout: false,
-//                 close:false,
-//                 closeOnEscape: false,
-//                 progressBar: false,
-//                 buttons: [
-//                     ['<button><b>Yes</b></button>', function (instance, toast) {
-//                         // Do something when the "Yes" button is clicked
-//
-//                         let update_server_responce;
-//
-//                         $.ajax("/institute",{
-//                             async : false,
-//                             type:"PUT",//Method
-//                             data:JSON.stringify(institute),//data that pass to backend
-//                             contentType:"application/json",
-//                             success:function(succsessResData,successStatus,resObj){
-//                                 update_server_responce = succsessResData;
-//                             },error:function (errorResOb,errorStatus,errorMsg){
-//                                 update_server_responce = errorMsg;
-//                             }
-//                         })
-//                         if(update_server_responce == "0"){
-//
-//                             iziToast.success({
-//                                 theme: 'dark',
-//                                 title: 'Institute Update Successfully',
-//                                 position: 'topRight',
-//                                 overlay: true,
-//                                 displayMode: 'once',
-//                                 zindex: 999,
-//                                 animateInside: true,
-//                                 closeOnEscape:true,
-//                                 timeout: 2000,
-//                                 closeOnClick: true,
-//
-//                             });
-//                             refreshTable();
-//                             refreshForm();
-//                         }else{
-//                             iziToast.error({
-//
-//                                 title: 'An error occurred',
-//                                 message: update_server_responce,
-//                                 position: 'topRight',
-//                                 overlay: true,
-//                                 closeOnEscape: false,
-//                                 close: true,
-//                                 layout: 2,
-//                                 displayMode: 'once',
-//                                 zindex: 999,
-//                                 animateInside: true,
-//                                 buttons: [
-//                                     ['<button><b>OK</b></button>', function (instance, toast) {
-//                                         instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                                     }, true]
-//                                 ]
-//                             });
-//
-//
-//                         }
-//                         instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//
-//                     }, true],
-//                     ['<button>No</button>', function (instance, toast) {
-//                         // Do something when the "No" button is clicked
-//                         iziToast.warning({
-//                             title: 'Cancel',
-//                         })
-//                         instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                     }]
-//                 ]
-//             });
-//         }else {
-//             iziToast.warning({
-//                 title: 'Nothing To Update',
-//             })
-//         }
-//     }else{
-//         iziToast.error({
-//             title: 'You Have Following Error',
-//             message: errors,
-//             position: 'topCenter',
-//             overlay: true,
-//             closeOnEscape: false,
-//             close: true,
-//             layout: 2,
-//             displayMode: 'once',
-//             zindex: 999,
-//             animateInside: true,
-//             buttons: [
-//                 ['<button><b>OK</b></button>', function (instance, toast) {
-//                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                 }, true]
-//             ]
-//         });
-//     }
-// }
+    if(classimplementation.grade_id == null){
+        errors = errors+"Please enter Grade..<br>";
+        floatingSelectGrade.style.borderBottom="2px solid red";
+    }
+
+    if(classimplementation.institute_implementation_id == null){
+        errors = errors+"Please enter institute..<br>";
+        floatingSelectInstitute.style.borderBottom="2px solid red";
+    }
+
+
+    if(classimplementation.subject_id == null){
+        errors = errors+"Please Select Subject..<br>";
+        floatingSelectSubject.style.borderBottom="2px solid red";
+    }
+
+    if(classimplementation.class_status_id == null){
+        errors = errors+"Please Select Status..<br>";
+        floatingSelectClassStatus.style.borderBottom="2px solid red";
+    }
+
+
+    return errors;
+
+
+}
+
+const buttonAddMc = () =>{
+    console.log("submit")
+
+    let errors = checkErrors();
+
+
+    if(errors == ""){
+
+        //Show the confirmation box when the Add button is clicked
+        iziToast.show({
+            theme: 'dark',
+            title: "Are You Sure To Register following Class ..?",
+            message: "Class Name: " + classimplementation.class_name,
+            layout: 2,
+            position: 'topCenter',
+            overlay: true,
+            timeout: false,
+            close:false,
+            closeOnEscape: false,
+            progressBar: false,
+            buttons: [
+                ['<button><b>Yes</b></button>', function (instance, toast) {
+                    // Do something when the "Yes" button is clicked
+
+                    let post_server_responce;
+
+                    $.ajax("/classImplementation",{
+                        async : false,
+                        type:"POST",//Method
+                        data:JSON.stringify(classimplementation),//data that pass to backend
+                        contentType:"application/json",
+                        success:function(succsessResData,successStatus,resObj){
+                            post_server_responce = succsessResData;
+                        },error:function (errorResOb,errorStatus,errorMsg){
+                            post_server_responce = errorMsg;
+                        }
+                    })
+                    if(post_server_responce == "0"){
+
+                        iziToast.success({
+                            theme: 'dark',
+                            title: 'Institute Add Successfully',
+                            position: 'topRight',
+                            overlay: true,
+                            displayMode: 'once',
+                            zindex: 999,
+                            animateInside: true,
+                            closeOnEscape:true,
+                            timeout: 2000,
+                            closeOnClick: true,
+
+                        });
+                        refreshTable();
+                        refreshForm();
+
+                    }else{
+                        iziToast.error({
+
+                            title: 'An error occurred',
+                            message: post_server_responce,
+                            position: 'topRight',
+                            overlay: true,
+                            closeOnEscape: false,
+                            close: true,
+                            layout: 2,
+                            displayMode: 'once',
+                            zindex: 999,
+                            animateInside: true,
+                            buttons: [
+                                ['<button><b>OK</b></button>', function (instance, toast) {
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                }, true]
+                            ]
+                        });
+
+
+                    }
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }, true],
+                ['<button>No</button>', function (instance, toast) {
+                    // Do something when the "No" button is clicked
+                    iziToast.warning({
+                        title: 'Cancel',
+                    })
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }]
+            ]
+        });
+
+
+    }else{
+        iziToast.error({
+            title: 'You Have Following Error',
+            message: errors,
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 999,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+
+    }
+}
+
+const checkUpdates = () => {
+    let updates = "";
+    if (classimplementation != null && old_classimplementation != null) {
+
+        if(classimplementation.class_name != old_classimplementation.class_name) {
+            updates = updates + "Class name  Has Changed..<br>"
+        }
+
+        if (classimplementation.class_code != old_classimplementation.class_code) {
+            updates = updates + "Class Code Has Changed..<br>"
+        }
+
+        if (classimplementation.grade_id.name != old_classimplementation.grade_id.name) {
+            updates = updates + "Grade Has Changed..<br>"
+        }
+
+        if (classimplementation.subject_id.name != old_classimplementation.subject_id.name) {
+            updates = updates + "Subject Has Changed..<br>"
+        }
+
+        if (classimplementation.class_status_id.name != old_classimplementation.class_status_id.name) {
+            updates = updates + "Class Status Has Changed..<br>"
+        }
+
+        if (classimplementation.institute_implementation_id.inst_name != old_classimplementation.institute_implementation_id.inst_name) {
+            updates = updates + "Institute Name Has Changed..<br>"
+        }
+
+    }
+
+    return updates;
+}
+
+const buttonUpdateMC = () =>{
+    let errors = checkErrors();
+    if (errors == ""){
+        let updates = checkUpdates();
+        if(updates != ""){
+            //Show the confirmation box when the Add button is clicked
+            iziToast.show({
+                theme: 'dark',
+                title: "Are You Sure Update Following Institute?",
+                message: updates,
+                layout: 2,
+                position: 'topCenter',
+                overlay: true,
+                timeout: false,
+                close:false,
+                closeOnEscape: false,
+                progressBar: false,
+                buttons: [
+                    ['<button><b>Yes</b></button>', function (instance, toast) {
+                        // Do something when the "Yes" button is clicked
+
+                        let update_server_responce;
+
+                        $.ajax("/classImplementation",{
+                            async : false,
+                            type:"PUT",//Method
+                            data:JSON.stringify(classimplementation),//data that pass to backend
+                            contentType:"application/json",
+                            success:function(succsessResData,successStatus,resObj){
+                                update_server_responce = succsessResData;
+                            },error:function (errorResOb,errorStatus,errorMsg){
+                                update_server_responce = errorMsg;
+                            }
+                        })
+                        if(update_server_responce == "0"){
+
+                            iziToast.success({
+                                theme: 'dark',
+                                title: 'Class Update Successfully',
+                                position: 'topRight',
+                                overlay: true,
+                                displayMode: 'once',
+                                zindex: 999,
+                                animateInside: true,
+                                closeOnEscape:true,
+                                timeout: 2000,
+                                closeOnClick: true,
+
+                            });
+                            refreshTable();
+                            refreshForm();
+                        }else{
+                            iziToast.error({
+
+                                title: 'An error occurred',
+                                message: update_server_responce,
+                                position: 'topRight',
+                                overlay: true,
+                                closeOnEscape: false,
+                                close: true,
+                                layout: 2,
+                                displayMode: 'once',
+                                zindex: 999,
+                                animateInside: true,
+                                buttons: [
+                                    ['<button><b>OK</b></button>', function (instance, toast) {
+                                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                    }, true]
+                                ]
+                            });
+
+
+                        }
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }, true],
+                    ['<button>No</button>', function (instance, toast) {
+                        // Do something when the "No" button is clicked
+                        iziToast.warning({
+                            title: 'Cancel',
+                        })
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }]
+                ]
+            });
+        }else {
+            iziToast.warning({
+                title: 'Nothing To Update',
+            })
+        }
+    }else{
+        iziToast.error({
+            title: 'You Have Following Error',
+            message: errors,
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 999,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+    }
+}

@@ -224,7 +224,7 @@
                             <form onsubmit="return false" class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectGrade,'','classimplementation','grade_id','old_classimplementation')" class="form-select" id="floatingSelectGrade" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectGrade,'','classimplementation','grade_id','old_classimplementation'); getClassName(); getClassCode();"  class="form-select" id="floatingSelectGrade" aria-label="State">
                                             <option selected>Select Grade</option>
 
                                         </select>
@@ -234,7 +234,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectSubject,'','classimplementation','subject_id','old_classimplementation')" class="form-select" id="floatingSelectSubject" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectSubject,'','classimplementation','subject_id','old_classimplementation');getClassName(); getClassCode(); " class="form-select" id="floatingSelectSubject" aria-label="State">
                                             <option selected>Select Subject</option>
 
                                         </select>
@@ -245,38 +245,31 @@
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input onkeyup="textFieldValidator(floatingCName,'','classimplementation','class_name','old_classimplementation')" type="text" class="form-control" id="floatingCName"
-                                               placeholder="Your Name">
+                                               placeholder="Your Name" disabled>
                                         <label for="floatingCName">Class Name</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select onchange="selectValidater(floatingSelectInstitute,'','classimplementation','institute_implementation_id','old_classimplementation'); getClassCode();  " class="form-select" id="floatingSelectInstitute" aria-label="State">
+                                            <option  selected>Select Institute</option>
+
+                                        </select>
+                                        <label for="floatingSelectInstitute">Institute</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input onkeyup="textFieldValidator(floatingCCode,'','classimplementation','class_code','old_classimplementation')" type="text" class="form-control" id="floatingCCode"
-                                               placeholder="Your Name">
+                                               placeholder="Your Name" disabled>
                                         <label for="floatingCCode">Class Code</label>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectTeacher,'','classimplementation','teacher_id','old_classimplementation')" class="form-select" id="floatingSelectTeacher" aria-label="State">
-                                            <option selected>Select Teacher</option>
 
-                                        </select>
-                                        <label for="floatingSelectTeacher">Teacher</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectInstitute" aria-label="State">
-                                            <option onchange="selectValidater(floatingSelectInstitute,'','classimplementation','institute_implementation_id','old_classimplementation')" selected>Select Institute</option>
-
-                                        </select>
-                                        <label for="floatingSelectInstitute">Institute</label>
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
@@ -290,8 +283,8 @@
 
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Add Class</button>
-                                    <button type="reset" class="btn btn-secondary">Update Class</button>
+                                    <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Class</button>
+                                    <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Class</button>
                                 </div>
                             </form><!-- End floating Labels Form -->
                         </div>
@@ -311,6 +304,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Class Name</th>
                                 <th scope="col">Institute</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Modify</th>
                             </tr>
                             </thead>
@@ -322,6 +316,66 @@
 
             </div>
         </div>
+
+
+        <div class="modal fade" id="ClassViewModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Class Implementation</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="ClassPrintTbl" class="table  table-striped table-hover">
+
+                            <tr>
+                                <th>Classs Name</th>
+                                <td id="td_classname"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Class code</th>
+                                <td id="td_classcode"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Grade</th>
+                                <td id="td_grade"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Subject</th>
+                                <td id="td_subject"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Institute</th>
+                                <td id="td_institute"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Class Status</th>
+                                <td id="td_classstatus"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="institutePrintModel()" type="button" class="btn btn-primary">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- End #main -->
+        </div>
+
 
 
         <!-- End #main -->

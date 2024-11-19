@@ -39,10 +39,22 @@ public class ClassImplementationsController {
     }
 
 
+    //get mapping service for get storage by given quary variable id[/classImplementation/getbyid?id=1]
+    @GetMapping(value = "/getbyid" , produces = "application/json")
+    public ClassImplementation getClassById(@RequestParam("id") Integer id){
+        return classimplementationDao.getReferenceById(id);
+    }
+
+
     @PostMapping
     @Transactional
     public String addClass(@RequestBody ClassImplementation classImplementation){
 
+
+        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_code());
+        if(extclassimplementation != null){
+            return "Cannot add this Class : This Class code is exist now";
+        }
         try{
 
             //save
@@ -54,6 +66,46 @@ public class ClassImplementationsController {
         }
 
     }
+
+
+    //Update section
+    @PutMapping
+    @Transactional
+    public String putClass(@RequestBody ClassImplementation classImplementation){
+        //check privilage
+
+        //save operate
+        try {
+            classimplementationDao.save(classImplementation);
+            return "0";
+        }catch(Exception e){
+            return "Storage Update not complete :" + e.getMessage();
+        }
+    }
+
+
+    //create delete mapping
+    @DeleteMapping
+    public String deleteClass(@RequestBody ClassImplementation classImplementation){
+        ClassImplementation extclassimplement = classimplementationDao.getReferenceById(classImplementation.getId());
+        if(extclassimplement != null){
+            try {
+
+                extclassimplement.setClass_status_id(classimplementationstatusDao.getReferenceById(3));
+                classimplementationDao.save(extclassimplement);
+
+                return "0";
+
+            }catch (Exception e){
+                return "Delete not complete :"+e.getMessage();
+            }
+        }else {
+            return "Delete not complete : Storage Device not exist";
+        }
+
+
+    }
+
 
 
 
