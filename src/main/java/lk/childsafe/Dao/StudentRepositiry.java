@@ -16,7 +16,13 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     @Query(value = "select s from Student s where s.studentid = ?1 and s.student_status_id.id=1")
     Student findStudentByStudentno(String studentno);
 
-    //check duplicate with find Storage by given Storage name without quary
+
+    //query for filter by studentID
+    @Query(value = "select s from Student s where s.studentid = ?1 and s.student_status_id.id != 3")
+    Student getByStudentnoforclass(String studentno);
+
+
+    //check duplicate with find student by given Storage name without quary
     Student findStudentByStudentid(String name);
 
 

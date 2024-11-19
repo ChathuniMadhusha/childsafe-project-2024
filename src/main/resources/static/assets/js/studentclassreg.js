@@ -14,7 +14,7 @@ const refreshTable = () =>{
     sturegs=httpGetRequest("/stureg/findall")
 
     //create display property list
-    let display_property_list = ["stu_class_code","student_id.studentid","class_implementation_id.class_name","class_implementation_id.institute_implementation_id.Inst_name"]
+    let display_property_list = ["stu_class_code","student_id.studentid","class_implementation_id.class_name","class_implementation_id.institute_implementation_id.inst_name"]
 
     //cretae display property type list
     let display_property_datatype = ["text","object","object","object"]
@@ -169,3 +169,61 @@ const rowView = (obj) =>{
 //         newWindow.print();
 //     },1000)
 // }
+
+const refreshForm = () =>{
+    stureg = new Object();
+    old_sturegs = null;
+
+    //create array for get data to select element
+    statuss = new Array();
+    statuss = httpGetRequest("/sturegstatus/findall")
+
+    //auto select value
+    fillSelectField(floatingSelectStatus,"",statuss,"name","Active");
+    statuss.registration_status_id = JSON.parse(floatingSelectStatus.value);
+
+    classes = new Array();
+    classes = httpGetRequest("/class/findall")
+    fillSelectField(floatingSelectClass,"",classes,"name","");
+
+    institutes = new Array();
+    institutes = httpGetRequest("/institute/findall")
+    fillSelectField(floatingSelect,"",institutes,"inst_name","");
+
+}
+
+const findStudentID = () => {
+
+
+    if(floatingFName.value != ""){
+        let sid_pattern = new RegExp('^ST[0-9]{4}[1-9]$')
+        if(sid_pattern.test(floatingFName.value)){
+            let stcode = floatingFName.value;
+            stu = httpGetRequest("/student/getbystudentno?studentno="+stcode);
+
+            if (stu !=""){
+                floatingLName.value = stu.first_name;
+                stureg.student_id = stu;
+                floatingLName.style.borderBottom = "2px solid green";
+                floatingFName.style.borderBottom = "2px solid green";
+            }else {
+                floatingLName.style.borderBottom = "2px solid red";
+                floatingFName.style.borderBottom = "2px solid red";
+                stureg.student_id = null;
+                floatingLName.value = "";
+            }
+
+
+        }else{
+            floatingLName.style.borderBottom = "2px solid red";
+            floatingFName.style.borderBottom = "2px solid red";
+            stureg.student_id = null;
+            floatingLName.value = "";
+        }
+    }else{
+        stureg.student_id = null;
+        floatingLName.style.borderBottom = "2px solid red";
+        floatingFName.style.borderBottom = "2px solid red";
+
+    }
+}

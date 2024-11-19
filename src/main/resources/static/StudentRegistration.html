@@ -223,7 +223,7 @@
                             <form class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingFName"
+                                        <input onkeyup="findStudentID()" type="text" class="form-control" id="floatingFName"
                                                placeholder="Your Name">
                                         <label for="floatingFName">Student ID</label>
                                     </div>
@@ -285,13 +285,14 @@
                     <div class="card-body">
                         <h5 class="card-title">Student Class registration table</h5>
                         <!-- Table with stripped rows -->
-                        <table id="stucls_tbl" class="table">
+                        <table id="stucls_tbl" class="table datatable">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Student Class Reg Code</th>
                                 <th scope="col">Student ID</th>
-                                <th scope="col">First Name</th>
                                 <th scope="col">Class Name</th>
+                                <th scope="col">Institute Name</th>
                                 <th scope="col">Modify</th>
                             </tr>
                             </thead>
