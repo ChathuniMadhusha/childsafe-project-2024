@@ -10,39 +10,91 @@ function refreshBrowser() {
 //define refresh table
 const refreshTable = () =>{
     //array for store processor data
-    institute = new Array();
-    institute=httpGetRequest("/institute/findall")
+    classimplementation = new Array();
+    classimplementation=httpGetRequest("/classImplementation/findall")
 
     //create display property list
-    let display_property_list = ["inst_name","location","contact_number","institute_status_id.name"]
+    let display_property_list = ["class_name","institute_implementation_id.inst_name","class_status_id.name"]
 
     //cretae display property type list
-    let display_property_datatype = ["text","text","text","object"]
+    let display_property_datatype = ["text","object","object"]
 
     //calling fillTable function
-    fillTable(ins_table,institute,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
+    fillTable(classimple_table,classimplementation,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
+
+
+    for (let index in classimplementation){
+        if (classimplementation[index].class_status_id.name == "Deleted"){
+            classimple_table.children[1].children[index].children[4].children[2].disabled = true;
+            classimple_table.children[1].children[index].children[4].children[0].disabled = true;
+        }
+    }
+
+}
+
+const getClassCode = () => {
+
+
+
+    if (classimplementation.grade_id != null && classimplementation.subject_id != null && classimplementation.institute_implementation_id != null) {
+
+        name = "G-" + classimplementation.grade_id.name + "-" + classimplementation.subject_id.name + "-" + classimplementation.institute_implementation_id.inst_name;
+
+    }
+
+
+    floatingCCode.value = name;
+    classimplementation.class_code = floatingCCode.value;
+    floatingCCode.style.borderBottom = '2px solid green';
+
 
 }
 
 
 
+
+const getClassName = () => {
+
+    var name = "";
+
+    if(classimplementation.grade_id != null && classimplementation.subject_id != null){
+        name = "Grade " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
+    }
+
+    floatingCName.value = name;
+    classimplementation.class_name = floatingCName.value;
+    floatingCName.style.borderBottom = '2px solid green';
+
+
+}
+
+
+
+
+
+
+
 const formReFill = (obj) =>{
-    institute = httpGetRequest("/institute/getbyid?id="+obj.id)
-    old_institute = httpGetRequest("/institute/getbyid?id="+obj.id)
+    classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
+    old_classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
 
 
     //set value in to text feild
-    floatingInsName.value=institute.inst_name;
-    floatingLocation.value=institute.location;
-    floatingMobile.value=institute.contact_number;
-    floatingEmail.value=institute.email;
+    floatingCCode.value=classimplementation.class_code;
+    floatingCName.value=classimplementation.class_name;
+
 
 
     //set value in to select feild
-    fillSelectField(floatingSelectInsStatus,"",int_status,"name",institute.institute_status_id.name);
+    fillSelectField(floatingSelectGrade,"",class_grade,"name",classimplementation.grade_id.name);
+    fillSelectField(floatingSelectSubject,"",class_subject,"name",classimplementation.subject_id.name);
+    fillSelectField(floatingSelectInstitute,"",institute,"inst_name",classimplementation.institute_implementation_id.inst_name);
+    fillSelectField(floatingSelectClassStatus,"",class_status,"name",classimplementation.class_status_id.name);
 
 
     setStyle("2px solid green")
+
+    disabledButton(false,true);
 
 
 }
@@ -52,7 +104,7 @@ const rowDelete = (obj) => {
     iziToast.show({
         theme: 'dark',
         title: 'Are you sure to delete the following Storage Device...?',
-        message: "Institute Name: " + obj.inst_name + "<br>Location: " + obj.location,
+        message: "Class Name: " + obj.class_name ,
         layout: 2,
         position: 'topCenter',
         overlay: true,
@@ -66,7 +118,7 @@ const rowDelete = (obj) => {
 
                 let delete_server_responce;
 
-                $.ajax("/institute",{
+                $.ajax("/classImplementation",{
                     async : false,
                     type:"DELETE",//Method
                     data:JSON.stringify(obj),//data that pass to backend
@@ -80,7 +132,7 @@ const rowDelete = (obj) => {
                 if(delete_server_responce == "0"){
                     iziToast.success({
                         theme: 'dark',
-                        title: 'Institute Deleted',
+                        title: 'Class Deleted',
                         position: 'topRight',
                         overlay: true,
                         displayMode: 'once',
@@ -126,15 +178,17 @@ const rowDelete = (obj) => {
 }
 
 const rowView = (obj) =>{
-    printinstitute = new Object();
-    printinstitute = httpGetRequest("/institute/getbyid?id="+obj.id);
+    printclass = new Object();
+    printclass = httpGetRequest("/classImplementation/getbyid?id="+obj.id);
 
-    td_insname.innerHTML = printinstitute.inst_name;
-    td_location.innerHTML = printinstitute.location;
-    td_cnumber.innerHTML = printinstitute.contact_number
-    td_email.innerHTML = printinstitute.email
-    td_insstatus.innerHTML = printinstitute.institute_status_id;
-    $('#instituteViewModel').modal('show')
+    td_classname.innerHTML = printclass.class_name;
+    td_classcode.innerHTML = printclass.class_code;
+
+    td_grade.innerHTML = printclass.grade_id.name;
+    td_subject.innerHTML = printclass.subject_id.name;
+    td_institute.innerHTML = printclass.institute_implementation_id.inst_name;
+    td_classstatus.innerHTML = printclass.class_status_id.name;
+    $('#ClassViewModel').modal('show')
 }
 
 // const studentPrintModel = () => {
@@ -153,40 +207,62 @@ const rowView = (obj) =>{
 //form
 
 const refreshForm = () =>{
-    institute = new Object();
-    old_Institute = null;
+    classimplementation = new Object();
+    old_classimplementation = null;
 
     //create array for fill select element
 
-    int_status = new Array();
-    int_status = httpGetRequest("/institutestatus/findall")
+    class_status = new Array();
+    class_status = httpGetRequest("/classimplestatus/findall")
 
     //auto select value
-    fillSelectField(floatingSelectInsStatus,"",int_status,"name","Active");
-    institute.institute_status_id = JSON.parse(floatingSelectInsStatus.value);
+    fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");
+    classimplementation.class_status_id = JSON.parse(floatingSelectClassStatus.value);
+
+    class_grade = new Array();
+    class_grade = httpGetRequest("/grade/findall");
 
 
-    //clear value after refesh
-    floatingInsName.value="";
-    floatingLocation.value="";
-    floatingMobile.value="";
-    floatingEmail.value="";
+    fillSelectField(floatingSelectGrade,"",class_grade,"name","");
 
+
+
+    class_subject = new Array();
+    class_subject = httpGetRequest("/subject/findall");
+
+    fillSelectField(floatingSelectSubject,"",class_subject,"name","");
+
+
+    institute = new Array();
+    institute = httpGetRequest("/institute/findall");
+
+    fillSelectField(floatingSelectInstitute,"",institute,"inst_name","");
+
+
+
+
+     //clear value after refesh
+    floatingSelectGrade.value="";
+    floatingSelectSubject.value="";
+    floatingCName.value="";
+    floatingSelectInstitute.value="";
+    floatingSelectClassStatus.value="";
+    floatingCCode.value="";
 
     //set style to default
     setStyle("1px solid #ced4da")
 
-
-
+    disabledButton(true,false);
 
 }
 
 function setStyle(style){
-    floatingInsName.style.borderBottom=style;
-    floatingLocation.style.borderBottom=style;
-    floatingMobile.style.borderBottom=style;
-    floatingEmail.style.borderBottom=style;
-
+    floatingSelectGrade.style.borderBottom=style;
+    floatingSelectSubject.style.borderBottom=style;
+    floatingCName.style.borderBottom=style;
+    floatingSelectInstitute.style.borderBottom=style;
+    floatingSelectClassStatus.style.borderBottom=style;
+    floatingCCode.style.borderBottom=style;
 
 
 }
@@ -197,30 +273,35 @@ const checkErrors = () =>{
     console.log("check error")
     let errors = "";
 
-    if(institute.inst_name == null){
-        errors = errors+"Please enter Institute name..<br>";
-        floatingInsName.style.borderBottom="2px solid red";
+    if(classimplementation.class_name == null){
+        errors = errors+"Please enter Class Name..<br>";
+        floatingCName.style.borderBottom="2px solid red";
     }
 
-    if(institute.location == null){
-        errors = errors+"Please enter Location..<br>";
-        floatingLocation.style.borderBottom="2px solid red";
+    if(classimplementation.class_code == null){
+        errors = errors+"Please enter Class Code..<br>";
+        floatingCCode.style.borderBottom="2px solid red";
     }
 
-    if(institute.contact_number == null){
-        errors = errors+"Please enter Contact number..<br>";
-        floatingMobile.style.borderBottom="2px solid red";
+    if(classimplementation.grade_id == null){
+        errors = errors+"Please enter Grade..<br>";
+        floatingSelectGrade.style.borderBottom="2px solid red";
     }
 
-    if(institute.email == null){
-        errors = errors+"Please enter Email..<br>";
-        floatingEmail.style.borderBottom="2px solid red";
+    if(classimplementation.institute_implementation_id == null){
+        errors = errors+"Please enter institute..<br>";
+        floatingSelectInstitute.style.borderBottom="2px solid red";
     }
 
 
-    if(institute.institute_status_id == null){
-        errors = errors+"Please Select Insitute Status..<br>";
-        floatingSelectInsStatus.style.borderBottom="2px solid red";
+    if(classimplementation.subject_id == null){
+        errors = errors+"Please Select Subject..<br>";
+        floatingSelectSubject.style.borderBottom="2px solid red";
+    }
+
+    if(classimplementation.class_status_id == null){
+        errors = errors+"Please Select Status..<br>";
+        floatingSelectClassStatus.style.borderBottom="2px solid red";
     }
 
 
@@ -240,8 +321,8 @@ const buttonAddMc = () =>{
         //Show the confirmation box when the Add button is clicked
         iziToast.show({
             theme: 'dark',
-            title: "Are You Suer To Register following Institute ..?",
-            message: "Institute Name: " + institute.inst_name,
+            title: "Are You Sure To Register following Class ..?",
+            message: "Class Name: " + classimplementation.class_name,
             layout: 2,
             position: 'topCenter',
             overlay: true,
@@ -255,10 +336,10 @@ const buttonAddMc = () =>{
 
                     let post_server_responce;
 
-                    $.ajax("/institute",{
+                    $.ajax("/classImplementation",{
                         async : false,
                         type:"POST",//Method
-                        data:JSON.stringify(institute),//data that pass to backend
+                        data:JSON.stringify(classimplementation),//data that pass to backend
                         contentType:"application/json",
                         success:function(succsessResData,successStatus,resObj){
                             post_server_responce = succsessResData;
@@ -344,26 +425,30 @@ const buttonAddMc = () =>{
 
 const checkUpdates = () => {
     let updates = "";
-    if (institute != null && old_institute != null) {
+    if (classimplementation != null && old_classimplementation != null) {
 
-        if(institute.inst_name != old_institute.inst_name) {
-            updates = updates + "Institute name  Has Changed..<br>"
+        if(classimplementation.class_name != old_classimplementation.class_name) {
+            updates = updates + "Class name  Has Changed..<br>"
         }
 
-        if (institute.location != old_institute.location) {
-            updates = updates + "Location Has Changed..<br>"
+        if (classimplementation.class_code != old_classimplementation.class_code) {
+            updates = updates + "Class Code Has Changed..<br>"
         }
 
-        if (institute.contact_number != old_institute.contact_number) {
-            updates = updates + "Contact Number Has Changed..<br>"
+        if (classimplementation.grade_id.name != old_classimplementation.grade_id.name) {
+            updates = updates + "Grade Has Changed..<br>"
         }
 
-        if (institute.email != old_institute.email) {
-            updates = updates + "Email Has Changed..<br>"
+        if (classimplementation.subject_id.name != old_classimplementation.subject_id.name) {
+            updates = updates + "Subject Has Changed..<br>"
         }
 
-        if (institute.institute_status_id.name != old_institute.institute_status_id.name) {
-            updates = updates + "Institute Status Has Changed..<br>"
+        if (classimplementation.class_status_id.name != old_classimplementation.class_status_id.name) {
+            updates = updates + "Class Status Has Changed..<br>"
+        }
+
+        if (classimplementation.institute_implementation_id.inst_name != old_classimplementation.institute_implementation_id.inst_name) {
+            updates = updates + "Institute Name Has Changed..<br>"
         }
 
     }
@@ -379,7 +464,7 @@ const buttonUpdateMC = () =>{
             //Show the confirmation box when the Add button is clicked
             iziToast.show({
                 theme: 'dark',
-                title: "Are You Suer Update Following Institute?",
+                title: "Are You Sure Update Following Institute?",
                 message: updates,
                 layout: 2,
                 position: 'topCenter',
@@ -394,10 +479,10 @@ const buttonUpdateMC = () =>{
 
                         let update_server_responce;
 
-                        $.ajax("/institute",{
+                        $.ajax("/classImplementation",{
                             async : false,
                             type:"PUT",//Method
-                            data:JSON.stringify(institute),//data that pass to backend
+                            data:JSON.stringify(classimplementation),//data that pass to backend
                             contentType:"application/json",
                             success:function(succsessResData,successStatus,resObj){
                                 update_server_responce = succsessResData;
@@ -409,7 +494,7 @@ const buttonUpdateMC = () =>{
 
                             iziToast.success({
                                 theme: 'dark',
-                                title: 'Institute Update Successfully',
+                                title: 'Class Update Successfully',
                                 position: 'topRight',
                                 overlay: true,
                                 displayMode: 'once',

@@ -34,10 +34,6 @@ public class ClassImplementation {
     private Institute institute_implementation_id;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id",referencedColumnName = "id")
-    private Teacher teacher_id;
-
-    @ManyToOne
     @JoinColumn(name = "subject_id",referencedColumnName = "id")
     private Subject subject_id;
 

@@ -19,8 +19,8 @@ public class Institute {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "Inst_name")
-    private String Inst_name;
+    @Column(name = "inst_name")
+    private String inst_name;
 
     @Column(name = "location")
     private String location;
