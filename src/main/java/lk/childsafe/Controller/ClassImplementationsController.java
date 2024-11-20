@@ -79,7 +79,7 @@ public class ClassImplementationsController {
             classimplementationDao.save(classImplementation);
             return "0";
         }catch(Exception e){
-            return "Storage Update not complete :" + e.getMessage();
+            return "Class Details Update not complete :" + e.getMessage();
         }
     }
 
@@ -100,7 +100,7 @@ public class ClassImplementationsController {
                 return "Delete not complete :"+e.getMessage();
             }
         }else {
-            return "Delete not complete : Storage Device not exist";
+            return "Delete not complete : Class is not exist";
         }
 
 

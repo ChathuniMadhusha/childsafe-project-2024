@@ -39,6 +39,9 @@ public class InstituteController {
     }
 
 
+
+
+
     @PostMapping
     @Transactional
     public String addInstitute(@RequestBody Institute institute){
@@ -75,7 +78,7 @@ public class InstituteController {
             instituteDao.save(institute);
             return "0";
         }catch(Exception e){
-            return "Storage Update not complete :" + e.getMessage();
+            return "Institute Update not complete :" + e.getMessage();
         }
     }
 
@@ -97,7 +100,7 @@ public class InstituteController {
                 return "Delete not complete :"+e.getMessage();
             }
         }else {
-            return "Delete not complete : Storage Device not exist";
+            return "Delete not complete : Institute is not exist";
         }
 
 

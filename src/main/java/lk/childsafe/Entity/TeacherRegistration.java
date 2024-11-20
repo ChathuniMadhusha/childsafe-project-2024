@@ -17,25 +17,16 @@ public class TeacherRegistration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    @Column(name = "description")
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "grade_id",referencedColumnName = "id")
-    private Grade grade_id;
-
-    @ManyToOne
-    @JoinColumn(name = "institute_implementation_id",referencedColumnName = "id")
-    private Institute institute_implementation_id;
+    @Column(name = "teacher_reg_code")
+    private String teacher_reg_code;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id",referencedColumnName = "id")
     private Teacher teacher_id;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id",referencedColumnName = "id")
-    private Subject subject_id;
+    @JoinColumn(name = "class_implementation_id",referencedColumnName = "id")
+    private ClassImplementation class_implementation_id;
 
     @ManyToOne
     @JoinColumn(name = "teacher_reg_status_id",referencedColumnName = "id")

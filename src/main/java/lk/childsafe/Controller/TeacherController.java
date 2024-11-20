@@ -44,6 +44,12 @@ public class TeacherController {
     }
 
 
+    //get tecaher's first name
+    @GetMapping (value = "/getbyteacherid",produces = "application/json")
+    public Teacher getByTeacherId(@RequestParam("teacherid") String teacherid){
+        return teacherDao.findTeacherByTeacherID(teacherid);}
+
+
     //Add section
     @PostMapping
     @Transactional

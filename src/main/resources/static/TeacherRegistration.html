@@ -220,52 +220,37 @@
                         <div class="row">
 
                             <!-- Floating Labels Form -->
-                            <form class="row g-3">
+                            <form onsubmit="return false" class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingFName"
+                                        <input onkeyup=" getFisrtName();" type="text" class="form-control" id="floatingTID"
                                                placeholder="Your Name">
-                                        <label for="floatingFName">Teacher ID</label>
+                                        <label for="floatingTID">Teacher ID</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingLName"
-                                               placeholder="Your Name">
-                                        <label for="floatingLName">First Name</label>
+                                        <label for="teacherName" >
+
+                                            </b></b></h6>
+                                        </label>
+                                        <input type="text" class="form-control-plaintext formcontrol" id="teacherName" disabled>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectSub" aria-label="State">
-                                            <option selected>Select Subject</option>
-                                            <option value="1">Oregon</option>
-                                            <option value="2">DC</option>
-                                        </select>
-                                        <label for="floatingSelectSub">Subject</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectGrade" aria-label="State">
-                                            <option selected>Select Grade</option>
+                                        <select onchange="selectValidater(floatingSelectClassCode,'','teacherregistration','class_implementation_id','old_teacherregistration');" class="form-select" id="floatingSelectClassCode" aria-label="State">
+                                            <option selected>Select Class Code</option>
 
                                         </select>
-                                        <label for="floatingSelectGrade">Grade</label>
+                                        <label for="floatingSelectClassCode">Class</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectInstitute" aria-label="State">
-                                            <option selected>Select Institute</option>
 
-                                        </select>
-                                        <label for="floatingSelectInstitute">Institute</label>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectStatus" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectStatus,'','teacherregistration','teacher_reg_status_id','old_teacherregistration');" class="form-select" id="floatingSelectStatus" aria-label="State">
                                             <option selected>Select Status</option>
 
                                         </select>
@@ -273,8 +258,8 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Add Teacher Registration</button>
-                                    <button type="reset" class="btn btn-secondary">Update Teacher Registration</button>
+                                    <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Teacher Registration</button>
+                                    <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Teacher Registration</button>
                                 </div>
                             </form><!-- End floating Labels Form -->
                         </div>
@@ -292,9 +277,10 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Registration code</th>
                                 <th scope="col">Teacher ID</th>
                                 <th scope="col">First name</th>
-                                <th scope="col">Subject</th>
+                                <th scope="col">Class code</th>
                                 <th scope="col">Modify</th>
                             </tr>
                             </thead>
@@ -307,6 +293,50 @@
             </div>
         </div>
 
+
+        <div class="modal fade" id="teacherRegViewModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Teacher Registration Details</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="teacherRegPrintTbl" class="table  table-striped table-hover">
+
+                            <tr>
+                                <th>Teacher Reg Code</th>
+                                <td id="td_regcode"></td>
+                            </tr>
+
+                            <tr>
+                                <th>Teacher ID</th>
+                                <td id="td_teacherid"></td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td id="td_firstname"></td>
+                            </tr>
+                            <tr>
+                                <th>Class Code</th>
+                                <td id="td_classcode"></td>
+                            </tr>
+                            <tr>
+                                <th>Registration Status</th>
+                                <td id="td_status"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="institutePrintModel()" type="button" class="btn btn-primary">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- End #main -->
         </div>
