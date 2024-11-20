@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "class_implementation")
+@Table(name = "stu_class_registration")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,31 +18,22 @@ public class StudentClassRegistration {
     private Integer id;
 
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "class_code")
-    private String class_code;
-
-
-    @ManyToOne
-    @JoinColumn(name = "stu_registration_status_id",referencedColumnName = "id")
-    private StudentRegStatus stu_registration_status_id;
-
-    @ManyToOne
-    @JoinColumn(name = "institute_implementation_id",referencedColumnName = "id")
-    private Institute institute_implementation_id;
+    @Column(name = "stu_class_code")
+    private String stu_class_code;
 
     @ManyToOne
     @JoinColumn(name = "student_id",referencedColumnName = "id")
     private Student student_id;
+
 
     @ManyToOne
     @JoinColumn(name = "class_implementation_id",referencedColumnName = "id")
     private ClassImplementation class_implementation_id;
 
 
-
+    @ManyToOne
+    @JoinColumn(name = "registration_status_id",referencedColumnName = "id")
+    private StudentRegStatus registration_status_id;
 
 
 }
