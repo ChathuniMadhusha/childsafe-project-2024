@@ -26,13 +26,6 @@ public class StudentClassRegistration {
     private Student student_id;
 
 
-
-    @ManyToOne
-    @JoinColumn(name = "institute_implementation_id",referencedColumnName = "id")
-    private Institute institute_implementation_id;
-
-
-
     @ManyToOne
     @JoinColumn(name = "class_implementation_id",referencedColumnName = "id")
     private ClassImplementation class_implementation_id;

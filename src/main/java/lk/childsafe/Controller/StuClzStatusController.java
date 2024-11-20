@@ -22,7 +22,7 @@ public class StuClzStatusController {
 
     @GetMapping(value = "/findall", produces = "application/json")
     public List<StudentRegStatus> stuClzRegStatus() {
-        return stuClzStatusDao.findAll();
+        return stuClzStatusDao.findByIdNot(2);
     }
 
 }

@@ -65,6 +65,7 @@ public class StudentController {
     public Student getByStudentno(@RequestParam("studentno") String studentno){
         return studentDao.findStudentByStudentno(studentno);}
 
+
     //get student id for class reg
     @GetMapping (value = "/getbystudentnoforclass",produces = "application/json")
     public Student getByStudentnoforclass(@RequestParam("studentno") String studentno){

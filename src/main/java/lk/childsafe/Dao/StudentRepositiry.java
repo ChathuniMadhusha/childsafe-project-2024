@@ -16,7 +16,6 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     @Query(value = "select s from Student s where s.studentid = ?1 and s.student_status_id.id=1")
     Student findStudentByStudentno(String studentno);
 
-
     //query for filter by studentID
     @Query(value = "select s from Student s where s.studentid = ?1 and s.student_status_id.id != 3")
     Student getByStudentnoforclass(String studentno);
