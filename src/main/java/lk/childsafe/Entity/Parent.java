@@ -42,6 +42,9 @@ public class Parent {
     @Column(name = "pr_password")
     private String pr_password;
 
+    @Column(name="accountreq")
+    private Boolean accountreq;
+
     @ManyToOne
     @JoinColumn(name = "parent_status_id",referencedColumnName = "id")
     private ParentStatus parent_status_id;

@@ -261,6 +261,7 @@ const getParentByNic = () =>{
 
                 floatingFName.value = exnic.first_name
                 parent.first_name = floatingFName.value
+                parent.accountreq = false;
                 $('#floatingFName').prop('disabled', true);
 
                 floatingLName.value = exnic.last_name
@@ -288,6 +289,8 @@ const getParentByNic = () =>{
                 //parent.parent_status_id = JSON.parse(floatingSelect.value);
 
             }else {
+                parent.accountreq = true;
+
                 floatingFName.value = "";
                 floatingLName.value = "";
                 floatingEmail.value = "";

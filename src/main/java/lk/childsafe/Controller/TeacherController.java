@@ -1,12 +1,11 @@
 package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
-import lk.childsafe.Dao.ParentstatusRepository;
-import lk.childsafe.Dao.TeacherRepository;
-import lk.childsafe.Dao.TeacherstatusRepository;
+import lk.childsafe.Dao.*;
 import lk.childsafe.Entity.ParentStatus;
 import lk.childsafe.Entity.Student;
 import lk.childsafe.Entity.Teacher;
+import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +23,12 @@ public class TeacherController {
 
     @Autowired
     private TeacherstatusRepository teacherstatusDao;
+
+    @Autowired
+    UserRepository userDao;
+
+    @Autowired
+    RoleRepository roleDao;
 
     //Load UI
     @GetMapping(value = "")
@@ -52,6 +57,14 @@ public class TeacherController {
         try{
             //set auto value
             teacher.setTeacherid(teacherDao.nexTeCode());
+
+            //create user
+            User user = new User();
+            user.setUsername(teacher.getTeacherid());
+            user.setPassword(teacher.getTe_password());
+            user.setTeacher_id(teacher);
+            user.setRole_id(roleDao.getReferenceById(2));
+            userDao.save(user);
 
 
             //save

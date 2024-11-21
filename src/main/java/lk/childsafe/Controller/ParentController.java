@@ -1,14 +1,8 @@
 package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
-import lk.childsafe.Dao.ParentRepository;
-import lk.childsafe.Dao.ParentstatusRepository;
-import lk.childsafe.Dao.StudentRepositiry;
-import lk.childsafe.Dao.TeacherstatusRepository;
-import lk.childsafe.Entity.Parent;
-import lk.childsafe.Entity.Student;
-import lk.childsafe.Entity.Teacher;
-import lk.childsafe.Entity.TeacherStatus;
+import lk.childsafe.Dao.*;
+import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +23,12 @@ public class ParentController {
 
     @Autowired
     StudentRepositiry studentDao;
+
+    @Autowired
+    UserRepository userDao;
+
+    @Autowired
+    RoleRepository roleDao;
 
     //Load UI
     @GetMapping(value = "")
@@ -70,6 +70,17 @@ public class ParentController {
         // Proceed with saving if no active parent is found
         try {
             parentDao.save(parent);
+
+            if (parent.getAccountreq()){
+                //create user
+                User user = new User();
+                user.setUsername(parent.getNic());
+                user.setPassword(parent.getPr_password());
+                user.setParent_id(parent);
+                user.setRole_id(roleDao.getReferenceById(3));
+                userDao.save(user);
+            }
+
             return "0";
         } catch (Exception e) {
             return "Parent Add not complete: " + e.getMessage();
