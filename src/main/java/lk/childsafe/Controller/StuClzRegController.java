@@ -1,10 +1,7 @@
 package lk.childsafe.Controller;
 
 import lk.childsafe.Dao.*;
-import lk.childsafe.Entity.Parent;
-import lk.childsafe.Entity.Student;
-import lk.childsafe.Entity.StudentClassRegistration;
-import lk.childsafe.Entity.TeacherStatus;
+import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +25,7 @@ public class StuClzRegController {
 
     @Autowired
     StudentstatusRepositiry studentstatusDao;
+
 
     //Load UI
     @GetMapping(value = "")
@@ -65,11 +63,12 @@ public class StuClzRegController {
 
             stuClzRegDao.save(studentClassRegistration);
 
-
+            //change studenat status
             Student student = studentDao.getReferenceById(studentClassRegistration.getStudent_id().getId());
 
             student.setStudent_status_id(studentstatusDao.getReferenceById(1));
             studentDao.save(student);
+
 
             return "0";
 

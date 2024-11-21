@@ -1,10 +1,13 @@
 package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
+import lk.childsafe.Dao.RoleRepository;
 import lk.childsafe.Dao.StudentRepositiry;
 import lk.childsafe.Dao.StudentstatusRepositiry;
+import lk.childsafe.Dao.UserRepository;
 import lk.childsafe.Entity.ParentStatus;
 import lk.childsafe.Entity.Student;
+import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +24,13 @@ public class StudentController {
 
     @Autowired
     private  StudentstatusRepositiry studentstatusDao;
+
+    @Autowired
+    UserRepository userDao;
+
+    @Autowired
+    RoleRepository roleDao;
+
 
     //Load UI
     @GetMapping(value = "")
@@ -46,6 +56,17 @@ public class StudentController {
 
                 //save
                 studentDao.save(student);
+
+                //create user
+                User user = new User();
+                user.setUsername(student.getStudentid());
+                user.setPassword(student.getSt_password());
+                user.setStudent_id(student);
+                user.setRole_id(roleDao.getReferenceById(1));
+                userDao.save(user);
+
+
+
                 return "0";
 
             }catch(Exception e){
