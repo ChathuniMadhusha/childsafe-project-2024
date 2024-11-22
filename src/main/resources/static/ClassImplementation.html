@@ -224,7 +224,7 @@
                             <form onsubmit="return false" class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectGrade,'','classimplementation','grade_id','old_classimplementation'); getClassName(); getClassCode();"  class="form-select" id="floatingSelectGrade" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectGrade,'','classimplementation','grade_id','old_classimplementation'); getClassName(); "  class="form-select" id="floatingSelectGrade" aria-label="State">
                                             <option selected>Select Grade</option>
 
                                         </select>
@@ -234,7 +234,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectSubject,'','classimplementation','subject_id','old_classimplementation');getClassName(); getClassCode(); " class="form-select" id="floatingSelectSubject" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectSubject,'','classimplementation','subject_id','old_classimplementation');getClassName(); " class="form-select" id="floatingSelectSubject" aria-label="State">
                                             <option selected>Select Subject</option>
 
                                         </select>
@@ -243,17 +243,8 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingCName,'','classimplementation','class_name','old_classimplementation')" type="text" class="form-control" id="floatingCName"
-                                               placeholder="Your Name" disabled>
-                                        <label for="floatingCName">Class Name</label>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectInstitute,'','classimplementation','institute_implementation_id','old_classimplementation'); getClassCode();  " class="form-select" id="floatingSelectInstitute" aria-label="State">
+                                        <select onchange="selectValidater(floatingSelectInstitute,'','classimplementation','institute_implementation_id','old_classimplementation'); getClassName();   " class="form-select" id="floatingSelectInstitute" aria-label="State">
                                             <option  selected>Select Institute</option>
 
                                         </select>
@@ -261,15 +252,14 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingCCode,'','classimplementation','class_code','old_classimplementation')" type="text" class="form-control" id="floatingCCode"
+                                        <input onkeyup="textFieldValidator(floatingCName,'','classimplementation','class_name','old_classimplementation')" type="text" class="form-control" id="floatingCName"
                                                placeholder="Your Name" disabled>
-                                        <label for="floatingCCode">Class Code</label>
+                                        <label for="floatingCName">Class Name</label>
                                     </div>
                                 </div>
-
-
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
@@ -304,6 +294,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Class Name</th>
                                 <th scope="col">Institute</th>
+                                <th scope="col">Code</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Modify</th>
                             </tr>

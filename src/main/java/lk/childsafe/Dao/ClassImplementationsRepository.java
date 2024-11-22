@@ -13,6 +13,8 @@ public interface ClassImplementationsRepository extends JpaRepository <ClassImpl
     @Query(value = "select cl from ClassImplementation cl where cl.class_code = ?1")
     ClassImplementation getClassByCourse_code(String class_code);
 
-
+    //generate next number (native damme sql query ekak nisa) anith eka jpl
+    @Query(value = "SELECT max(cl.class_code) FROM childsafe.class_implementation as cl;", nativeQuery = true)
+    String getNextNumber();
 
 }

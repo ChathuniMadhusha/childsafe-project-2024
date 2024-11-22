@@ -90,7 +90,7 @@ const formReFill = (obj) =>{
 
     // //set value in to select feild
     fillSelectField(floatingSelectStatus,"",tereg_status,"name",teacherregistration.teacher_reg_status_id.name);
-    fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_code","class_name",teacherregistration.class_implementation_id.class_code);
+    fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_name","class_code",teacherregistration.class_implementation_id.class_code);
 
     //
     //
@@ -214,7 +214,7 @@ const refreshForm = () =>{
     classimple = new Array();
     classimple = httpGetRequest("/classImplementation/findall")
 
-    fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_code","class_name","");
+    fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_name","class_code","");
 
 
     tereg_status = new Array();

@@ -14,10 +14,10 @@ const refreshTable = () =>{
     classimplementation=httpGetRequest("/classImplementation/findall")
 
     //create display property list
-    let display_property_list = ["class_name","institute_implementation_id.inst_name","class_status_id.name"]
+    let display_property_list = ["class_name","institute_implementation_id.inst_name","class_code","class_status_id.name"]
 
     //cretae display property type list
-    let display_property_datatype = ["text","object","object"]
+    let display_property_datatype = ["text","object","text","object"]
 
     //calling fillTable function
     fillTable(classimple_table,classimplementation,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
@@ -25,28 +25,10 @@ const refreshTable = () =>{
 
     for (let index in classimplementation){
         if (classimplementation[index].class_status_id.name == "Deleted"){
-            classimple_table.children[1].children[index].children[4].children[2].disabled = true;
-            classimple_table.children[1].children[index].children[4].children[0].disabled = true;
+            classimple_table.children[1].children[index].children[5].children[2].disabled = true;
+            classimple_table.children[1].children[index].children[5].children[0].disabled = true;
         }
     }
-
-}
-
-const getClassCode = () => {
-
-
-
-    if (classimplementation.grade_id != null && classimplementation.subject_id != null && classimplementation.institute_implementation_id != null) {
-
-        name = "G-" + classimplementation.grade_id.name + "-" + classimplementation.subject_id.name + "-" + classimplementation.institute_implementation_id.inst_name;
-
-    }
-
-
-    floatingCCode.value = name;
-    classimplementation.class_code = floatingCCode.value;
-    floatingCCode.style.borderBottom = '2px solid green';
-
 
 }
 
@@ -57,8 +39,8 @@ const getClassName = () => {
 
     var name = "";
 
-    if(classimplementation.grade_id != null && classimplementation.subject_id != null){
-        name = "Grade " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
+    if(classimplementation.institute_implementation_id != null && classimplementation.grade_id != null && classimplementation.subject_id != null){
+        name = classimplementation.institute_implementation_id.inst_name + " " + "-" + " " +"Grade " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
     }
 
     floatingCName.value = name;
@@ -247,7 +229,7 @@ const refreshForm = () =>{
     floatingCName.value="";
     floatingSelectInstitute.value="";
     floatingSelectClassStatus.value="";
-    floatingCCode.value="";
+
 
     //set style to default
     setStyle("1px solid #ced4da")
@@ -262,7 +244,7 @@ function setStyle(style){
     floatingCName.style.borderBottom=style;
     floatingSelectInstitute.style.borderBottom=style;
     floatingSelectClassStatus.style.borderBottom=style;
-    floatingCCode.style.borderBottom=style;
+
 
 
 }
@@ -276,11 +258,6 @@ const checkErrors = () =>{
     if(classimplementation.class_name == null){
         errors = errors+"Please enter Class Name..<br>";
         floatingCName.style.borderBottom="2px solid red";
-    }
-
-    if(classimplementation.class_code == null){
-        errors = errors+"Please enter Class Code..<br>";
-        floatingCCode.style.borderBottom="2px solid red";
     }
 
     if(classimplementation.grade_id == null){
@@ -351,7 +328,7 @@ const buttonAddMc = () =>{
 
                         iziToast.success({
                             theme: 'dark',
-                            title: 'Institute Add Successfully',
+                            title: 'Class Add Successfully',
                             position: 'topRight',
                             overlay: true,
                             displayMode: 'once',
@@ -431,9 +408,7 @@ const checkUpdates = () => {
             updates = updates + "Class name  Has Changed..<br>"
         }
 
-        if (classimplementation.class_code != old_classimplementation.class_code) {
-            updates = updates + "Class Code Has Changed..<br>"
-        }
+
 
         if (classimplementation.grade_id.name != old_classimplementation.grade_id.name) {
             updates = updates + "Grade Has Changed..<br>"

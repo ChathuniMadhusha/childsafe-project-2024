@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -56,10 +57,41 @@ public class ClassImplementationsController {
             return "Cannot add this Class : This Class code is exist now";
         }
         try{
+            //tyena last code number eka gannwa
+            String lastCode = classimplementationDao.getNextNumber();
+            String nextCode = "";
 
+            //ada date eka gannawa
+            LocalDate nowDate = LocalDate.now();
+
+            //eeka enne int agayak nisa eka string wlata harawa gannwa
+            String nowYearLastTwo = String.valueOf(nowDate.getYear()).substring(2,4);
+
+            System.out.println(lastCode);
+            System.out.println(lastCode.substring(2,4));
+
+            //awasana number ekak tynwda nadda kiyla check krnwa
+            //tynwnm......
+            if(lastCode != null ){
+                //24001
+                String lastCodeLastTwo = lastCode.substring(2,4);
+                if(nowYearLastTwo.equals(lastCodeLastTwo)){
+                    nextCode = lastCodeLastTwo + String.format("%03d", Integer.valueOf(lastCode.substring(3))+1);
+                }else {
+                    nextCode =  nowYearLastTwo + "001";
+                }
+
+            }else {
+                nextCode =  nowYearLastTwo + "001";
+            }
+
+            System.out.println(nextCode);
+
+
+            classImplementation.setClass_code(nextCode);
             //save
             classimplementationDao.save(classImplementation);
-            return "0";
+            return classImplementation.getClass_code();
 
         }catch(Exception e){
             return "Class Add not complete :" + e.getMessage();
