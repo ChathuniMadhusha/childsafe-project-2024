@@ -202,73 +202,95 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Teacher Registration</h1>
+        <h1>Teacher Class Registration</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Teacher</a></li>
-                <li class="breadcrumb-item">Teacher Registration</li>
+                <li class="breadcrumb-item">Teacher Class Registration</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
+
         <div class="row">
+            <div class="col-10"></div>
+            <div class="d-grid gap-2 col-2 mx-auto mb-1">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                    Add New Registration
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Registration</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <!-- Floating Labels Form -->
+                                        <form onsubmit="return false" class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup=" getFisrtName();" type="text" class="form-control" id="floatingTID"
+                                                           placeholder="Your Name">
+                                                    <label for="floatingTID">Teacher ID</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <label for="teacherName" >
+
+                                                        </b></b></h6>
+                                                    </label>
+                                                    <input type="text" class="form-control-plaintext formcontrol" id="teacherName" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-floating mb-3">
+                                                    <select onchange="selectValidater(floatingSelectClassCode,'','teacherregistration','class_implementation_id','old_teacherregistration');" class="form-select" id="floatingSelectClassCode" aria-label="State">
+                                                        <option selected>Select Class Code</option>
+
+                                                    </select>
+                                                    <label for="floatingSelectClassCode">Class</label>
+                                                </div>
+                                            </div>
 
 
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <select onchange="selectValidater(floatingSelectStatus,'','teacherregistration','teacher_reg_status_id','old_teacherregistration');" class="form-select" id="floatingSelectStatus" aria-label="State">
+                                                        <option selected>Select Status</option>
 
-                            <!-- Floating Labels Form -->
-                            <form onsubmit="return false" class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup=" getFisrtName();" type="text" class="form-control" id="floatingTID"
-                                               placeholder="Your Name">
-                                        <label for="floatingTID">Teacher ID</label>
+                                                    </select>
+                                                    <label for="floatingSelectStatus">State</label>
+                                                </div>
+                                            </div>
+
+                                        </form><!-- End floating Labels Form -->
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <label for="teacherName" >
-
-                                            </b></b></h6>
-                                        </label>
-                                        <input type="text" class="form-control-plaintext formcontrol" id="teacherName" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectClassCode,'','teacherregistration','class_implementation_id','old_teacherregistration');" class="form-select" id="floatingSelectClassCode" aria-label="State">
-                                            <option selected>Select Class Code</option>
-
-                                        </select>
-                                        <label for="floatingSelectClassCode">Class</label>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectStatus,'','teacherregistration','teacher_reg_status_id','old_teacherregistration');" class="form-select" id="floatingSelectStatus" aria-label="State">
-                                            <option selected>Select Status</option>
-
-                                        </select>
-                                        <label for="floatingSelectStatus">State</label>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Teacher Registration</button>
-                                    <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Teacher Registration</button>
-                                </div>
-                            </form><!-- End floating Labels Form -->
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Teacher Registration</button>
+                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Teacher Registration</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Student table</h5>

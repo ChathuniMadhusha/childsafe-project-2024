@@ -58,6 +58,9 @@ const formReFill = (obj) =>{
     //Enable status field
     $('#floatingSelect').prop('disabled', false);
 
+    //open form model
+    $('#basicModal').modal('show')
+
     
 
 }
@@ -375,7 +378,7 @@ const buttonAddMc = () =>{
                             position: 'topRight',
                             overlay: true,
                             displayMode: 'once',
-                            zindex: 999,
+                            zindex: 2000,
                             animateInside: true,
                             closeOnEscape:true,
                             timeout: 2000,
@@ -396,7 +399,7 @@ const buttonAddMc = () =>{
                             close: true,
                             layout: 2,
                             displayMode: 'once',
-                            zindex: 999,
+                            zindex: 2000,
                             animateInside: true,
                             buttons: [
                                 ['<button><b>OK</b></button>', function (instance, toast) {
@@ -431,7 +434,7 @@ const buttonAddMc = () =>{
             close: true,
             layout: 2,
             displayMode: 'once',
-            zindex: 999,
+            zindex: 2000,
             animateInside: true,
             buttons: [
                 ['<button><b>OK</b></button>', function (instance, toast) {
@@ -531,7 +534,7 @@ const buttonUpdateMC = () =>{
                                 position: 'topRight',
                                 overlay: true,
                                 displayMode: 'once',
-                                zindex: 999,
+                                zindex: 2000,
                                 animateInside: true,
                                 closeOnEscape:true,
                                 timeout: 2000,
@@ -551,7 +554,7 @@ const buttonUpdateMC = () =>{
                                 close: true,
                                 layout: 2,
                                 displayMode: 'once',
-                                zindex: 999,
+                                zindex: 2000,
                                 animateInside: true,
                                 buttons: [
                                     ['<button><b>OK</b></button>', function (instance, toast) {
@@ -589,7 +592,7 @@ const buttonUpdateMC = () =>{
             close: true,
             layout: 2,
             displayMode: 'once',
-            zindex: 999,
+            zindex: 2000,
             animateInside: true,
             buttons: [
                 ['<button><b>OK</b></button>', function (instance, toast) {

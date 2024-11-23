@@ -203,119 +203,140 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Add Parent</h1>
+        <h1>Parent Manage</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Parent</a></li>
-                <li class="breadcrumb-item">Add Parent</li>
+                <li class="breadcrumb-item">Parent Manage</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
+<!--        Form-->
         <div class="row">
+            <div class="col-10"></div>
+            <div class="d-grid gap-2 col-2 mx-auto mb-1">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                    Add New Parent
+                </button>
+            </div>
+        </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add parent</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                                <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
 
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
+                                                    <!-- Floating Labels Form -->
+                                                    <form onsubmit="return false" class="row g-3">
 
-                            <!-- Floating Labels Form -->
-                            <form onsubmit="return false" class="row g-3">
+                                                        <div class="col-md-12">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="textFieldValidator(floatingNIC,'^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$','parent','nic','old_parent');getParentByNic()" type="text" class="form-control" id="floatingNIC"
+                                                                       placeholder="Your NIC">
+                                                                <label for="floatingNIC">NIC</label>
+                                                            </div>
+                                                        </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingNIC,'^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$','parent','nic','old_parent');getParentByNic()" type="text" class="form-control" id="floatingNIC"
-                                               placeholder="Your NIC">
-                                        <label for="floatingNIC">NIC</label>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','parent','first_name','old_parent')" type="text" class="form-control" id="floatingFName"
+                                                                       placeholder="Your Name">
+                                                                <label for="floatingFName">First Name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','parent','last_name','old_parent')" type="text" class="form-control" id="floatingLName"
+                                                                       placeholder="Your Name">
+                                                                <label for="floatingLName">Last Name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','parent','mobile_number','old_parent')" class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <input type="text" class="form-control" id="floatingMobile"
+                                                                       placeholder="Your Mobile">
+                                                                <label for="floatingmobile">Mobile</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="textFieldValidator(floatingTextarea,'','parent','address','old_parent')" type="text" class="form-control" id="floatingTextarea"
+                                                                       placeholder="Your Name">
+                                                                <label for="floatingTextarea">Address</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','parent','email','old_parent')" type="email" class="form-control" id="floatingEmail"
+                                                                       placeholder="Your Email">
+                                                                <label for="floatingEmail">Email</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="findStudentID()" type="text" class="form-control" id="floatingStid"
+                                                                       placeholder="Student ID">
+                                                                <label for="floatingStid">Student ID</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="mb-3">
+                                                                <label for="stuName" class="form-label">
+                                                                    <h6><b>&nbsp&nbspStudent Name :
+                                                                    </b></b></h6>
+                                                                </label>
+
+                                                                <input type="text" class="form-control-plaintext formcontrol" id="stuName" disabled>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating mb-3">
+                                                                <select onchange="selectValidater(floatingSelect,'','parent','parent_status_id','old_parent')" class="form-select" id="floatingSelect" aria-label="State">
+                                                                    <option selected>Select Status</option>
+                                                                </select>
+                                                                <label for="floatingSelect">Parent Status</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="form-floating">
+                                                                <input onkeyup="textFieldValidator(floatingPPassword,'','parent','pr_password','old_parent')" type="Password" class="form-control" id="floatingPPassword"
+                                                                       placeholder="Your Password">
+                                                                <label for="floatingPPassword">Create Password</label>
+                                                            </div>
+                                                        </div>
+                                                    </form><!-- End floating Labels Form -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','parent','first_name','old_parent')" type="text" class="form-control" id="floatingFName"
-                                               placeholder="Your Name">
-                                        <label for="floatingFName">First Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','parent','last_name','old_parent')" type="text" class="form-control" id="floatingLName"
-                                               placeholder="Your Name">
-                                        <label for="floatingLName">Last Name</label>
-                                    </div>
-                                </div>
-                                <div onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','parent','mobile_number','old_parent')" class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingMobile"
-                                               placeholder="Your Mobile">
-                                        <label for="floatingmobile">Mobile</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingTextarea,'','parent','address','old_parent')" type="text" class="form-control" id="floatingTextarea"
-                                               placeholder="Your Name">
-                                        <label for="floatingTextarea">Address</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','parent','email','old_parent')" type="email" class="form-control" id="floatingEmail"
-                                               placeholder="Your Email">
-                                        <label for="floatingEmail">Email</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="findStudentID()" type="text" class="form-control" id="floatingStid"
-                                               placeholder="Student ID">
-                                        <label for="floatingStid">Student ID</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-6">
-                                    <div class="mb-3">
-                                        <label for="stuName" class="form-label">
-                                            <h6><b>&nbsp&nbspStudent Name :
-                                            </b></b></h6>
-                                        </label>
-
-                                        <input type="text" class="form-control-plaintext formcontrol" id="stuName" disabled>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelect,'','parent','parent_status_id','old_parent')" class="form-select" id="floatingSelect" aria-label="State">
-                                            <option selected>Select Status</option>
-                                        </select>
-                                        <label for="floatingSelect">Parent Status</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-floating">
-                                        <input onkeyup="textFieldValidator(floatingPPassword,'','parent','pr_password','old_parent')" type="Password" class="form-control" id="floatingPPassword"
-                                               placeholder="Your Password">
-                                        <label for="floatingPPassword">Create Password</label>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Parent</button>
-                                    <button onclick="buttonUpdateMC()" type="submit" class="btn btn-secondary" id="updatebtn">Update Parent</button>
-                                </div>
-                            </form><!-- End floating Labels Form -->
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Parent</button>
+                        <button onclick="buttonUpdateMC()" type="submit" class="btn btn-secondary" id="updatebtn">Update Parent</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-lg-6">
+        </div>
+<!--        Table-->
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Parent table</h5>
@@ -412,13 +433,7 @@
 
         <!-- End #main -->
         </div>
-
-
     </section>
-
-
-    </div>
-
 
 </main><!-- End #main -->
 

@@ -211,63 +211,83 @@
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
+
         <div class="row">
+            <div class="col-10"></div>
+            <div class="d-grid gap-2 col-2 mx-auto mb-1">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                    Add New Registration
+                </button>
+            </div>
+        </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
 
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
+                                        <!-- Floating Labels Form -->
+                                        <form onsubmit="return false" class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup="findStudentID()" type="text" class="form-control" id="floatingFName"
+                                                           placeholder="Your Name">
+                                                    <label for="floatingFName">Student ID</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input disabled type="text" class="form-control" id="floatingLName"
+                                                           placeholder="Your Name">
+                                                    <label for="floatingLName">First Name</label>
+                                                </div>
+                                            </div>
 
-                            <!-- Floating Labels Form -->
-                            <form onsubmit="return false" class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input onkeyup="findStudentID()" type="text" class="form-control" id="floatingFName"
-                                               placeholder="Your Name">
-                                        <label for="floatingFName">Student ID</label>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <select onchange="selectValidater(floatingSelectClass,'','stureg','class_implementation_id','old_stureg')" class="form-select" id="floatingSelectClass" aria-label="State">
+                                                        <option selected>Select Class Name</option>
+                                                    </select>
+                                                    <label for="floatingSelectClass">Class Coda & Name</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-select" id="floatingSelectStatus" aria-label="State">
+                                                        <option selected>Select Registration Status</option>
+
+                                                    </select>
+                                                    <label for="floatingSelectStatus">Registration status</label>
+                                                </div>
+                                            </div>
+
+                                        </form><!-- End floating Labels Form -->
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input disabled type="text" class="form-control" id="floatingLName"
-                                               placeholder="Your Name">
-                                        <label for="floatingLName">First Name</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select onchange="selectValidater(floatingSelectClass,'','stureg','class_implementation_id','old_stureg')" class="form-select" id="floatingSelectClass" aria-label="State">
-                                            <option selected>Select Class Name</option>
-                                        </select>
-                                        <label for="floatingSelectClass">Class Coda & Name</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelectStatus" aria-label="State">
-                                            <option selected>Select Registration Status</option>
-
-                                        </select>
-                                        <label for="floatingSelectStatus">Registration status</label>
-                                    </div>
-                                </div>
-
-
-                                <div class="text-center">
-                                    <button type="submit" onclick="buttonAddMc()" id="addbtn" class="btn btn-primary">Add Registration</button>
-                                    <button type="button" onclick="buttonUpdateMC()" id="updatebtn" class="btn btn-secondary">Update Registration</button>
-                                </div>
-                            </form><!-- End floating Labels Form -->
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" onclick="buttonAddMc()" id="addbtn" class="btn btn-primary">Add Registration</button>
+                        <button type="button" onclick="buttonUpdateMC()" id="updatebtn" class="btn btn-secondary">Update Registration</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Student Class registration table</h5>
