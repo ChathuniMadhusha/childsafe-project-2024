@@ -2,6 +2,7 @@ package lk.childsafe.Controller;
 
 import lk.childsafe.Dao.RoleRepository;
 import lk.childsafe.Dao.UserRepository;
+import lk.childsafe.Entity.LogUser;
 import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -70,11 +71,38 @@ public class LoginController {
         return loginUi;
     }
 
-    @GetMapping(value = "/accessdenied")
+    @GetMapping(value = "/error")
     public ModelAndView accessDenied(){
         ModelAndView accessdenied = new ModelAndView();
         accessdenied.setViewName("404.html");
         return accessdenied;
+    }
+
+
+
+    //get logged user
+    @GetMapping(value = "/loguser",produces = "application/json")
+    public LogUser getLoggedUserDetails(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logExtUser = userDao.findUserByUsername(auth.getName());
+
+        if(logExtUser != null && !(auth instanceof AnonymousAuthenticationToken)){
+            LogUser loggeUser = new LogUser();
+
+            String username = logExtUser.getUsername();
+            loggeUser.setUsername(username);
+
+            String role = logExtUser.getRole_id().getName();
+            loggeUser.setRole(role);
+
+            loggeUser.setPhotoname(logExtUser.getPhotoname());
+            loggeUser.setPhotopath(logExtUser.getPhotopath());
+
+            return loggeUser;
+        }else {
+            return null;
+        }
     }
 
 }
