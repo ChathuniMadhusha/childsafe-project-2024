@@ -40,6 +40,13 @@ public class StudentController {
         return modelandview;
     }
 
+    //get student list by class registration
+    @GetMapping(value = "/byclregistration", params={"cid"}, produces="application/json")
+    public List<Student> studentListByRegistration(@RequestParam ("cid") Integer cid){
+
+        return studentDao.getBySession(cid);
+    }
+
     //Get all date from table
     @GetMapping(value = "/findall", produces = "application/json")
     public List<Student> student() {
@@ -47,7 +54,7 @@ public class StudentController {
     }
 
     @PostMapping
-    @Transactional
+
     public String addStudent(@RequestBody Student student){
 
         try{

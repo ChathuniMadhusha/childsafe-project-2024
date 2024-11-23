@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StudentRepositiry extends JpaRepository <Student,Integer>{
 
@@ -24,6 +26,11 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     //check duplicate with find student by given Storage name without quary
     Student findStudentByStudentid(String name);
 
+
+
+    //filtering query for get student list
+    @Query(value = "select new Student(s.id, s.studentid, s.first_name) from Student s where s.id in (select scr.student_id.id from StudentClassRegistration scr where scr.class_implementation_id.class_code=?1 and scr.stu_registration_status_id.id=1)")
+    List<Student> getBySession(Integer cid);
 
 
 

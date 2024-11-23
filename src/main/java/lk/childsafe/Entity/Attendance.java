@@ -1,17 +1,25 @@
 package lk.childsafe.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "attendance")
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Setter
+@Getter
+
+
+
+
 public class Attendance {
 
     @Id
@@ -32,12 +40,11 @@ public class Attendance {
     private String present_count;
 
     @ManyToOne
-    @JoinColumn(name = "institute_implementation_id",referencedColumnName = "id")
-    private Institute institute_implementation_id;
-
-    @ManyToOne
     @JoinColumn(name = "class_implementation_id",referencedColumnName = "id")
     private ClassImplementation class_implementation_id;
+
+    @OneToMany(mappedBy = "attendance_id",cascade = CascadeType.ALL,orphanRemoval=true)
+    List<Attendance_Has_Student> attendance_has_students;
 
 
 

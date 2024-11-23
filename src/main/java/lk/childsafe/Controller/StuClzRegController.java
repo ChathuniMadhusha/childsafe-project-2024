@@ -100,7 +100,7 @@ public class StuClzRegController {
         if(extreg != null){
             try {
 
-                extreg.setRegistration_status_id(stuClzStatusDao.getReferenceById(2));
+                extreg.setStu_registration_status_id(stuClzStatusDao.getReferenceById(2));
                 stuClzRegDao.save(extreg);
 
                 return "0";

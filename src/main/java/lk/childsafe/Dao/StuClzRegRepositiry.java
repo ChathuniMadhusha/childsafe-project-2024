@@ -16,7 +16,7 @@ public interface StuClzRegRepositiry extends JpaRepository <StudentClassRegistra
     String nexTeCode();
 
     //duplicate
-    @Query("SELECT sc FROM StudentClassRegistration sc WHERE sc.student_id.studentid = :studentid AND sc.class_implementation_id.class_code = :class_code AND sc.registration_status_id.id!=2")
+    @Query("SELECT sc FROM StudentClassRegistration sc WHERE sc.student_id.studentid = :studentid AND sc.class_implementation_id.class_code = :class_code AND sc.stu_registration_status_id.id!=2")
     StudentClassRegistration findduplicateregByStID(@Param("studentid") String studentid, @Param("class_code") String class_code);
 
 
