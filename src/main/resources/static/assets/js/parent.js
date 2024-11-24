@@ -195,6 +195,7 @@ const refreshForm = () =>{
     floatingMobile.value="";
     floatingPPassword.value="";
     floatingStid.value="";
+    stuName.value="";
 
     //Dissable update button
     disabledButton(true,false);
@@ -224,7 +225,7 @@ const findStudentID = () => {
 
 
     if(floatingStid.value != ""){
-        let sid_pattern = new RegExp('^ST[0-9]{4}[1-9]$')
+        let sid_pattern = new RegExp('^ST[0-9]{5}$')
         if(sid_pattern.test(floatingStid.value)){
             let stcode = floatingStid.value;
             stu = httpGetRequest("/student/getbystudentno?studentno="+stcode);

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Childsafe</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- jquary -->
+    <script src="assets/Resourse/Jquary/jquary.js"></script>
+
+    <!--  Link scripts  -->
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/teachermodel.js"></script>
+
+    <!--iziToast-->
+    <link rel="stylesheet" href="assets/Resourse/iziToast-master/dist/css/iziToast.min.css">
+    <script src="assets/Resourse/iziToast-master/dist/js/iziToast.min.js"></script>
+
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="assets/Resourse/Datatables/datatables.min.css">
+
+    <script type="text/javascript" src="assets/Resourse/Datatables/datatables.min.js"></script>
+
+    <!--font awesome-->
+    <script src="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/js/all.js"></script>
+    <link rel="stylesheet" href="assets/Resourse/fontawesome/fontawesome-free-6.2.0-web/css/all.css">
+
+
+
+
+</head>
+
+<body>
+
+
+<main id="main" class="main">
+    <section class="section">
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Teacher Sign-Up Form</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+
+                                        <!-- Floating Labels Form -->
+                                        <form onsubmit="return false" class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','teacher','first_name','old_teacher')" type="text" class="form-control" id="floatingFName"
+                                                           placeholder="Your Name">
+                                                    <label for="floatingFName">First Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','teacher','last_name','old_teacher')" type="text" class="form-control" id="floatingLName"
+                                                           placeholder="Your Name">
+                                                    <label for="floatingLName">Last Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup="textFieldValidator(floatingTextarea,'','teacher','address','old_teacher')" type="text" class="form-control" id="floatingTextarea"
+                                                           placeholder="Your Name">
+                                                    <label for="floatingDOB">Address</label>
+                                                </div>
+                                            </div>
+                                            <div onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','teacher','mobile_number','old_teacher')" class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="floatingMobile"
+                                                           placeholder="Your Mobile">
+                                                    <label for="floatingmobile">Mobile</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup="nicFieldValidator()" type="text" class="form-control" id="floatingNIC"
+                                                           placeholder="Your NIC">
+                                                    <label for="floatingNIC">NIC</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onchange="dateFeildValidate(floatingDOB,'','teacher','dob','old_teacher')" type="date" class="form-control" id="floatingDOB"
+                                                           placeholder="Your DOB">
+                                                    <label for="floatingDOB">Date of birth</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','teacher','email','old_teacher')" type="email" class="form-control" id="floatingEmail"
+                                                           placeholder="Your Email">
+                                                    <label for="floatingEmail">Email</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <select onchange="selectValidater(floatingSelect,'','teacher','teacher_status_id','old_teacher')" class="form-select" id="floatingSelect" aria-label="State">
+                                                        <option selected>Select Status</option>
+                                                    </select>
+                                                    <label for="floatingSelect">Teacher Status</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-floating">
+                                                    <input onkeyup="textFieldValidator(floatingTPassword,'','teacher','te_password','old_teacher')" type="Password" class="form-control" id="floatingTPassword"
+                                                           placeholder="Your Password">
+                                                    <label for="floatingTPassword">Create Password</label>
+                                                </div>
+                                            </div>
+                                        </form><!-- End floating Labels Form -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Create Acount</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- End #main -->
+        </div>
+    </section>
+
+
+    </div>
+
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.min.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#basicModal').modal('show');
+    });
+</script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
