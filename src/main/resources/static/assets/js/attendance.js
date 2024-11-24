@@ -69,6 +69,14 @@ const getClassName = () =>{
 
 
 const formReFill = (obj) =>{
+
+    attendance = httpGetRequest("/attendance/getbyid?id="+obj.id)
+    old_attendance = httpGetRequest("/attendance/getbyid?id="+obj.id)
+
+
+
+    getStudentListByClassRegistration();
+
     // classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
     // old_classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
     //
@@ -89,6 +97,14 @@ const formReFill = (obj) =>{
     // setStyle("2px solid green")
     //
     // disabledButton(false,true);
+
+    divShowTotalRegCount.innerText = attendance.reg_count;
+
+
+    divShowPresentCount.innerText = attendance.present_count;
+
+
+    divShowAbsentCount.innerText = attendance.absent_count;
 
 
 }
@@ -325,10 +341,10 @@ const getStudentListByClassRegistration = () => {
                     absentCount = parseInt(absentCount)+1;
                 }
 
-                attendance.absant_count = absentCount;
-                attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absant_count);
+                attendance.absent_count = absentCount;
+                attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
                 divShowPresentCount.innerText = attendance.present_count;
-                divShowAbsentCount.innerText = attendance.absant_count;
+                divShowAbsentCount.innerText = attendance.absent_count;
 
             }
 
@@ -337,6 +353,21 @@ const getStudentListByClassRegistration = () => {
                 absentCount = parseInt(absentCount)-1;
 
             }
+
+            // if(old_attendance !=null){
+            //     let extIndex = attendance.attendance_has_students.map(e => e.student_id.id).indexOf(parseInt(this.parentNode.parentNode.id));
+            //     if(extIndex != -1){
+            //         checkBox.checked = true;
+            //     }
+            // }
+
+            if (old_attendance != null) {
+                if (attendance.attendance_has_students[index].present_or_absent == true) {
+                    checkBox.checked = true;
+                }
+            }
+
+
 
 
             checkTD.appendChild(checkBox);

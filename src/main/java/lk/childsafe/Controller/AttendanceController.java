@@ -39,6 +39,13 @@ public class AttendanceController {
     }
 
 
+    //get mapping service for get storage by given quary variable id[/classImplementation/getbyid?id=1]
+    @GetMapping(value = "/getbyid" , produces = "application/json")
+    public Attendance getAttendanceById(@RequestParam("id") Integer id){
+        return attendanceDao.getReferenceById(id);
+    }
+
+
 
     @PostMapping
     public String addAttendance(@RequestBody Attendance attendance){
