@@ -78,6 +78,8 @@ public class ParentController {
                 user.setPassword(parent.getPr_password());
                 user.setParent_id(parent);
                 user.setRole_id(roleDao.getReferenceById(3));
+                user.setPhotopath("/assets/img");
+                user.setPhotoname("user1.png");
                 userDao.save(user);
             }
 

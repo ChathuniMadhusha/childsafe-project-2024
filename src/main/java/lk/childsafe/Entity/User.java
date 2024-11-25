@@ -43,6 +43,10 @@ public class User {
     @JoinColumn(name = "role_id",referencedColumnName = "id")
     private Role role_id;
 
-    
+    @Column(name = "photoname")
+    private String photoname;
+
+    @Column(name = "photopath")
+    private String photopath;
 
 }

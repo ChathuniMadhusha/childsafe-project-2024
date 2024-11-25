@@ -70,6 +70,8 @@ public class StudentController {
                 user.setPassword(student.getSt_password());
                 user.setStudent_id(student);
                 user.setRole_id(roleDao.getReferenceById(1));
+                user.setPhotopath("/assets/img");
+                user.setPhotoname("user1.png");
                 userDao.save(user);
 
 
