@@ -70,4 +70,27 @@ public class AttendanceController {
 
 
 
+    //Update section
+    @PutMapping
+    @Transactional
+    public String putAttendance(@RequestBody Attendance attendance){
+        //check privilage
+
+        //save operate
+        try {
+
+            for (Attendance_Has_Student ahs : attendance.getAttendance_has_students()) {
+                ahs.setAttendance_id(attendance);
+            }
+
+
+            attendanceDao.save(attendance);
+            return "0";
+        }catch(Exception e){
+            return "Attendance Update not complete :" + e.getMessage();
+        }
+    }
+
+
+
 }

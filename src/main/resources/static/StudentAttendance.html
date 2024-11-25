@@ -272,7 +272,8 @@
                                 </div>
 
                                 <div class="text-center">
-                                <button   class="btn btn-primary" onclick="enableCheckBox();">Start Session</button>
+                                    <button   class="btn btn-primary" onclick="enableCheckBox();">Start Session</button>
+                                    <button   class="btn btn-primary" onclick="disableCheckBox();">End Session</button>
                                 </div>
 
                                 <div class="card">
@@ -288,7 +289,7 @@
                                                 <th scope="col">Present or Absent</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="ttttbody">
 
                                             </tbody>
                                         </table>
@@ -302,7 +303,10 @@
 
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary" onclick="buttonAddMc();">Add Attendance</button>
+                                    <button type="submit" class="btn btn-primary" id="addbtn" onclick="buttonAddMc();">Add Attendance</button>
+                                    <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Attendance</button>
+
+
 
                                 </div>
                             </form><!-- End floating Labels Form -->

@@ -74,29 +74,11 @@ const formReFill = (obj) =>{
     old_attendance = httpGetRequest("/attendance/getbyid?id="+obj.id)
 
 
+    floatingDate.value=attendance.date;
+    floatingClasscode.value=attendance.class_implementation_id.class_code;
+    floatingCName.value=attendance.class_implementation_id.class_name;
 
-    getStudentListByClassRegistration();
 
-    // classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
-    // old_classimplementation = httpGetRequest("/classImplementation/getbyid?id="+obj.id)
-    //
-    //
-    // //set value in to text feild
-    // floatingCCode.value=classimplementation.class_code;
-    // floatingCName.value=classimplementation.class_name;
-    //
-    //
-    //
-    // //set value in to select feild
-    // fillSelectField(floatingSelectGrade,"",class_grade,"name",classimplementation.grade_id.name);
-    // fillSelectField(floatingSelectSubject,"",class_subject,"name",classimplementation.subject_id.name);
-    // fillSelectField(floatingSelectInstitute,"",institute,"inst_name",classimplementation.institute_implementation_id.inst_name);
-    // fillSelectField(floatingSelectClassStatus,"",class_status,"name",classimplementation.class_status_id.name);
-    //
-    //
-    // setStyle("2px solid green")
-    //
-    // disabledButton(false,true);
 
     divShowTotalRegCount.innerText = attendance.reg_count;
 
@@ -105,7 +87,14 @@ const formReFill = (obj) =>{
 
 
     divShowAbsentCount.innerText = attendance.absent_count;
+    getStudentListByClassRegistration();
 
+    enableCheckBox();
+
+    setStyle("2px solid green")
+
+
+    disabledButton(false,true);
 
 }
 
@@ -234,17 +223,16 @@ const refreshForm = () =>{
 
 
     //  //clear value after refesh
-    // floatingSelectGrade.value="";
-    // floatingSelectSubject.value="";
-    // floatingCName.value="";
-    // floatingSelectInstitute.value="";
-    // floatingSelectClassStatus.value="";
-    //
-    //
-    // //set style to default
-    // setStyle("1px solid #ced4da")
-    //
-    // disabledButton(true,false);
+    floatingDate.value="";
+    floatingClasscode.value="";
+    floatingCName.value="";
+    ttttbody.innerHTML = "";
+
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+
+    disabledButton(true,false);
 
     divShowTotalRegCount.innerHTML = "";
     divShowPresentCount.innerHTML = "";
@@ -254,16 +242,16 @@ const refreshForm = () =>{
 
 
 const getStudentListByClassRegistration = () => {
-
     divShowPresentCount.innerText = "";
     divShowAbsentCount.innerText = "";
-
     let studentListByCRegistration = httpGetRequest("/student/byclregistration?cid=" + (floatingClasscode.value))
     console.log(studentListByCRegistration);
     let tableBody =  tblAttendanceMark.children[1]
-    tableBody.innerHTML = "";
-    // tableBody.style.pointerEvents = "none";
 
+    tableBody.style.pointerEvents = "none";
+
+
+    absentCount = 0;
     if(studentListByCRegistration.length != 0){
         divShowTotalRegCount.innerText = studentListByCRegistration.length;
         divShowPresentCount.innerText = 0;
@@ -274,6 +262,7 @@ const getStudentListByClassRegistration = () => {
         attendance.absent_count = studentListByCRegistration.length;
 
         if(old_attendance == null){
+
             attendance.attendance_has_students = new Array();
             for(let index in studentListByCRegistration) {
 
@@ -283,15 +272,16 @@ const getStudentListByClassRegistration = () => {
                 attestu.present_or_absent = false;
 
                 attendance.attendance_has_students.push(attestu);
+
                 console.log(attendance.attendance_has_students);
             }
 
+        } else {
+            absentCount = attendance.absent_count;
         }
-
 
         absentCount = attendance.attendance_has_students.length;
         for(let index in attendance.attendance_has_students){
-
 
             let tr = document.createElement("tr");
             //list eke inn plaweniyage id eka gannwa
@@ -317,9 +307,7 @@ const getStudentListByClassRegistration = () => {
 
             }else {
                 checkBoxLabel.innerText = "Absent ";
-
             }
-
 
             checkBoxLabel.classList.add("form-check-label");
             checkBoxLabel.classList.add("ms-2");
@@ -330,21 +318,25 @@ const getStudentListByClassRegistration = () => {
 
 
             checkBox.onchange = function () {
+                console.log("kkkk");
                 let attendindex = attendance.attendance_has_students.map(e => e.student_id.id).indexOf(parseInt(this.parentNode.parentNode.id));
                 if(this.checked){
                     attendance.attendance_has_students[attendindex].present_or_absent = true;
                     this.parentNode.children[1].innerText = "Present";
                     absentCount = parseInt(absentCount)-1;
+
+
                 }else{
                     attendance.attendance_has_students[attendindex].present_or_absent = false;
                     this.parentNode.children[1].innerText = "Absent";
                     absentCount = parseInt(absentCount)+1;
+
                 }
 
-                attendance.absent_count = absentCount;
+                divShowAbsentCount.innerText = parseInt(absentCount);
+                attendance.absent_count = parseInt(absentCount);
                 attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
                 divShowPresentCount.innerText = attendance.present_count;
-                divShowAbsentCount.innerText = attendance.absent_count;
 
             }
 
@@ -354,58 +346,169 @@ const getStudentListByClassRegistration = () => {
 
             }
 
-            // if(old_attendance !=null){
-            //     let extIndex = attendance.attendance_has_students.map(e => e.student_id.id).indexOf(parseInt(this.parentNode.parentNode.id));
-            //     if(extIndex != -1){
-            //         checkBox.checked = true;
-            //     }
-            // }
-
             if (old_attendance != null) {
+                console.log("hhhh")
+                console.log(old_attendance);
                 if (attendance.attendance_has_students[index].present_or_absent == true) {
                     checkBox.checked = true;
                 }
+
+                attendance.absent_count = absentCount;
+                attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+                divShowPresentCount.innerText = attendance.present_count;
+                divShowAbsentCount.innerText = attendance.absent_count;
+
             }
 
+            if (old_attendance != null) {
+                console.log("hhhh")
+                console.log(old_attendance);
+                if (attendance.attendance_has_students[index].present_or_absent == true) {
+                    checkBox.checked = true;
+                    divShowAbsentCount.innerText = parseInt(absentCount);
+                    attendance.absent_count = parseInt(absentCount);
+                    attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+                    divShowPresentCount.innerText = attendance.present_count;
 
-
-
+                }
+            }
             checkTD.appendChild(checkBox);
             checkTD.appendChild(checkBoxLabel);
             tr.appendChild(checkTD);
 
-
-
             tableBody.appendChild(tr);
         }
-
     }
+}
 
+
+// const getStudentListByClassRegistration = () => {
+//
+//     divShowPresentCount.innerText = "";
+//     divShowAbsentCount.innerText = "";
+//
+//     let studentListByCRegistration = httpGetRequest("/student/byclregistration?cid=" + (floatingClasscode.value))
+//     console.log(studentListByCRegistration);
+//     let tableBody = tblAttendanceMark.children[1]
+//     tableBody.innerHTML = "";
+//     // tableBody.style.pointerEvents = "none";
+//     absentCount = 0;
+//     if (old_attendance == null) {
+//         if (studentListByCRegistration.length != 0) {
+//
+//             divShowTotalRegCount.innerText = studentListByCRegistration.length;
+//             divShowPresentCount.innerText = 0;
+//             divShowAbsentCount.innerText = studentListByCRegistration.length;;
+//
+//             attendance.reg_count = studentListByCRegistration.length;
+//
+//             absentCount = studentListByCRegistration.length;
+//
+//             attendance.attendance_has_students = new Array();
+//             for (let index in studentListByCRegistration) {
+//                 let attendStu = new Object();
+//                 attendStu.student_id = studentListByCRegistration[index];
+//                 attendStu.present_or_absent = false;
+//                 attendance.attendance_has_students.push(attendStu);
+//             }
+//         }
+//     } else {
+//         absentCount = attendance.absent_count;
+//     }
+//
+//     for (let index in attendance.attendance_has_students) {
+//         let tr = document.createElement("tr");
+//         tr.id = attendance.attendance_has_students[index].student_id.id;
+//
+//         let indTd = document.createElement("td");
+//         indTd.innerText = parseInt(index) + 1;
+//         tr.appendChild(indTd);
+//
+//         let regTd = document.createElement("td");
+//         regTd.innerText = attendance.attendance_has_students[index].student_id.studentid;
+//         tr.appendChild(regTd);
+//
+//         let nameTd = document.createElement("td");
+//         nameTd.innerText = attendance.attendance_has_students[index].student_id.first_name;
+//         tr.appendChild(nameTd);
+//
+//         let checkTd = document.createElement("td");
+//         let checkBox = document.createElement("input");
+//         let checkBoxlable = document.createElement("label");
+//         checkBoxlable.innerText = "Absent";
+//         checkBoxlable.classList.add("form-check-label");
+//         checkBoxlable.classList.add("ml-2");
+//
+//         checkBox.type = "checkbox";
+//         checkBox.classList.add("form-check-input");
+//
+//         checkBox.onchange = function () {
+//             console.log("kkkkk");
+//             let attendindex = attendance.attendance_has_students.map(e => e.student_id.id).indexOf(parseInt(this.parentNode.parentNode.id))
+//
+//             if (this.checked) {
+//                 attendance.attendance_has_students[attendindex].present_or_absent = true;
+//                 this.parentNode.children[1].innerText = "Present";
+//                 absentCount = parseInt(absentCount) - 1;
+//             } else {
+//                 attendance.attendance_has_students[attendindex].present_or_absent = false;
+//                 this.parentNode.children[1].innerText = "Absent";
+//                 absentCount = parseInt(absentCount) + 1;
+//             }
+//
+//             attendance.absent_count = absentCount;
+//             attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+//             divShowPresentCount.innerText = attendance.present_count;
+//             divShowAbsentCount.innerText = attendance.absent_count;
+//
+//         }
+//
+//         if (old_attendance != null) {
+//             console.log("hhhh")
+//              console.log(old_attendance);
+//             if (attendance.attendance_has_students[index].present_or_absent == true) {
+//                 checkBox.checked = true;
+//                 divShowAbsentCount.innerText = parseInt(absentCount);
+//                 attendance.absent_count = parseInt(absentCount);
+//                 attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+//                 divShowPresentCount.innerText = attendance.present_count;
+//
+//             }
+//         }
+//
+//         checkTd.appendChild(checkBox);
+//         checkTd.appendChild(checkBoxlable);
+//         tr.appendChild(checkTd);
+//
+//         tableBody.appendChild(tr);
+//     }
+//
+// }
+
+
+const enableCheckBox = () => {
+
+    console.log("000");
+    ttttbody.style.pointerEvents = "auto";
 
 }
 
-// const enableCheckBox = () => {
-//
-//
-//     document.getElementById("tblAttendanceMark").style.pointerEvents="auto";
-//
-//
-//
-//
-//
-// }
+
+const disableCheckBox = () => {
+
+    ttttbody.style.pointerEvents = "none";
+
+}
 
 
-// function setStyle(style){
-//     floatingSelectGrade.style.borderBottom=style;
-//     floatingSelectSubject.style.borderBottom=style;
-//     floatingCName.style.borderBottom=style;
-//     floatingSelectInstitute.style.borderBottom=style;
-//     floatingSelectClassStatus.style.borderBottom=style;
-//
-//
-//
-// }
+function setStyle(style){
+    floatingDate.style.borderBottom=style;
+    floatingClasscode.style.borderBottom=style;
+
+
+
+
+}
 
 //function for check errors
 
@@ -433,7 +536,7 @@ const checkErrors = () =>{
 
 const buttonAddMc = () =>{
 
-
+        console.log(attendance);
     let errors = checkErrors();
 
 
@@ -486,6 +589,7 @@ const buttonAddMc = () =>{
                         });
                         refreshTable();
                         refreshForm();
+
 
                     }else{
                         iziToast.error({
@@ -545,144 +649,151 @@ const buttonAddMc = () =>{
     }
 }
 
-// const checkUpdates = () => {
-//     let updates = "";
-//     if (classimplementation != null && old_classimplementation != null) {
-//
-//         if(classimplementation.class_name != old_classimplementation.class_name) {
-//             updates = updates + "Class name  Has Changed..<br>"
-//         }
-//
-//
-//
-//         if (classimplementation.grade_id.name != old_classimplementation.grade_id.name) {
-//             updates = updates + "Grade Has Changed..<br>"
-//         }
-//
-//         if (classimplementation.subject_id.name != old_classimplementation.subject_id.name) {
-//             updates = updates + "Subject Has Changed..<br>"
-//         }
-//
-//         if (classimplementation.class_status_id.name != old_classimplementation.class_status_id.name) {
-//             updates = updates + "Class Status Has Changed..<br>"
-//         }
-//
-//         if (classimplementation.institute_implementation_id.inst_name != old_classimplementation.institute_implementation_id.inst_name) {
-//             updates = updates + "Institute Name Has Changed..<br>"
-//         }
-//
-//     }
-//
-//     return updates;
-// }
+const checkUpdates = () => {
+    let updates = "";
+    if (attendance != null && old_attendance != null) {
 
-// const buttonUpdateMC = () =>{
-//     let errors = checkErrors();
-//     if (errors == ""){
-//         let updates = checkUpdates();
-//         if(updates != ""){
-//             //Show the confirmation box when the Add button is clicked
-//             iziToast.show({
-//                 theme: 'dark',
-//                 title: "Are You Sure Update Following Institute?",
-//                 message: updates,
-//                 layout: 2,
-//                 position: 'topCenter',
-//                 overlay: true,
-//                 timeout: false,
-//                 close:false,
-//                 closeOnEscape: false,
-//                 progressBar: false,
-//                 buttons: [
-//                     ['<button><b>Yes</b></button>', function (instance, toast) {
-//                         // Do something when the "Yes" button is clicked
-//
-//                         let update_server_responce;
-//
-//                         $.ajax("/classImplementation",{
-//                             async : false,
-//                             type:"PUT",//Method
-//                             data:JSON.stringify(classimplementation),//data that pass to backend
-//                             contentType:"application/json",
-//                             success:function(succsessResData,successStatus,resObj){
-//                                 update_server_responce = succsessResData;
-//                             },error:function (errorResOb,errorStatus,errorMsg){
-//                                 update_server_responce = errorMsg;
-//                             }
-//                         })
-//                         if(update_server_responce == "0"){
-//
-//                             iziToast.success({
-//                                 theme: 'dark',
-//                                 title: 'Class Update Successfully',
-//                                 position: 'topRight',
-//                                 overlay: true,
-//                                 displayMode: 'once',
-//                                 zindex: 999,
-//                                 animateInside: true,
-//                                 closeOnEscape:true,
-//                                 timeout: 2000,
-//                                 closeOnClick: true,
-//
-//                             });
-//                             refreshTable();
-//                             refreshForm();
-//                         }else{
-//                             iziToast.error({
-//
-//                                 title: 'An error occurred',
-//                                 message: update_server_responce,
-//                                 position: 'topRight',
-//                                 overlay: true,
-//                                 closeOnEscape: false,
-//                                 close: true,
-//                                 layout: 2,
-//                                 displayMode: 'once',
-//                                 zindex: 999,
-//                                 animateInside: true,
-//                                 buttons: [
-//                                     ['<button><b>OK</b></button>', function (instance, toast) {
-//                                         instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                                     }, true]
-//                                 ]
-//                             });
-//
-//
-//                         }
-//                         instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//
-//                     }, true],
-//                     ['<button>No</button>', function (instance, toast) {
-//                         // Do something when the "No" button is clicked
-//                         iziToast.warning({
-//                             title: 'Cancel',
-//                         })
-//                         instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                     }]
-//                 ]
-//             });
-//         }else {
-//             iziToast.warning({
-//                 title: 'Nothing To Update',
-//             })
-//         }
-//     }else{
-//         iziToast.error({
-//             title: 'You Have Following Error',
-//             message: errors,
-//             position: 'topCenter',
-//             overlay: true,
-//             closeOnEscape: false,
-//             close: true,
-//             layout: 2,
-//             displayMode: 'once',
-//             zindex: 999,
-//             animateInside: true,
-//             buttons: [
-//                 ['<button><b>OK</b></button>', function (instance, toast) {
-//                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                 }, true]
-//             ]
-//         });
-//     }
-// }
+        if(attendance.date != old_attendance.date) {
+            updates = updates + "Date  Has Changed..<br>"
+        }
+
+        if (attendance.class_implementation_id.class_code != old_attendance.class_implementation_id.class_code) {
+            updates = updates + "Class code Has Changed..<br>"
+        }
+
+
+        if (attendance.attendance_has_students.length != old_attendance.attendance_has_students.length) { //will be usefull for attendance
+            updates = updates + "Attendance is changed \n";
+        } else {
+            let extcount = 0;
+            for (let newattend of attendance.attendance_has_students) { //have to check element count in list
+                for (let oldattend of old_attendance.attendance_has_students) {
+                    if (newattend.student_id.id == oldattend.student_id.id && newattend.present_or_absent == oldattend.present_or_absent) { //
+                        extcount = extcount + 1;
+                    }
+                }
+            }
+
+            if (attendance.attendance_has_students.length != extcount) {
+                updates = updates + "Attendance is changed \n";
+            }
+        }
+
+
+
+    }
+
+    return updates;
+}
+
+const buttonUpdateMC = () =>{
+    let errors = checkErrors();
+    if (errors == ""){
+        let updates = checkUpdates();
+        if(updates != ""){
+            //Show the confirmation box when the Add button is clicked
+            iziToast.show({
+                theme: 'dark',
+                title: "Are You Sure Update Following Attendance?",
+                message: updates,
+                layout: 2,
+                position: 'topCenter',
+                overlay: true,
+                timeout: false,
+                close:false,
+                closeOnEscape: false,
+                progressBar: false,
+                buttons: [
+                    ['<button><b>Yes</b></button>', function (instance, toast) {
+                        // Do something when the "Yes" button is clicked
+
+                        let update_server_responce;
+
+                        $.ajax("/attendance",{
+                            async : false,
+                            type:"PUT",//Method
+                            data:JSON.stringify(attendance),//data that pass to backend
+                            contentType:"application/json",
+                            success:function(succsessResData,successStatus,resObj){
+                                update_server_responce = succsessResData;
+                            },error:function (errorResOb,errorStatus,errorMsg){
+                                update_server_responce = errorMsg;
+                            }
+                        })
+                        if(update_server_responce == "0"){
+
+                            iziToast.success({
+                                theme: 'dark',
+                                title: 'Class Update Successfully',
+                                position: 'topRight',
+                                overlay: true,
+                                displayMode: 'once',
+                                zindex: 999,
+                                animateInside: true,
+                                closeOnEscape:true,
+                                timeout: 2000,
+                                closeOnClick: true,
+
+                            });
+                            refreshTable();
+                            refreshForm();
+
+                        }else{
+                            iziToast.error({
+
+                                title: 'An error occurred',
+                                message: update_server_responce,
+                                position: 'topRight',
+                                overlay: true,
+                                closeOnEscape: false,
+                                close: true,
+                                layout: 2,
+                                displayMode: 'once',
+                                zindex: 999,
+                                animateInside: true,
+                                buttons: [
+                                    ['<button><b>OK</b></button>', function (instance, toast) {
+                                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                    }, true]
+                                ]
+                            });
+
+
+                        }
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }, true],
+                    ['<button>No</button>', function (instance, toast) {
+                        // Do something when the "No" button is clicked
+                        iziToast.warning({
+                            title: 'Cancel',
+                        })
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }]
+                ]
+            });
+        }else {
+            iziToast.warning({
+                title: 'Nothing To Update',
+            })
+        }
+    }else{
+        iziToast.error({
+            title: 'You Have Following Error',
+            message: errors,
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 999,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+    }
+}
