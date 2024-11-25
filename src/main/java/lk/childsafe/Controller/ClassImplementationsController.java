@@ -7,6 +7,7 @@ import lk.childsafe.Dao.InstituteRepository;
 import lk.childsafe.Dao.InstitutestatusRepository;
 import lk.childsafe.Entity.ClassImplementation;
 import lk.childsafe.Entity.Institute;
+import lk.childsafe.Entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,12 +40,18 @@ public class ClassImplementationsController {
         return classimplementationDao.findAll();
     }
 
+    //get class name according to class code
+    @GetMapping (value = "/getbyclassname",produces = "application/json")
+    public ClassImplementation getByClassname(@RequestParam("class_name") String class_name){
+        return classimplementationDao.findClassByClassCode(class_name);}
+
 
     //get mapping service for get storage by given quary variable id[/classImplementation/getbyid?id=1]
     @GetMapping(value = "/getbyid" , produces = "application/json")
     public ClassImplementation getClassById(@RequestParam("id") Integer id){
         return classimplementationDao.getReferenceById(id);
     }
+
 
 
     @PostMapping

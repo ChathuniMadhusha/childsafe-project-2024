@@ -14,7 +14,7 @@ const refreshTable = () =>{
     sturegs=httpGetRequest("/stureg/findall")
 
     //create display property list
-    let display_property_list = ["stu_class_code","student_id.studentid","class_implementation_id.class_code","registration_status_id.name"]
+    let display_property_list = ["stu_class_code","student_id.studentid","class_implementation_id.class_code","stu_registration_status_id.name"]
 
     //cretae display property type list
     let display_property_datatype = ["text","object","object","object"]
@@ -23,7 +23,7 @@ const refreshTable = () =>{
     fillTable(stucls_tbl,sturegs,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
 
     for (let index in sturegs){
-        if (sturegs[index].registration_status_id.name == "Deleted"){
+        if (sturegs[index].stu_registration_status_id.name == "Deleted"){
             stucls_tbl.children[1].children[index].children[5].children[2].disabled = true;
             stucls_tbl.children[1].children[index].children[5].children[0].disabled = true;
         }
@@ -45,7 +45,7 @@ const formReFill = (obj) =>{
 
     //set value in to select feild
     fillSelectFieldtwoproperty(floatingSelectClass,"",classes,"class_code","class_name",stureg.class_implementation_id.class_code);
-    fillSelectField(floatingSelectStatus,"",statuss,"name",stureg.registration_status_id.name);
+    fillSelectField(floatingSelectStatus,"",statuss,"name",stureg.stu_registration_status_id.name);
 
     //disable add button
     disabledButton(false,true);
@@ -149,7 +149,7 @@ const rowView = (obj) =>{
     td_fname.innerHTML = printStudent.student_id.first_name;
     td_ccode.innerHTML = printStudent.class_implementation_id.class_code;
     td_cname.innerHTML = printStudent.class_implementation_id.class_name;
-    td_sstatus.innerHTML = printStudent.registration_status_id.name;
+    td_sstatus.innerHTML = printStudent.stu_registration_status_id.name;
     $('#studentViewModel').modal('show')
 }
 
@@ -175,7 +175,7 @@ const refreshForm = () =>{
 
     //auto select value
     fillSelectField(floatingSelectStatus,"",statuss,"name","Active");
-    stureg.registration_status_id = JSON.parse(floatingSelectStatus.value);
+    stureg.stu_registration_status_id = JSON.parse(floatingSelectStatus.value);
 
     classes = new Array();
     classes = httpGetRequest("/classImplementation/findall")
@@ -296,7 +296,7 @@ const checkErrors = () =>{
     }
 
 
-    if(stureg.registration_status_id == null){
+    if(stureg.stu_registration_status_id == null){
         errors = errors+"Please Select Registration Status..<br>";
         floatingSelectStatus.style.borderBottom="2px solid red";
     }
@@ -440,7 +440,7 @@ const checkUpdates = () => {
         }
 
 
-        if (stureg.registration_status_id.name != old_stureg.registration_status_id.name) {
+        if (stureg.stu_registration_status_id.name != old_stureg.stu_registration_status_id.name) {
             updates = updates + "Registration Status Has Changed..<br>"
         }
 

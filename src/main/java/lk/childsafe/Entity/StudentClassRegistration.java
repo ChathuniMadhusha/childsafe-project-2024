@@ -32,8 +32,8 @@ public class StudentClassRegistration {
 
 
     @ManyToOne
-    @JoinColumn(name = "registration_status_id",referencedColumnName = "id")
-    private StudentRegStatus registration_status_id;
+    @JoinColumn(name = "stu_registration_status_id",referencedColumnName = "id")
+    private StudentRegStatus stu_registration_status_id;
 
 
 }
