@@ -73,8 +73,6 @@ function refillProfile(){
     loggeduser1 = httpGetRequest("/loguser");
     old_loggeduser1 = httpGetRequest("/loguser");
 
-    console.log(loggeduser1);
-    console.log(old_loggeduser1);
 
     if (loggeduser1 != null && loggeduser1.student != null){
         logimage2.src = loggeduser1.photopath + loggeduser1.photoname;
@@ -83,6 +81,22 @@ function refillProfile(){
         address.value = loggeduser1.student.address;
         Phone.value = loggeduser1.student.mobile_number;
         Email.value = loggeduser1.student.email;
+    }
+    else if(loggeduser1 != null && loggeduser1.teacher != null){
+        logimage2.src = loggeduser1.photopath + loggeduser1.photoname;
+        fName.value = loggeduser1.teacher.first_name;
+        lName.value = loggeduser1.teacher.last_name;
+        address.value = loggeduser1.teacher.address;
+        Phone.value = loggeduser1.teacher.mobile_number;
+        Email.value = loggeduser1.teacher.email;
+    }
+    else if(loggeduser1 != null && loggeduser1.parent != null){
+        logimage2.src = loggeduser1.photopath + loggeduser1.photoname;
+        fName.value = loggeduser1.parent.first_name;
+        lName.value = loggeduser1.parent.last_name;
+        address.value = loggeduser1.parent.address;
+        Phone.value = loggeduser1.parent.mobile_number;
+        Email.value = loggeduser1.parent.email;
     }
 }
 
