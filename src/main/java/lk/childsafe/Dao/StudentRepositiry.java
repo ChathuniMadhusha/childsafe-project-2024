@@ -23,7 +23,7 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     Student getByStudentnoforclass(String studentno);
 
 
-    //check duplicate with find student by given Storage name without quary
+    //check duplicate with find student by given student name without quary
     Student findStudentByStudentid(String name);
 
 

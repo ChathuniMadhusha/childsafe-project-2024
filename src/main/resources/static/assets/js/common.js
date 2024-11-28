@@ -14,6 +14,28 @@ const httpGetRequest = (url) => {
     return responce_data;
 }
 
+function httpServiceRequest(url,method, postdata) {
+    var returndata;
+    $.ajax(url, {
+        async: false,
+        // dataType: 'json', // type of response data
+        type: method,  // http method
+        data: JSON.stringify(postdata),// data to submit
+        timeout: 500, // timeout milliseconds
+        contentType:"application/json; charset=utf-8",
+        success: function (data, status, xhr) {
+            $('#err').append('<br>');
+            $('#err').append('Responce : <br>' + url + " --><br>" + JSON.stringify(data));
+            returndata = data;
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+            $('#err').append('Error: \n' + jqXhr);
+            returndata = errorMessage;
+        }
+    });
+    return returndata;
+}
+
 //validotors
 const textFieldValidator = (feildid, pattern, object, property,oldObject) => {
 

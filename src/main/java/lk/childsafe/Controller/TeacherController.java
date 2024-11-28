@@ -2,10 +2,7 @@ package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
 import lk.childsafe.Dao.*;
-import lk.childsafe.Entity.ParentStatus;
-import lk.childsafe.Entity.Student;
-import lk.childsafe.Entity.Teacher;
-import lk.childsafe.Entity.User;
+import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -117,6 +114,31 @@ public class TeacherController {
             }
         }else {
             return "Delete not complete : Teacher not exist";
+        }
+    }
+
+    ////////////////loguser profile change////////////////
+    @PutMapping("/log")
+    public String userupdate(@RequestBody LogUser logUser) {
+
+        try {
+            //password eka change krla submit klham eka saved password ekamda kiyla blna oni
+            //isselama existing userwa ganna oni
+            Teacher exttchr = teacherDao.getReferenceById(logUser.getTeacher().getId()); // id eka deela object eka gennagnwa
+
+            exttchr.setFirst_name(logUser.getTeacher().getFirst_name());
+            exttchr.setLast_name(logUser.getTeacher().getLast_name());
+            exttchr.setEmail(logUser.getTeacher().getEmail());
+            exttchr.setAddress(logUser.getTeacher().getAddress());
+            exttchr.setMobile_number(logUser.getTeacher().getMobile_number());
+
+
+            //dena password eka encode krla eyatama set krla save krnwa
+            //user.setPassword(passwordEncoder.encode(user.getPassword()));
+            teacherDao.save(exttchr);
+            return "Ok";
+        } catch (Exception e) {
+            return "User profile change not completed :" + e.getMessage();
         }
 
 

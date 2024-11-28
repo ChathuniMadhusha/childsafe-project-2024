@@ -1,0 +1,191 @@
+//Function for browser onload event
+window.addEventListener('load', refreshBrowser);
+
+//Create function for browser onload event
+function refreshBrowser() {
+    setUserNavbar();
+    setUserProfileDetails();
+     loggeduser1 = new Object();
+     old_loggeduser1 = null
+
+}
+
+
+function userFN(){
+    if (loggeduser1.student!=null){
+
+
+        if (fName.value != ""){
+            const namepattern = new RegExp('^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*');
+
+            if (namepattern.test(fName.value)) {
+                loggeduser1.student.first_name = fName.value;
+
+                if (old_loggeduser1!=null && loggeduser1.student.first_name != old_loggeduser1.student.first_name){
+                    fName.style.borderBottom = '2px solid orange';
+                }
+                else {
+                    fName.style.borderBottom = '2px solid green';
+                }
+            }else {
+                loggeduser1.student.first_name = null;
+                fName.style.borderBottom = '2px solid red';
+            }
+
+        }else{
+            loggeduser1.student.first_name = null;
+            fName.style.borderBottom = '2px solid red';
+        }
+    }
+    else if(loggeduser1.teacher!=null){
+        if (fName.value != ""){
+            const namepattern = new RegExp('^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*');
+
+            if (namepattern.test(fName.value)) {
+                loggeduser1.teacher.first_name = fName.value;
+
+                if (old_loggeduser1!=null && loggeduser1.teacher.first_name != old_loggeduser1.teacher.first_name){
+                    fName.style.borderBottom = '2px solid orange';
+                }
+                else {
+                    fName.style.borderBottom = '2px solid green';
+                }
+            }else {
+                loggeduser1.teacher.first_name = null;
+                fName.style.borderBottom = '2px solid red';
+            }
+
+        }else{
+            loggeduser1.teacher.first_name = null;
+            fName.style.borderBottom = '2px solid red';
+        }
+    }
+    else if(loggeduser1.parent!=null){
+        if (fName.value != ""){
+            const namepattern = new RegExp('^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*');
+
+            if (namepattern.test(fName.value)) {
+                loggeduser1.parent.first_name = fName.value;
+
+                if (old_loggeduser1!=null && loggeduser1.parent.first_name != old_loggeduser1.parent.first_name){
+                    fName.style.borderBottom = '2px solid orange';
+                }
+                else {
+                    fName.style.borderBottom = '2px solid green';
+                }
+            }else {
+                loggeduser1.parent.first_name = null;
+                fName.style.borderBottom = '2px solid red';
+            }
+
+        }else{
+            loggeduser1.parent.first_name = null;
+            fName.style.borderBottom = '2px solid red';
+        }
+    }
+
+
+}
+
+function userLN(){
+    if (lName.value != ""){
+        const namepattern = new RegExp('^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*');
+
+        if (namepattern.test(lName.value)) {
+            loggeduser1.student.last_name = lName.value;
+
+            if (old_loggeduser1!=null && loggeduser1.student.last_name != old_loggeduser1.student.last_name){
+                lName.style.borderBottom = '2px solid orange';
+            }
+            else {
+                lName.style.borderBottom = '2px solid green';
+            }
+        }else {
+            loggeduser1.student.last_name = null;
+            lName.style.borderBottom = '2px solid red';
+        }
+
+    }else{
+        loggeduser1.student.last_name = null;
+        lName.style.borderBottom = '2px solid red';
+    }
+
+}
+
+function userAddress(){
+    if (address.value != ""){
+        const namepattern = new RegExp('^[A-Z][a-z]{4,}(?: [A-Z][a-z]*)*');
+
+        if (namepattern.test(address.value)) {
+            loggeduser1.student.address = address.value;
+
+            if (old_loggeduser1!=null && loggeduser1.student.address != old_loggeduser1.student.address){
+                address.style.borderBottom = '2px solid orange';
+            }
+            else {
+                address.style.borderBottom = '2px solid green';
+            }
+        }else {
+            loggeduser1.student.address = null;
+            address.style.borderBottom = '2px solid red';
+        }
+
+    }else{
+        loggeduser1.student.address = null;
+        address.style.borderBottom = '2px solid red';
+    }
+
+}
+
+
+function userPhone(){
+    if (Phone.value != ""){
+        const namepattern = new RegExp('^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$');
+
+        if (namepattern.test(Phone.value)) {
+            loggeduser1.student.mobile_number = Phone.value;
+
+            if (old_loggeduser1!=null && loggeduser1.student.mobile_number != old_loggeduser1.student.mobile_number){
+                Phone.style.borderBottom = '2px solid orange';
+            }
+            else {
+                Phone.style.borderBottom = '2px solid green';
+            }
+        }else {
+            loggeduser1.student.mobile_number = null;
+            Phone.style.borderBottom = '2px solid red';
+        }
+
+    }else{
+        loggeduser1.student.mobile_number = null;
+        Phone.style.borderBottom = '2px solid red';
+    }
+
+}
+
+
+function userMail(){
+    if (Email.value != ""){
+        const namepattern = new RegExp("^[a-z0-9]{3,}@[a-z]{3,}.[a-z]{2,3}$");
+
+
+        if (namepattern.test(Email.value)) {
+            loggeduser1.student.email = Email.value;
+
+            if (old_loggeduser1!=null && loggeduser1.student.email != old_loggeduser1.student.email){
+                Email.style.borderBottom = '2px solid orange';
+            }
+            else {
+                Email.style.borderBottom = '2px solid green';
+            }
+        }else {
+            loggeduser1.student.email = null;
+            Email.style.borderBottom = '2px solid red';
+        }
+
+    }else{
+        loggeduser1.student.email = null;
+        Email.style.borderBottom = '2px solid red';
+    }
+
+}

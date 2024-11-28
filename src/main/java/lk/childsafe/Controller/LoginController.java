@@ -2,6 +2,7 @@ package lk.childsafe.Controller;
 
 import lk.childsafe.Dao.RoleRepository;
 import lk.childsafe.Dao.UserRepository;
+import lk.childsafe.Entity.ForgetUser;
 import lk.childsafe.Entity.LogUser;
 import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Objects;
 
 @RestController
 public class LoginController {
@@ -99,10 +102,60 @@ public class LoginController {
             loggeUser.setPhotoname(logExtUser.getPhotoname());
             loggeUser.setPhotopath(logExtUser.getPhotopath());
 
+            if (logExtUser.getStudent_id() != null) {
+                loggeUser.setStudent(logExtUser.getStudent_id());
+            }else if(logExtUser.getTeacher_id() != null) {
+                loggeUser.setTeacher(logExtUser.getTeacher_id());
+            }else if(logExtUser.getParent_id() != null) {
+                loggeUser.setParent(logExtUser.getParent_id());
+            }
+
             return loggeUser;
         }else {
             return null;
         }
+    }
+
+
+    @PostMapping("/changeforgetuserpassword")
+    public String changeForgotUserPassword(@RequestBody ForgetUser forgetUser){
+
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            User logExtUser = userDao.findUserByUsername(auth.getName());
+
+
+            if (logExtUser == null) {
+                return "Password change error: User not Exist..!";
+            }
+
+            if (forgetUser.getCurrunt_password() != "" && forgetUser.getNew_password() != "" && forgetUser.getRe_new_password()!= "") {
+                if (bCryptPasswordEncoder.matches(forgetUser.getCurrunt_password(), logExtUser.getPassword())) {
+
+                    if (bCryptPasswordEncoder.matches(logExtUser.getPassword(), forgetUser.getNew_password())) {
+                        return "User change password not completed: password same as previous password";
+                    }else {
+                        if (Objects.equals(forgetUser.getNew_password(), forgetUser.getRe_new_password())) {
+                            logExtUser.setPassword(bCryptPasswordEncoder.encode(forgetUser.getNew_password()));
+                            userDao.save(logExtUser);
+                            return "OK";
+                        }else {
+                            return "User change password not completed";
+                        }
+                    }
+                }else{
+                    return "User password change not completed: current password is no correct";
+                }
+            } else {
+                return "Error Password Change;";
+            }
+
+
+
+        } catch (Exception e) {
+            return "Error Password Change;";
+        }
+
     }
 
 }

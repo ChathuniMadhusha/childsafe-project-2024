@@ -5,6 +5,7 @@ import lk.childsafe.Dao.RoleRepository;
 import lk.childsafe.Dao.StudentRepositiry;
 import lk.childsafe.Dao.StudentstatusRepositiry;
 import lk.childsafe.Dao.UserRepository;
+import lk.childsafe.Entity.LogUser;
 import lk.childsafe.Entity.ParentStatus;
 import lk.childsafe.Entity.Student;
 import lk.childsafe.Entity.User;
@@ -134,6 +135,34 @@ public class StudentController {
             }else {
                 return "Delete not complete : Student not exist";
             }
+
+
+    }
+
+
+    ////////////////loguser profile change////////////////
+    @PutMapping("/log")
+    public String userupdate(@RequestBody LogUser logUser) {
+
+        try {
+            //password eka change krla submit klham eka saved password ekamda kiyla blna oni
+            //isselama existing userwa ganna oni
+            Student extStu = studentDao.getReferenceById(logUser.getStudent().getId()); // id eka deela object eka gennagnwa
+
+            extStu.setFirst_name(logUser.getStudent().getFirst_name());
+            extStu.setLast_name(logUser.getStudent().getLast_name());
+            extStu.setEmail(logUser.getStudent().getEmail());
+            extStu.setAddress(logUser.getStudent().getAddress());
+            extStu.setMobile_number(logUser.getStudent().getMobile_number());
+
+
+            //dena password eka encode krla eyatama set krla save krnwa
+            //user.setPassword(passwordEncoder.encode(user.getPassword()));
+            studentDao.save(extStu);
+            return "Ok";
+        } catch (Exception e) {
+            return "User profile change not completed :" + e.getMessage();
+        }
 
 
     }

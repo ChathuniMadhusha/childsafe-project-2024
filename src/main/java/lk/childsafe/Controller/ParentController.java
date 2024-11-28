@@ -141,4 +141,31 @@ public class ParentController {
 
 
     }
+
+    ////////////////loguser profile change////////////////
+    @PutMapping("/log")
+    public String userupdate(@RequestBody LogUser logUser) {
+
+        try {
+            //password eka change krla submit klham eka saved password ekamda kiyla blna oni
+            //isselama existing userwa ganna oni
+            Parent extprnt = parentDao.getReferenceById(logUser.getParent().getId()); // id eka deela object eka gennagnwa
+
+            extprnt.setFirst_name(logUser.getParent().getFirst_name());
+            extprnt.setLast_name(logUser.getParent().getLast_name());
+            extprnt.setEmail(logUser.getParent().getEmail());
+            extprnt.setAddress(logUser.getParent().getAddress());
+            extprnt.setMobile_number(logUser.getParent().getMobile_number());
+
+
+            //dena password eka encode krla eyatama set krla save krnwa
+            //user.setPassword(passwordEncoder.encode(user.getPassword()));
+            parentDao.save(extprnt);
+            return "Ok";
+        } catch (Exception e) {
+            return "User profile change not completed :" + e.getMessage();
+        }
+
+
+    }
 }
