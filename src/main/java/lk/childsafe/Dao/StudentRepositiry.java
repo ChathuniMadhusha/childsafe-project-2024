@@ -33,5 +33,10 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     List<Student> getBySession(Integer cid);
 
 
+    //Dash bord eke card wlata data ganna
+    @Query(value = "select new Student(count(s.id)) from Student s where s.student_status_id.id =1")
+    Student findActiveStudent();
+
+
 
 }

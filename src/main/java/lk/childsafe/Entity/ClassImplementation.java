@@ -41,6 +41,10 @@ public class ClassImplementation {
     @JoinColumn(name = "class_status_id",referencedColumnName = "id")
     private ClassImplementationStatus class_status_id;
 
+    public ClassImplementation(Long id){
+        this.class_code = id.toString();
+    }
+
 
 
 

@@ -51,6 +51,15 @@ public class LoginController {
         return dashboardUI;
     }
 
+    @RequestMapping(value = "/createaccount",method = RequestMethod.GET)
+    public ModelAndView createaccount(){
+        ModelAndView createaccountUI = new ModelAndView();
+        createaccountUI.setViewName("pages-register.html");
+        return createaccountUI;
+    }
+
+
+
     @GetMapping(value = "/login")
     public ModelAndView LoginUi(){
         ModelAndView loginUi = new ModelAndView();

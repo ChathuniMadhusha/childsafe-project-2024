@@ -16,4 +16,8 @@ public interface TeacherRepository extends JpaRepository <Teacher,Integer>{
 
     @Query(value = "select t from Teacher t where t.teacherid = ?1")
     Teacher findTeacherByTeacherID(String teacherid);
+
+    //Dash bord eke card wlata data ganna
+    @Query(value = "select new Teacher (count(t.id)) from Teacher t where t.teacher_status_id.id =1")
+    Teacher findActiveTeacher();
 }

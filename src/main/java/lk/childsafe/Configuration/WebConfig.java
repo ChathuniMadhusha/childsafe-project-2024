@@ -29,6 +29,14 @@ public class WebConfig {
                     request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                             .requestMatchers("/assets/**").permitAll().
                             requestMatchers("/login").permitAll().
+                            requestMatchers("/studentmodel").permitAll().
+                            requestMatchers("/studentstatus/**").permitAll().
+                            requestMatchers("/teachermodel").permitAll().
+                            requestMatchers("/teacherstatus/**").permitAll().
+                            requestMatchers("/parentmodel").permitAll().
+                            requestMatchers("/parentstatus/**").permitAll().
+                            requestMatchers("/student/**").permitAll().
+                            requestMatchers("/createaccount").permitAll().
                             requestMatchers("/accessdenied").permitAll().
                             requestMatchers("/createadmin").permitAll().
                             requestMatchers("/teacher/**").hasAnyAuthority("Admin").

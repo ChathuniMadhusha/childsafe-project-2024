@@ -35,6 +35,14 @@ public class TeacherController {
         return modelandview;
     }
 
+    //dashboard count
+    @GetMapping(value = "/activeTeachers", produces = "application/json")
+    public Teacher activeList() {
+        return teacherDao.findActiveTeacher();
+    }
+
+
+
     //get all
     @GetMapping(value = "/findall", produces = "application/json")
     public List<Teacher> teacher() {return teacherDao.findAll();}

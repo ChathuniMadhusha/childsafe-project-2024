@@ -61,8 +61,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">Childsafe</span>
+            <!--      <img src="assets/img/logo.png" alt="">-->
+            <span class="d-none d-lg-block" style="color: #4d1354">ChildSafe</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -120,21 +120,21 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Student.html">
+            <a class="nav-link collapsed" href="/student">
                 <i class="bi bi-person"></i>
                 <span>Add Student</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentRegistration.html">
+            <a class="nav-link collapsed" href="/stureg">
                 <i class="bi bi-question-circle"></i>
                 <span>Student Class Registration</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentAttendance.html">
+            <a class="nav-link collapsed" href="/attendance">
                 <i class="bi bi-envelope"></i>
                 <span>Student Attendance</span>
             </a>
@@ -148,12 +148,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="InstituteImplementation.html">
+                    <a href="/institute">
                         <i class="bi bi-circle"></i><span>Institute</span>
                     </a>
                 </li>
                 <li>
-                    <a href="ClassImplementation.html">
+                    <a href="/classImplementation">
                         <i class="bi bi-circle"></i><span>Class</span>
                     </a>
                 </li>
@@ -167,12 +167,12 @@
             </a>
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="Teacher.html">
+                    <a href="/teacher">
                         <i class="bi bi-circle"></i><span>Add Teacher</span>
                     </a>
                 </li>
                 <li>
-                    <a href="TeacherRegistration.html">
+                    <a href="/teacherregistration">
                         <i class="bi bi-circle"></i><span>Teacher Registration</span>
                     </a>
                 </li>
@@ -180,7 +180,7 @@
         </li><!-- End Charts Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Parent.html">
+            <a class="nav-link collapsed" href="/parent">
                 <i class="bi bi-person"></i>
                 <span>Add Parent</span>
             </a>
@@ -203,7 +203,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Class Implementation</h1>
+        <h1 style="color: #4d1354">Class Implementation</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Class Implementation</a></li>
@@ -215,7 +215,7 @@
         <div class="row">
             <div class="col-10"></div>
             <div class="d-grid gap-2 col-2 mx-auto mb-1">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#basicModal" style="background-color: #4d1354; color: white">
                     Add New Class
                 </button>
             </div>
@@ -226,7 +226,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Class</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #4d1354">Class Implementation Form</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -243,7 +243,7 @@
                                                                     <option selected>Select Grade</option>
 
                                                                 </select>
-                                                                <label for="floatingSelectGrade">Grade</label>
+                                                                <label for="floatingSelectGrade">Grade <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -253,7 +253,7 @@
                                                                     <option selected>Select Subject</option>
 
                                                                 </select>
-                                                                <label for="floatingSelectSubject">Subject</label>
+                                                                <label for="floatingSelectSubject">Subject <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -263,7 +263,7 @@
                                                                     <option  selected>Select Institute</option>
 
                                                                 </select>
-                                                                <label for="floatingSelectInstitute">Institute</label>
+                                                                <label for="floatingSelectInstitute">Institute <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -272,7 +272,7 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingCName,'','classimplementation','class_name','old_classimplementation')" type="text" class="form-control" id="floatingCName"
                                                                        placeholder="Your Name" disabled>
-                                                                <label for="floatingCName">Class Name</label>
+                                                                <label for="floatingCName">Class Name <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -282,7 +282,7 @@
                                                                     <option onchange="selectValidater(floatingSelectClassStatus,'','classimplementation','class_status_id','old_classimplementation')" selected>Select Status</option>
 
                                                                 </select>
-                                                                <label for="floatingSelectClassStatus">Class Status</label>
+                                                                <label for="floatingSelectClassStatus">Class Status <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                     </form><!-- End floating Labels Form -->
@@ -292,9 +292,10 @@
                                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Class</button>
-                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Class</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn" style="border-radius: 50rem !important">Add Class</button>
+                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-outline-warning" id="updatebtn" style="border-radius: 50rem !important">Update Class</button>
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                        <button type="submit" onclick="" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
                     </div>
                 </div>
             </div>
@@ -304,7 +305,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Class Implementation table</h5>
+                        <h5 class="card-title" style="color:#4d1354;">Class Implementation table</h5>
                         <!-- Table with stripped rows -->
                         <table class="table datatable" id="classimple_table">
                             <thead>

@@ -2,6 +2,7 @@ package lk.childsafe.Dao;
 
 import lk.childsafe.Entity.ClassImplementation;
 import lk.childsafe.Entity.Institute;
+import lk.childsafe.Entity.Student;
 import lk.childsafe.Entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +22,10 @@ public interface ClassImplementationsRepository extends JpaRepository <ClassImpl
     //query for get class name accordinf to class code
     @Query(value = "select cl from ClassImplementation cl where cl.class_code = ?1")
     ClassImplementation findClassByClassCode(String class_name);
+
+
+    //Dash bord eke card wlata data ganna
+    @Query(value = "select new ClassImplementation (count(c.id)) from ClassImplementation c where c.class_status_id.id =1")
+    ClassImplementation findActiveClasses();
 
 }

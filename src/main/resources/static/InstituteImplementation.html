@@ -60,8 +60,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">Childsafe</span>
+            <!--      <img src="assets/img/logo.png" alt="">-->
+            <span class="d-none d-lg-block" style="color: #4d1354">ChildSafe</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -119,21 +119,21 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Student.html">
+            <a class="nav-link collapsed" href="/student">
                 <i class="bi bi-person"></i>
                 <span>Add Student</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentRegistration.html">
+            <a class="nav-link collapsed" href="/stureg">
                 <i class="bi bi-question-circle"></i>
                 <span>Student Class Registration</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentAttendance.html">
+            <a class="nav-link collapsed" href="/attendance">
                 <i class="bi bi-envelope"></i>
                 <span>Student Attendance</span>
             </a>
@@ -147,12 +147,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="InstituteImplementation.html">
+                    <a href="/institute">
                         <i class="bi bi-circle"></i><span>Institute</span>
                     </a>
                 </li>
                 <li>
-                    <a href="ClassImplementation.html">
+                    <a href="/classImplementation">
                         <i class="bi bi-circle"></i><span>Class</span>
                     </a>
                 </li>
@@ -166,12 +166,12 @@
             </a>
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="Teacher.html">
+                    <a href="/teacher">
                         <i class="bi bi-circle"></i><span>Add Teacher</span>
                     </a>
                 </li>
                 <li>
-                    <a href="TeacherRegistration.html">
+                    <a href="/teacherregistration">
                         <i class="bi bi-circle"></i><span>Teacher Registration</span>
                     </a>
                 </li>
@@ -179,7 +179,7 @@
         </li><!-- End Charts Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Parent.html">
+            <a class="nav-link collapsed" href="/parent">
                 <i class="bi bi-person"></i>
                 <span>Add Parent</span>
             </a>
@@ -202,7 +202,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Institute Implementation</h1>
+        <h1 style="color: #4d1354">Institute Implementation</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Institute Implementation</a></li>
@@ -215,7 +215,7 @@
         <div class="row">
             <div class="col-10"></div>
             <div class="d-grid gap-2 col-2 mx-auto mb-1">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#basicModal" style="background-color: #4d1354; color: white">
                     Add New Institute
                 </button>
             </div>
@@ -226,12 +226,12 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New institute</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel"  style="color: #4d1354">Institute Form</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row">
@@ -242,38 +242,38 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingInsName,'','institute','inst_name','old_institute')" type="text" class="form-control" id="floatingInsName"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingInsName">Institute Name</label>
+                                                                <label for="floatingInsName">Institute Name <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingLocation,'','institute','location','old_institute')" type="text" class="form-control" id="floatingLocation"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingLocation">Location</label>
+                                                                <label for="floatingLocation">Location <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingMobile,'^[0][7,1,3][0-8][0-9]{7}$','institute','contact_number','old_institute')" type="text" class="form-control" id="floatingMobile"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingMobile">Mobile Number</label>
+                                                                <label for="floatingMobile">Mobile Number <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','institute','email','old_institute')" type="email" class="form-control" id="floatingEmail"
                                                                        placeholder="Your Email">
-                                                                <label for="floatingEmail">Email</label>
+                                                                <label for="floatingEmail">Email <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-floating mb-3">
                                                                 <select onchange="selectValidater(floatingSelectInsStatus,'','institute','institute_status_id','old_institute')" class="form-select" id="floatingSelectInsStatus" aria-label="State">
-                                                                    <option selected>Select Status</option>
+                                                                    <option selected>Select Status </option>
 
                                                                 </select>
-                                                                <label for="floatingSelectInsStatus">Status</label>
+                                                                <label for="floatingSelectInsStatus">Status <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                     </form><!-- End floating Labels Form -->
@@ -284,9 +284,10 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Institute</button>
-                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Institute</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn" style="border-radius: 50rem !important">Add Institute</button>
+                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-outline-warning" id="updatebtn" style="border-radius: 50rem !important">Update Institute</button>
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                        <button type="submit" onclick="" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
                     </div>
                 </div>
             </div>
@@ -297,7 +298,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Student table</h5>
+                        <h5 class="card-title" style="color: #4d1354">Institute Table</h5>
                         <!-- Table with stripped rows -->
                         <table class="table datatable" id="ins_table">
                             <thead>

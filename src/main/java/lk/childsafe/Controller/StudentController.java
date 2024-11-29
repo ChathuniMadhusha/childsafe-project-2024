@@ -48,6 +48,15 @@ public class StudentController {
         return studentDao.getBySession(cid);
     }
 
+    //dashboard count
+    @GetMapping(value = "/activestudent", produces = "application/json")
+    public Student activeList() {
+        return studentDao.findActiveStudent();
+    }
+
+
+
+
     //Get all date from table
     @GetMapping(value = "/findall", produces = "application/json")
     public List<Student> student() {
