@@ -14,10 +14,10 @@ const refreshTable = () =>{
     attendance=httpGetRequest("/attendance/findall")
 
     //create display property list
-    let display_property_list = ["class_implementation_id.class_name","present_count","absent_count"]
+    let display_property_list = ["class_implementation_id.class_name","date","present_count","absent_count"]
 
     //cretae display property type list
-    let display_property_datatype = ["object","text","text"]
+    let display_property_datatype = ["object","text","text","text"]
 
     //calling fillTable function
     fillTable(attendance_tbl,attendance,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)

@@ -7,6 +7,7 @@ import lk.childsafe.Dao.InstituteRepository;
 import lk.childsafe.Dao.InstitutestatusRepository;
 import lk.childsafe.Entity.ClassImplementation;
 import lk.childsafe.Entity.Institute;
+import lk.childsafe.Entity.Student;
 import lk.childsafe.Entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,14 @@ public class ClassImplementationsController {
         modelandview.setViewName("ClassImplementation.html");
         return modelandview;
     }
+
+    //dashboard count
+    @GetMapping(value = "/activeClasses", produces = "application/json")
+    public ClassImplementation activeList() {
+        return classimplementationDao.findActiveClasses();
+    }
+
+
 
     //Get all date from table
     @GetMapping(value = "/findall", produces = "application/json")
@@ -75,13 +84,13 @@ public class ClassImplementationsController {
             String nowYearLastTwo = String.valueOf(nowDate.getYear()).substring(2,4);
 
             System.out.println(lastCode);
-            System.out.println(lastCode.substring(2,4));
+            System.out.println(lastCode.substring(0,2));
 
             //awasana number ekak tynwda nadda kiyla check krnwa
             //tynwnm......
-            if(lastCode != null ){
+            if(lastCode != null ||  !lastCode.equals("")){
                 //24001
-                String lastCodeLastTwo = lastCode.substring(2,4);
+                String lastCodeLastTwo = lastCode.substring(0,2);
                 if(nowYearLastTwo.equals(lastCodeLastTwo)){
                     nextCode = lastCodeLastTwo + String.format("%03d", Integer.valueOf(lastCode.substring(3))+1);
                 }else {

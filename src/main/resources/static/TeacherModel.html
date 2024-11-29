@@ -65,7 +65,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Teacher Sign-Up Form</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:#4d1354;">Teacher Sign-Up Form</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -80,42 +80,42 @@
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','teacher','first_name','old_teacher')" type="text" class="form-control" id="floatingFName"
                                                            placeholder="Your Name">
-                                                    <label for="floatingFName">First Name</label>
+                                                    <label for="floatingFName">First Name <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','teacher','last_name','old_teacher')" type="text" class="form-control" id="floatingLName"
                                                            placeholder="Your Name">
-                                                    <label for="floatingLName">Last Name</label>
+                                                    <label for="floatingLName">Last Name <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingTextarea,'','teacher','address','old_teacher')" type="text" class="form-control" id="floatingTextarea"
                                                            placeholder="Your Name">
-                                                    <label for="floatingDOB">Address</label>
+                                                    <label for="floatingDOB">Address <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','teacher','mobile_number','old_teacher')" class="col-md-6">
                                                 <div class="form-floating">
                                                     <input type="text" class="form-control" id="floatingMobile"
                                                            placeholder="Your Mobile">
-                                                    <label for="floatingmobile">Mobile</label>
+                                                    <label for="floatingmobile">Mobile <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="nicFieldValidator()" type="text" class="form-control" id="floatingNIC"
                                                            placeholder="Your NIC">
-                                                    <label for="floatingNIC">NIC</label>
+                                                    <label for="floatingNIC">NIC <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onchange="dateFeildValidate(floatingDOB,'','teacher','dob','old_teacher')" type="date" class="form-control" id="floatingDOB"
                                                            placeholder="Your DOB">
-                                                    <label for="floatingDOB">Date of birth</label>
+                                                    <label for="floatingDOB">Date of birth <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
 
@@ -123,7 +123,7 @@
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','teacher','email','old_teacher')" type="email" class="form-control" id="floatingEmail"
                                                            placeholder="Your Email">
-                                                    <label for="floatingEmail">Email</label>
+                                                    <label for="floatingEmail">Email <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
 
@@ -132,7 +132,7 @@
                                                     <select onchange="selectValidater(floatingSelect,'','teacher','teacher_status_id','old_teacher')" class="form-select" id="floatingSelect" aria-label="State">
                                                         <option selected>Select Status</option>
                                                     </select>
-                                                    <label for="floatingSelect">Teacher Status</label>
+                                                    <label for="floatingSelect">Teacher Status <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
 
@@ -140,7 +140,7 @@
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingTPassword,'','teacher','te_password','old_teacher')" type="Password" class="form-control" id="floatingTPassword"
                                                            placeholder="Your Password">
-                                                    <label for="floatingTPassword">Create Password</label>
+                                                    <label for="floatingTPassword">Create Password <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                         </form><!-- End floating Labels Form -->
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Create Acount</button>
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn" style="background-color: #4d1354; color: white;">Create Acount</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>

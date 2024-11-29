@@ -29,6 +29,15 @@ const refreshTable = () =>{
         }
     }
 
+    // for(let index in student){
+    //     if(student[index].student_status_id.name == "Active"){
+    //         std_table.children[1].children[index].children[4].children[0].classList.add("active-cell-style");
+    //     }
+    //     if(student[index].student_status_id.name == "In-active"){
+    //         std_table.children[1].children[index].children[4].children[0].classList.add("active-cell-style");
+    //     }
+    // }
+
 
 
 

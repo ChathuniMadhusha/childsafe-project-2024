@@ -61,8 +61,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">Childsafe</span>
+            <!--      <img src="assets/img/logo.png" alt="">-->
+            <span class="d-none d-lg-block" style="color: #4d1354">ChildSafe</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -120,21 +120,21 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Student.html">
+            <a class="nav-link collapsed" href="/student">
                 <i class="bi bi-person"></i>
                 <span>Add Student</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentRegistration.html">
+            <a class="nav-link collapsed" href="/stureg">
                 <i class="bi bi-question-circle"></i>
                 <span>Student Class Registration</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentAttendance.html">
+            <a class="nav-link collapsed" href="/attendance">
                 <i class="bi bi-envelope"></i>
                 <span>Student Attendance</span>
             </a>
@@ -148,12 +148,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="InstituteImplementation.html">
+                    <a href="/institute">
                         <i class="bi bi-circle"></i><span>Institute</span>
                     </a>
                 </li>
                 <li>
-                    <a href="ClassImplementation.html">
+                    <a href="/classImplementation">
                         <i class="bi bi-circle"></i><span>Class</span>
                     </a>
                 </li>
@@ -167,12 +167,12 @@
             </a>
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="Teacher.html">
+                    <a href="/teacher">
                         <i class="bi bi-circle"></i><span>Add Teacher</span>
                     </a>
                 </li>
                 <li>
-                    <a href="TeacherRegistration.html">
+                    <a href="/teacherregistration">
                         <i class="bi bi-circle"></i><span>Teacher Registration</span>
                     </a>
                 </li>
@@ -180,7 +180,7 @@
         </li><!-- End Charts Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Parent.html">
+            <a class="nav-link collapsed" href="/parent">
                 <i class="bi bi-person"></i>
                 <span>Add Parent</span>
             </a>
@@ -203,7 +203,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Parent Manage</h1>
+        <h1 style="color: #4d1354">Parent Manage</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Parent</a></li>
@@ -216,7 +216,7 @@
         <div class="row">
             <div class="col-10"></div>
             <div class="d-grid gap-2 col-2 mx-auto mb-1">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal" style="background-color: #4d1354; color: white">
                     Add New Parent
                 </button>
             </div>
@@ -227,7 +227,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add parent</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #4d1354">Parent Form</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -243,7 +243,7 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingNIC,'^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$','parent','nic','old_parent');getParentByNic()" type="text" class="form-control" id="floatingNIC"
                                                                        placeholder="Your NIC">
-                                                                <label for="floatingNIC">NIC</label>
+                                                                <label for="floatingNIC">NIC <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -251,28 +251,28 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','parent','first_name','old_parent')" type="text" class="form-control" id="floatingFName"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingFName">First Name</label>
+                                                                <label for="floatingFName">First Name <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','parent','last_name','old_parent')" type="text" class="form-control" id="floatingLName"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingLName">Last Name</label>
+                                                                <label for="floatingLName">Last Name <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                         <div onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','parent','mobile_number','old_parent')" class="col-md-6">
                                                             <div class="form-floating">
                                                                 <input type="text" class="form-control" id="floatingMobile"
                                                                        placeholder="Your Mobile">
-                                                                <label for="floatingmobile">Mobile</label>
+                                                                <label for="floatingmobile">Mobile <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingTextarea,'','parent','address','old_parent')" type="text" class="form-control" id="floatingTextarea"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingTextarea">Address</label>
+                                                                <label for="floatingTextarea">Address <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -280,7 +280,7 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','parent','email','old_parent')" type="email" class="form-control" id="floatingEmail"
                                                                        placeholder="Your Email">
-                                                                <label for="floatingEmail">Email</label>
+                                                                <label for="floatingEmail">Email <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -288,7 +288,7 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="findStudentID()" type="text" class="form-control" id="floatingStid"
                                                                        placeholder="Student ID">
-                                                                <label for="floatingStid">Student ID</label>
+                                                                <label for="floatingStid">Student ID <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -296,7 +296,7 @@
                                                             <div class="form-floating">
                                                                 <input disabled type="text" class="form-control" id="stuName"
                                                                        placeholder="Your Name">
-                                                                <label for="floatingLName">Student First Name</label>
+                                                                <label for="floatingLName">Student First Name <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -305,7 +305,7 @@
                                                                 <select onchange="selectValidater(floatingSelect,'','parent','parent_status_id','old_parent')" class="form-select" id="floatingSelect" aria-label="State">
                                                                     <option selected>Select Status</option>
                                                                 </select>
-                                                                <label for="floatingSelect">Parent Status</label>
+                                                                <label for="floatingSelect">Parent Status <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
 
@@ -313,7 +313,7 @@
                                                             <div class="form-floating">
                                                                 <input onkeyup="textFieldValidator(floatingPPassword,'','parent','pr_password','old_parent')" type="Password" class="form-control" id="floatingPPassword"
                                                                        placeholder="Your Password">
-                                                                <label for="floatingPPassword">Create Password</label>
+                                                                <label for="floatingPPassword">Create Password <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
                                                     </form><!-- End floating Labels Form -->
@@ -323,9 +323,10 @@
                                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Parent</button>
-                        <button onclick="buttonUpdateMC()" type="submit" class="btn btn-secondary" id="updatebtn">Update Parent</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn">Add Parent</button>
+                        <button onclick="buttonUpdateMC()" type="submit" class="btn btn-outline-warning" id="updatebtn">Update Parent</button>
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                        <button type="submit" onclick="" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
                     </div>
                 </div>
             </div>
@@ -335,7 +336,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Parent table</h5>
+                        <h5 class="card-title" style="color: #4d1354">Parent table</h5>
                         <!-- Table with stripped rows -->
                         <table class="table datatable" id="prnt_table">
                             <thead>

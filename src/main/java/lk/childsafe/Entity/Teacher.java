@@ -52,6 +52,10 @@ public class Teacher {
     @JoinColumn(name = "teacher_status_id",referencedColumnName = "id")
     private TeacherStatus teacher_status_id;
 
+    public Teacher(Long id){
+        this.teacherid = id.toString();
+    }
+
 
 
 }

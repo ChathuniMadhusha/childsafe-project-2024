@@ -62,8 +62,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">Childsafe</span>
+            <!--      <img src="assets/img/logo.png" alt="">-->
+            <span class="d-none d-lg-block" style="color: #4d1354">ChildSafe</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -121,21 +121,21 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Student.html">
+            <a class="nav-link collapsed" href="/student">
                 <i class="bi bi-person"></i>
                 <span>Add Student</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentRegistration.html">
+            <a class="nav-link collapsed" href="/stureg">
                 <i class="bi bi-question-circle"></i>
                 <span>Student Class Registration</span>
             </a>
         </li><!-- End F.A.Q Page Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="StudentAttendance.html">
+            <a class="nav-link collapsed" href="/attendance">
                 <i class="bi bi-envelope"></i>
                 <span>Student Attendance</span>
             </a>
@@ -149,12 +149,12 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="InstituteImplementation.html">
+                    <a href="/institute">
                         <i class="bi bi-circle"></i><span>Institute</span>
                     </a>
                 </li>
                 <li>
-                    <a href="ClassImplementation.html">
+                    <a href="/classImplementation">
                         <i class="bi bi-circle"></i><span>Class</span>
                     </a>
                 </li>
@@ -168,12 +168,12 @@
             </a>
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="Teacher.html">
+                    <a href="/teacher">
                         <i class="bi bi-circle"></i><span>Add Teacher</span>
                     </a>
                 </li>
                 <li>
-                    <a href="TeacherRegistration.html">
+                    <a href="/teacherregistration">
                         <i class="bi bi-circle"></i><span>Teacher Registration</span>
                     </a>
                 </li>
@@ -181,7 +181,7 @@
         </li><!-- End Charts Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="Parent.html">
+            <a class="nav-link collapsed" href="/parent">
                 <i class="bi bi-person"></i>
                 <span>Add Parent</span>
             </a>
@@ -204,11 +204,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Student Manage</h1>
+        <h1 style="color: #4d1354">Student</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Student</li>
+                <li class="breadcrumb-item" >Student</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -216,7 +216,7 @@
         <div class="row">
            <div class="col-10"></div>
            <div class="d-grid gap-2 col-2 mx-auto mb-1">
-               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+               <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#basicModal" style="background-color: #4d1354; color: white">
                    Add New Student
                </button>
            </div>
@@ -227,7 +227,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #4d1354">Student Form</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -242,42 +242,42 @@
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingFName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','student','first_name','old_student')" type="text" class="form-control" id="floatingFName"
                                                            placeholder="Your Name">
-                                                    <label for="floatingFName">First Name</label>
+                                                    <label for="floatingFName">First Name <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingLName,'^[A-Z][a-z]{2,}(?: [A-Z][a-z]*)*$','student','last_name','old_student')" type="text" class="form-control" id="floatingLName"
                                                            placeholder="Your Name">
-                                                    <label for="floatingLName">Last Name</label>
+                                                    <label for="floatingLName">Last Name <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input type="date" onchange="dateFeildValidate(floatingDOB,'','student','dob','old_student')" class="form-control" id="floatingDOB"
                                                            placeholder="Your DOB">
-                                                    <label for="floatingDOB">Date of Birth</label>
+                                                    <label for="floatingDOB">Date of Birth <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingEmail,'^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$','student','email','old_student')" type="email" class="form-control" id="floatingEmail"
                                                            placeholder="Your Email">
-                                                    <label for="floatingEmail">Email</label>
+                                                    <label for="floatingEmail">Email  <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-floating">
                                         <textarea onkeyup="textFieldValidator(floatingTextarea,'','student','address','old_student')" class="form-control" placeholder="Address" id="floatingTextarea"
                                                   style="height: 100px;"></textarea>
-                                                    <label for="floatingTextarea">Address</label>
+                                                    <label for="floatingTextarea">Address <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingMobile,'^[0][7][0,1,2,4,5,6,7,8][0-9]{7}$','student','mobile_number','old_student')" type="text" class="form-control" id="floatingMobile"
                                                            placeholder="Your Mobile">
-                                                    <label for="floatingMobile">Mobile Number</label>
+                                                    <label for="floatingMobile">Mobile Number <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
 
@@ -286,14 +286,14 @@
                                                     <select onchange="selectValidater(floatingSelect,'','student','student_status_id','old_student')" class="form-select" id="floatingSelect" aria-label="State">
                                                         <option selected>Select Status</option>
                                                     </select>
-                                                    <label for="floatingSelect">Status</label>
+                                                    <label for="floatingSelect">Status <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
                                                     <input onkeyup="textFieldValidator(floatingSPassword,'','student','st_password','old_student')" type="Password" class="form-control" id="floatingSPassword"
                                                            placeholder="Your Name">
-                                                    <label for="floatingSPassword">Create Password</label>
+                                                    <label for="floatingSPassword">Create Password <span style="color: red">*</span></label>
                                                 </div>
                                             </div>
 
@@ -304,9 +304,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn">Add Student</button>
-                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-secondary" id="updatebtn">Update Student</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn" style="border-radius: 50rem !important">Add Student</button>
+                        <button type="submit" onclick="buttonUpdateMC()" class="btn btn-outline-warning" id="updatebtn" style="border-radius: 50rem !important">Update Student</button>
+                        <button type="submit" onclick="" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
                     </div>
                 </div>
             </div>
@@ -318,7 +319,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Student table</h5>
+                        <h5 class="card-title" style="color: #4d1354">Student table</h5>
                         <!-- Table with stripped rows -->
                         <table class="table datatable" id="std_table">
                             <thead>

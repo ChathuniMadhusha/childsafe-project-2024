@@ -56,6 +56,11 @@ public class Student {
         this.first_name = first_name;
 
     }
+
+
+    public Student(Long id){
+        this.studentid = id.toString();
+    }
     
 
 }
