@@ -29,6 +29,8 @@ const refreshTable = () =>{
         }
     }
 
+
+
 }
 
 const formReFill = (obj) =>{
@@ -44,7 +46,7 @@ const formReFill = (obj) =>{
 
 
     //set value in to select feild
-    fillSelectFieldtwoproperty(floatingSelectClass,"",classes,"class_code","class_name",stureg.class_implementation_id.class_code);
+    fillSelectField(floatingSelectClass,"",classes,"class_name",stureg.class_implementation_id.class_name);
     fillSelectField(floatingSelectStatus,"",statuss,"name",stureg.stu_registration_status_id.name);
 
     //disable add button
@@ -179,9 +181,7 @@ const refreshForm = () =>{
 
     classes = new Array();
     classes = httpGetRequest("/classImplementation/findall")
-    //fillSelectField(floatingSelectClass,"",classes,"class_name","");
-
-    fillSelectFieldtwoproperty(floatingSelectClass,"",classes,"class_code","class_name","")
+    fillSelectField(floatingSelectClass,"",classes,"class_name","");
 
     floatingFName.value="";
     floatingLName.value="";
@@ -201,7 +201,7 @@ const findStudentID = () => {
 
 
     if(floatingFName.value != ""){
-        let sid_pattern = new RegExp('^ST[0-9]{4}[1-9]$')
+        let sid_pattern = new RegExp('^ST[0-9]{5}$')
         if(sid_pattern.test(floatingFName.value)){
             let stcode = floatingFName.value;
             stu = httpGetRequest("/student/getbystudentnoforclass?studentno="+stcode);
