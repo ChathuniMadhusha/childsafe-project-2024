@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface StuClzRegRepositiry extends JpaRepository <StudentClassRegistration,Integer>{
 
     //query for get next teacherid
-    @Query(value = "SELECT CONCAT('SC', lpad(substring(max(t.stu_class_code),3)+1,5,'0')) FROM childsafe.stu_class_registration as t;",nativeQuery = true)
+    @Query(value = "SELECT CONCAT('SC', lpad(substring(max(t.stu_class_code),4)+1,6,'0')) FROM childsafe.stu_class_registration as t;",nativeQuery = true)
     String nexTeCode();
 
     //duplicate

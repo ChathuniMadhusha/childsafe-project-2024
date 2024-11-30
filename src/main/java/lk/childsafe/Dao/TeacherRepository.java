@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeacherRepository extends JpaRepository <Teacher,Integer>{
     //query for get next teacherid
-    @Query(value = "SELECT CONCAT('TE', lpad(substring(max(t.teacherid),3)+1,5,'0')) FROM childsafe.teacher as t;",nativeQuery = true)
+    @Query(value = "SELECT CONCAT('TE', lpad(substring(max(t.teacherid),4)+1,6,'0')) FROM childsafe.teacher as t;",nativeQuery = true)
     String nexTeCode();
 
 

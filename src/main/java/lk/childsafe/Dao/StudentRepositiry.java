@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface StudentRepositiry extends JpaRepository <Student,Integer>{
 
-    @Query(value = "SELECT CONCAT('ST', lpad(substring(max(s.studentid),3)+1,5,'0')) FROM childsafe.student as s;",nativeQuery = true)
+    @Query(value = "SELECT CONCAT('ST', lpad(substring(max(s.studentid),4)+1,6,'0')) FROM childsafe.student as s;",nativeQuery = true)
     String nextStCode();
 
     //query for filter by studentID

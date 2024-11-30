@@ -213,7 +213,7 @@ const refreshForm = () =>{
     tereg_status = httpGetRequest("/teacherregstatus/findall")
 
     //auto select value
-    fillSelectField(floatingSelectStatus,"",tereg_status,"name","Active");
+    fillSelectField(floatingSelectStatus,"",tereg_status,"name","In-Active");
     teacherregistration.teacher_reg_status_id = JSON.parse(floatingSelectStatus.value);
 
     //clear value after refesh

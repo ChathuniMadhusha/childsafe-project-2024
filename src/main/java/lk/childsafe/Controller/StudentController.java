@@ -10,6 +10,7 @@ import lk.childsafe.Entity.ParentStatus;
 import lk.childsafe.Entity.Student;
 import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,6 +32,9 @@ public class StudentController {
 
     @Autowired
     RoleRepository roleDao;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     //Load UI
@@ -69,18 +73,20 @@ public class StudentController {
 
         try{
                 //set auto value
+            
                 student.setStudentid(studentDao.nextStCode());
+                student.setSt_password(bCryptPasswordEncoder.encode(student.getSt_password()));
 
                 //save
                 studentDao.save(student);
 
                 //create user
                 User user = new User();
-                user.setUsername(student.getStudentid());
+                user.setUsername(student.getEmail());
                 user.setPassword(student.getSt_password());
                 user.setStudent_id(student);
                 user.setRole_id(roleDao.getReferenceById(1));
-                user.setPhotopath("/assets/img");
+                user.setPhotopath("/assets/img/");
                 user.setPhotoname("user1.png");
                 userDao.save(user);
 

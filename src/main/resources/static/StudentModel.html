@@ -129,7 +129,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input onkeyup="textFieldValidator(floatingSPassword,'','student','st_password','old_student')" type="Password" class="form-control" id="floatingSPassword"
+                                                    <input onkeyup="textFieldValidator(floatingSPassword,'^[a-zA-Z0-9!@#$%^&*()_+\\-/]{4,8}$','student','st_password','old_student')" type="Password" class="form-control" id="floatingSPassword"
                                                            placeholder="Your Name">
                                                     <label for="floatingSPassword">Create Password <span style="color: red">*</span></label>
                                                 </div>
@@ -143,7 +143,8 @@
                     </div>
                     <div class="modal-footer">
                         <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn" style="background-color: #4d1354; color: white">Create Account</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.replace('/login')">Close</button>
+
                     </div>
                 </div>
             </div>

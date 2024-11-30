@@ -201,7 +201,7 @@ const findStudentID = () => {
 
 
     if(floatingFName.value != ""){
-        let sid_pattern = new RegExp('^ST[0-9]{5}$')
+        let sid_pattern = new RegExp('^ST[0-9]{6}$')
         if(sid_pattern.test(floatingFName.value)){
             let stcode = floatingFName.value;
             stu = httpGetRequest("/student/getbystudentnoforclass?studentno="+stcode);

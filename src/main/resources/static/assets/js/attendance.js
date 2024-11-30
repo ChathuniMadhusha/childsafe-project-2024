@@ -5,6 +5,10 @@ window.addEventListener('load', refreshBrowser);
 function refreshBrowser() {
     refreshTable();
     refreshForm();
+    loggeduser = httpGetRequest("/loguser")
+    if(loggeduser.teacher == null){
+        $("#sidebar").removeAttr("hidden");
+    }
 }
 
 //define refresh table

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lk.childsafe.Dao.*;
 import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +30,9 @@ public class ParentController {
 
     @Autowired
     RoleRepository roleDao;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //Load UI
     @GetMapping(value = "")
@@ -62,6 +66,7 @@ public class ParentController {
 
         Parent activeParent = parentDao.findActiveParentByStudentid(parent.getStudent_id().getStudentid());
 
+
         if (activeParent != null) {
             // Parent with student ID exists and is active
             return "Parent insert not complete: Student ID is already linked to an active parent";
@@ -69,13 +74,14 @@ public class ParentController {
 
         // Proceed with saving if no active parent is found
         try {
+            parent.setPr_password(bCryptPasswordEncoder.encode(parent.getPr_password()));
             parentDao.save(parent);
 
             if (parent.getAccountreq()){
                 //create user
                 User user = new User();
                 user.setUsername(parent.getNic());
-                user.setPassword(parent.getPr_password());
+                user.setPassword(bCryptPasswordEncoder.encode(parent.getPr_password()));
                 user.setParent_id(parent);
                 user.setRole_id(roleDao.getReferenceById(3));
                 user.setPhotopath("/assets/img");

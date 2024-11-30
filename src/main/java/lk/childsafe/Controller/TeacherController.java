@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lk.childsafe.Dao.*;
 import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,9 @@ public class TeacherController {
 
     @Autowired
     RoleRepository roleDao;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //Load UI
     @GetMapping(value = "")
@@ -66,13 +70,17 @@ public class TeacherController {
     public String addTeacher(@RequestBody Teacher teacher){
 
         try{
+
             //set auto value
             teacher.setTeacherid(teacherDao.nexTeCode());
+            teacher.setTe_password(bCryptPasswordEncoder.encode(teacher.getTe_password()));
+            //save
+            teacherDao.save(teacher);
 
             //create user
             User user = new User();
-            user.setUsername(teacher.getTeacherid());
-            user.setPassword(teacher.getTe_password());
+            user.setUsername(teacher.getEmail());
+            user.setPassword(bCryptPasswordEncoder.encode(teacher.getTe_password()));
             user.setTeacher_id(teacher);
             user.setRole_id(roleDao.getReferenceById(2));
             user.setPhotopath("/assets/img");
@@ -80,8 +88,7 @@ public class TeacherController {
             userDao.save(user);
 
 
-            //save
-            teacherDao.save(teacher);
+
             return "0";
 
         }catch(Exception e){

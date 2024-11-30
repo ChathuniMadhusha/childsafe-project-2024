@@ -3,6 +3,7 @@ package lk.childsafe.Configuration;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +23,23 @@ public class WebConfig {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/dashboard", true)
+                .successHandler((request, response, authentication) -> {
+                    // Custom success handler for role-based redirection
+                    String redirectUrl = "/dashboard"; // Default for Admin
+                    if (authentication.getAuthorities().stream()
+                            .anyMatch(auth -> auth.getAuthority().equals("Teacher"))) {
+                        redirectUrl = "/teacherview"; // Redirect for Teacher
+                    }
+                    else if (authentication.getAuthorities().stream()
+                            .anyMatch(auth -> auth.getAuthority().equals("Student"))) {
+                        redirectUrl = "/studentview"; // Redirect for Teacher
+                    }
+                    else if (authentication.getAuthorities().stream()
+                            .anyMatch(auth -> auth.getAuthority().equals("Parent"))) {
+                        redirectUrl = "/parentview"; // Redirect for Teacher
+                    }
+                    response.sendRedirect(redirectUrl);
+                })
                 .failureUrl("/login?error=usernamepassworderror").and().httpBasic().and()
                 .authorizeHttpRequests((request) ->
                 {
@@ -34,16 +51,22 @@ public class WebConfig {
                             requestMatchers("/teachermodel").permitAll().
                             requestMatchers("/teacherstatus/**").permitAll().
                             requestMatchers("/parentmodel").permitAll().
+                            requestMatchers(HttpMethod.POST, "/parent").permitAll().
+                            requestMatchers(HttpMethod.POST, "/student").permitAll().
+                            requestMatchers(HttpMethod.POST, "/teacher").permitAll().
                             requestMatchers("/parentstatus/**").permitAll().
-                            requestMatchers("/student/**").permitAll().
+                            requestMatchers("/changeprofile").permitAll().
                             requestMatchers("/createaccount").permitAll().
                             requestMatchers("/accessdenied").permitAll().
                             requestMatchers("/createadmin").permitAll().
-                            requestMatchers("/teacher/**").hasAnyAuthority("Admin").
+                            requestMatchers("/teacher").hasAnyAuthority("Admin").
                             requestMatchers("/student").hasAnyAuthority("Admin").
                             requestMatchers("/parent").hasAnyAuthority("Admin").
                             requestMatchers("/classImplementation").hasAnyAuthority("Admin").
-                            requestMatchers("/stureg").hasAnyAuthority("Admin","Student").
+                            requestMatchers("/stureg").hasAnyAuthority("Admin").
+                            requestMatchers("/teacherregistration").hasAnyAuthority("Admin").
+                            requestMatchers("/institute").hasAnyAuthority("Admin").
+                            requestMatchers("/attendance").hasAnyAuthority("Admin","Teacher").
                             anyRequest().authenticated();
 
 
