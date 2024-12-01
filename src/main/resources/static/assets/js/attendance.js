@@ -65,13 +65,6 @@ const getClassName = () =>{
 
 
 
-
-
-
-
-
-
-
 const formReFill = (obj) =>{
 
     attendance = httpGetRequest("/attendance/getbyid?id="+obj.id)
@@ -248,6 +241,8 @@ const refreshForm = () =>{
 const getStudentListByClassRegistration = () => {
     divShowPresentCount.innerText = "";
     divShowAbsentCount.innerText = "";
+    let tbody = tblAttendanceMark.children[1];
+    tbody.innerHTML="";
     let studentListByCRegistration = httpGetRequest("/student/byclregistration?cid=" + (floatingClasscode.value))
     console.log(studentListByCRegistration);
     let tableBody =  tblAttendanceMark.children[1]
@@ -584,7 +579,7 @@ const buttonAddMc = () =>{
                             position: 'topRight',
                             overlay: true,
                             displayMode: 'once',
-                            zindex: 999,
+                            zindex: 2000,
                             animateInside: true,
                             closeOnEscape:true,
                             timeout: 2000,
@@ -606,7 +601,7 @@ const buttonAddMc = () =>{
                             close: true,
                             layout: 2,
                             displayMode: 'once',
-                            zindex: 999,
+                            zindex: 2000,
                             animateInside: true,
                             buttons: [
                                 ['<button><b>OK</b></button>', function (instance, toast) {
@@ -641,7 +636,7 @@ const buttonAddMc = () =>{
             close: true,
             layout: 2,
             displayMode: 'once',
-            zindex: 999,
+            zindex: 2000,
             animateInside: true,
             buttons: [
                 ['<button><b>OK</b></button>', function (instance, toast) {
@@ -732,7 +727,7 @@ const buttonUpdateMC = () =>{
                                 position: 'topRight',
                                 overlay: true,
                                 displayMode: 'once',
-                                zindex: 999,
+                                zindex: 2000,
                                 animateInside: true,
                                 closeOnEscape:true,
                                 timeout: 2000,
@@ -753,7 +748,7 @@ const buttonUpdateMC = () =>{
                                 close: true,
                                 layout: 2,
                                 displayMode: 'once',
-                                zindex: 999,
+                                zindex: 2000,
                                 animateInside: true,
                                 buttons: [
                                     ['<button><b>OK</b></button>', function (instance, toast) {
@@ -791,7 +786,7 @@ const buttonUpdateMC = () =>{
             close: true,
             layout: 2,
             displayMode: 'once',
-            zindex: 999,
+            zindex: 2000,
             animateInside: true,
             buttons: [
                 ['<button><b>OK</b></button>', function (instance, toast) {

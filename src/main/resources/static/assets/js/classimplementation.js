@@ -40,7 +40,7 @@ const getClassName = () => {
     var name = "";
 
     if(classimplementation.institute_implementation_id != null && classimplementation.grade_id != null && classimplementation.subject_id != null){
-        name = classimplementation.institute_implementation_id.inst_name + " " + "-" + " " +"Grade " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
+        name = classimplementation.institute_implementation_id.inst_name + " " + "-" + " " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
     }
 
     floatingCName.value = name;
@@ -62,10 +62,9 @@ const formReFill = (obj) =>{
 
 
     //set value in to text feild
-    floatingCCode.value=classimplementation.class_code;
     floatingCName.value=classimplementation.class_name;
 
-
+    let class_status = httpGetRequest("/classimplestatus/findall")
 
     //set value in to select feild
     fillSelectField(floatingSelectGrade,"",class_grade,"name",classimplementation.grade_id.name);

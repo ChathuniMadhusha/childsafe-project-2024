@@ -49,6 +49,13 @@ public class ClassImplementationsController {
         return classimplementationDao.findAll();
     }
 
+
+    //active-class
+    @GetMapping(value = "/activeclass", produces = "application/json")
+    public List<ClassImplementation> activeclass() {
+        return classimplementationDao.getActiveClass();
+    }
+
     //get class name according to class code
     @GetMapping (value = "/getbyclassname",produces = "application/json")
     public ClassImplementation getByClassname(@RequestParam("class_name") String class_name){
@@ -68,9 +75,9 @@ public class ClassImplementationsController {
     public String addClass(@RequestBody ClassImplementation classImplementation){
 
 
-        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_code());
+        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_name());
         if(extclassimplementation != null){
-            return "Cannot add this Class : This Class code is exist now";
+            return "Cannot add this Class : Class name already exist";
         }
         try{
             //tyena last code number eka gannwa
@@ -107,7 +114,7 @@ public class ClassImplementationsController {
             classImplementation.setClass_code(nextCode);
             //save
             classimplementationDao.save(classImplementation);
-            return classImplementation.getClass_code();
+            return "0";
 
         }catch(Exception e){
             return "Class Add not complete :" + e.getMessage();
@@ -120,8 +127,12 @@ public class ClassImplementationsController {
     @PutMapping
     @Transactional
     public String putClass(@RequestBody ClassImplementation classImplementation){
-        //check privilage
 
+
+        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_name());
+        if(extclassimplementation != null){
+            return "Cannot add this Class : Class name already exist";
+        }
         //save operate
         try {
             classimplementationDao.save(classImplementation);

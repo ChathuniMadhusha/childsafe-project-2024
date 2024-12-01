@@ -14,7 +14,7 @@ const refreshTable = () =>{
     sturegs=httpGetRequest("/stureg/findall")
 
     //create display property list
-    let display_property_list = ["stu_class_code","student_id.studentid","class_implementation_id.class_code","stu_registration_status_id.name"]
+    let display_property_list = ["stu_class_code","student_id.studentid","class_implementation_id.class_name","stu_registration_status_id.name"]
 
     //cretae display property type list
     let display_property_datatype = ["text","object","object","object"]
@@ -180,7 +180,7 @@ const refreshForm = () =>{
     stureg.stu_registration_status_id = JSON.parse(floatingSelectStatus.value);
 
     classes = new Array();
-    classes = httpGetRequest("/classImplementation/findall")
+    classes = httpGetRequest("/classImplementation/activeclass")
     fillSelectField(floatingSelectClass,"",classes,"class_name","");
 
     floatingFName.value="";
@@ -206,14 +206,22 @@ const findStudentID = () => {
             let stcode = floatingFName.value;
             stu = httpGetRequest("/student/getbystudentnoforclass?studentno="+stcode);
 
-            if (stu !=""){
+            if (stu != ""){
+                if(old_stureg == null){
+                    floatingLName.value = stu.first_name;
+                    stureg.student_id = stu;
+                    floatingLName.style.borderBottom = "2px solid green";
+                    floatingFName.style.borderBottom = "2px solid green";
+                }else {
+                    floatingLName.value = stu.first_name;
+                    stureg.student_id = stu;
+                    floatingLName.style.borderBottom = "2px solid orange";
+                    floatingFName.style.borderBottom = "2px solid orange";
+                }
 
-                floatingLName.value = stu.first_name;
-                stureg.student_id = stu;
-                floatingLName.style.borderBottom = "2px solid green";
-                floatingFName.style.borderBottom = "2px solid green";
 
-            }else {
+            }
+            else {
                 floatingLName.style.borderBottom = "2px solid red";
                 floatingFName.style.borderBottom = "2px solid red";
                 stureg.student_id = null;
