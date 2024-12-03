@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>ChildSafe</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -27,7 +27,7 @@
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/stylenew.css" rel="stylesheet">
   <!-- jquary -->
   <script src="assets/Resourse/Jquary/jquary.js"></script>
 
@@ -36,12 +36,7 @@
   <script src="/assets/js/dashboard.js"></script>
   <link rel="stylesheet" href="assets/fontawesom/css/all.css">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.2.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body>
@@ -51,8 +46,8 @@
 
   <div class="d-flex align-items-center justify-content-between">
     <a href="/dashboard" class="logo d-flex align-items-center">
-      <img src="assets/img/logo.png" alt="">
-      <span class="d-none d-lg-block">NiceAdmin</span>
+      <img src="assets/img/Child%20Safe.png" alt="">
+
     </a>
     <i class="bi bi-list toggle-sidebar-btn"></i>
   </div><!-- End Logo -->
@@ -218,7 +213,7 @@
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
           <img src="" alt="Profile" class="rounded-circle" id="logimage">
-          <span id="uname" class="d-none d-md-block dropdown-toggle ps-2"></span>
+          <span id="uname" class="d-none d-md-block dropdown-toggle ps-2" style="color: #4d1354"></span>
         </a><!-- End Profile Iamge Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -258,7 +253,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1 style="color: #4d1354">Dashboard</h1>
+      <h1 style="color: #4d1354" id="studentFName"></h1>
 
     </div><!-- End Page Title -->
 
@@ -273,29 +268,106 @@
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
+                  <h5 class="card-title" style="color: #4d1354">Your Student ID</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="studentID" style="color: #4d1354"></h6>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div><!-- End Sales Card -->
 
-            <!-- Revenue Card -->
+
+
+
+
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title" style="color: #4d1354">All Registered Class Count</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="regClassCount" style="color: #4d1354"></h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+
+
+            <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
                 <div class="card-body">
+                  <h5 class="card-title" style="color: #4d1354">All Registered Class List</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="form-floating mb-6">
+                   <select class="form-select" id="floatingSelectClass" aria-label="State">-->
+                    <option selected>Select Class</option>
+                    </select>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="classCount" style="color: #4d1354"></h6>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div><!-- End Revenue Card -->
 
-            <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+<!--            <div class="pagetitle">-->
+<!--              <h1 style="color: #4d1354"></h1>-->
+<!--            </div>-->
+<!--            <div class="col-md-8">-->
+<!--              <div class="form-floating mb-3">-->
+<!--                <select class="form-select" id="floatingSelectStatus" aria-label="State">-->
+<!--                  <option selected>Select Class</option>-->
 
-              <div class="card info-card customers-card">
-                <div class="card-body">
-                </div>
-              </div>
-            </div><!-- End Customers Card -->
+<!--                </select>-->
+<!--              </div>-->
+<!--            </div>-->
+
+
+
           </div>
         </div><!-- End Left side columns -->
       </div>
+
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" style="color: #4d1354">Attendance</h5>
+          <!-- Smal tables -->
+          <table class="table table-sm" id="tblAttendanceMark">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th sscope="col">Date</th>
+              <th scope="col">Class Name</th>
+              <th scope="col">Present or Absent</th>
+            </tr>
+            </thead>
+            <tbody id="ttttbody">
+            </tbody>
+          </table>
+          <!-- End small tables -->
+        </div>
+      </div>
+
+
+
     </section>
 
   </main><!-- End #main -->
@@ -319,24 +391,30 @@
 
 <script>
 
-  // let activeclasses = httpGetRequest("/classImplementation/activeClasses")
-  // if(Array.isArray(activeclasses)){
-  //   let classNamesText = activeclasses.map(classimplementation => classimplementation.class_name).join('\n');
-  //   activeClassList.innerText = classNamesText;
-  // } else {
-  //   activeClassList.innerText = 'No active classes available';
+
+  // let loggeduser = httpGetRequest("/loguser")
+  // if(loggeduser != null){
+  //   studentFName.innerText = loggeduser.student.first_name;
+  //   studentLName.innerText = loggeduser.student.last_name;
   // }
 
+  let loggeduser = httpGetRequest("/loguser")
+  if(loggeduser != null){
+    studentFName.innerText = "Hello.." + loggeduser.student.first_name + " " + loggeduser.student.last_name;
+    studentID.innerText = loggeduser.student.studentid;
+  }
 
 
-  let stuCount = httpGetRequest("/student/activestudent")
-  regStudent.innerText = stuCount.studentid;
+  let registerClassCount = httpGetRequest("/stureg/getclassaccorstu?studentid="+loggeduser.student.id);
+  regClassCount.innerText = registerClassCount.stu_class_code;
 
-  let ClCount = httpGetRequest("/classImplementation/activeClasses")
-  classCount.innerText = ClCount.class_code;
 
-  let teaCount = httpGetRequest("/teacher/activeTeachers")
-  staffCount.innerText = teaCount.teacherid;
+  getregistrationaccorstudent = httpGetRequest("/stureg/getclasslistaccorstu?studentid="+loggeduser.student.id)
+  fillSelectField(floatingSelectClass, "Select Class Name", getregistrationaccorstudent, 'class_implementation_id.class_name', '');
+
+
+ 
+
 
 
 </script>

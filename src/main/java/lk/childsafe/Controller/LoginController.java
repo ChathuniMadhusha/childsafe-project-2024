@@ -4,6 +4,7 @@ import lk.childsafe.Dao.RoleRepository;
 import lk.childsafe.Dao.UserRepository;
 import lk.childsafe.Entity.ForgetUser;
 import lk.childsafe.Entity.LogUser;
+import lk.childsafe.Entity.Student;
 import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
