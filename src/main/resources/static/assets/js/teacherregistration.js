@@ -14,7 +14,7 @@ const refreshTable = () =>{
     teacherregistration=httpGetRequest("/teacherregistration/findall")
 
     //create display property list
-    let display_property_list = ["teacher_reg_code","teacher_id.teacherid","teacher_id.first_name","class_implementation_id.class_code"]
+    let display_property_list = ["teacher_reg_code","teacher_id.teacherid","class_implementation_id.class_name","teacher_reg_status_id.name"]
 
     //cretae display property type list
     let display_property_datatype = ["text","object","object","object"]
@@ -38,7 +38,7 @@ const getFisrtName = () => {
 
 
     if(floatingTID.value != ""){
-        let tid_pattern = new RegExp('^TE[0-9]{4}[1-9]$')
+        let tid_pattern = new RegExp('^TE[0-9]{6}$')
         if(tid_pattern.test(floatingTID.value)){
             let tecode = floatingTID.value;
             te = httpGetRequest("/teacher/getbyteacherid?teacherid="+tecode);
@@ -80,7 +80,8 @@ const formReFill = (obj) =>{
 
     // //set value in to select feild
     fillSelectField(floatingSelectStatus,"",tereg_status,"name",teacherregistration.teacher_reg_status_id.name);
-    fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_name","class_code",teacherregistration.class_implementation_id.class_code);
+    //fillSelectField(floatingSelectClassCode,"",classimple,"class_code",teacherregistration.class_implementation_id.class_code);
+    fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_code","class_name",teacherregistration.class_implementation_id.class_code);
 
     //
     //
@@ -204,7 +205,7 @@ const refreshForm = () =>{
     //create array for fill select element
 
     classimple = new Array();
-    classimple = httpGetRequest("/classImplementation/findall")
+    classimple = httpGetRequest("/classImplementation/activeclass")
 
     fillSelectFieldtwoproperty(floatingSelectClassCode,"",classimple,"class_name","class_code","");
 
@@ -213,7 +214,7 @@ const refreshForm = () =>{
     tereg_status = httpGetRequest("/teacherregstatus/findall")
 
     //auto select value
-    fillSelectField(floatingSelectStatus,"",tereg_status,"name","In-Active");
+    fillSelectField(floatingSelectStatus,"",tereg_status,"name","Active");
     teacherregistration.teacher_reg_status_id = JSON.parse(floatingSelectStatus.value);
 
     //clear value after refesh
@@ -226,6 +227,8 @@ const refreshForm = () =>{
 
     //set style to default
     setStyle("1px solid #ced4da")
+    //dissable status field
+    $('#floatingSelectStatus').prop('disabled', true);
     disabledButton(true,false);
 
 }

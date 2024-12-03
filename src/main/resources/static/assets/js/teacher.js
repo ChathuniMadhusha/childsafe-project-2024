@@ -221,34 +221,227 @@ function setStyle(style){
 
 }
 
+// function nicFieldValidator(){
+//     let nic_pattern = new RegExp('^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$')
+//
+//     if(floatingNIC.value != ""){
+//         if(nic_pattern.test(floatingNIC.value)){
+//
+//             if(floatingNIC.value.length == 10){
+//                 nic="19"+floatingNIC.value.substring(0,5)+"0"+floatingNIC.value.substring(5,9);
+//
+//
+//             }else{
+//                 nic = floatingNIC.value
+//             }
+//
+//             let empBirtyear = nic.substring(0,4);
+//             let empBirthday = nic.substring(4,7);
+//
+//
+//             let empdob = new Date(empBirtyear)
+//
+//             if(parseInt(empBirtyear) % 4 == 0){
+//                 empdob.setDate(empdob.getDate()-1 + parseInt(empBirthday))
+//             }else{
+//                 empdob.setDate(empdob.getDate()-2 + parseInt(empBirthday))
+//             }
+//
+//
+//             floatingDOB.value = getDateFormat("date",empdob);
+//
+//             //update part
+//             teacher.nic = floatingNIC.value
+//             teacher.dob = floatingDOB.value;
+//
+//             if(old_teacher != null && teacher.nic != old_teacher.nic){
+//                 floatingNIC.style.borderBottom = "2px solid orange";
+//                 floatingDOB.style.borderBottom = "2px solid orange";
+//             }else{
+//                 floatingNIC.style.borderBottom = "2px solid green";
+//                 floatingDOB.style.borderBottom = "2px solid green";
+//
+//             }
+//
+//
+//
+//         }else{
+//             teacher.nic = null;
+//             floatingNIC.style.borderBottom = "2px solid red";
+//         }
+//     }else{
+//         teacher.nic = null;
+//         floatingNIC.style.borderBottom = "2px solid red";
+//
+//     }
+// }
+
+// function nicFieldValidator(){
+//     let nicpattern  = new RegExp('^(([0-9]{9}[VvXx])|([2,1][9,0][0,7,8,9][0-9]{9}))$');
+//     if(floatingNIC.value != ""){
+//         if(nicpattern.test(floatingNIC.value)){
+//
+//             if (floatingNIC.value.length == 10) {
+//                 nic = "19" + floatingNIC.value.substring(0,5) + "0" +  floatingNIC.value.substring(5,9);
+//             } else {
+//                 nic = floatingNIC.value;
+//             }
+//
+//             let techerBYera = nic.substring(0,4);
+//
+//
+//             let techerBDay = nic.substring(4,7);
+//
+//
+//             let dob = new Date(techerBYera);
+//
+//
+//             if(techerBYera%4 == 0){
+//                 //adika awuruddak nm
+//                 dob.setDate(techerBDay);
+//                 floatingDOB.value = getCurrentDate("date",dob);
+//             }else {
+//                 if(techerBDay <= 59){
+//                     dob.setDate(techerBDay);
+//                     floatingDOB.value = getCurrentDate("date",dob);
+//                 }else if(techerBDay == 60){
+//                     floatingDOB.value = techerBYera+"-02-29";
+//                 }else {
+//                     dob.setDate( parseInt(techerBDay)-1);
+//                     floatingDOB.value = getCurrentDate("date",dob);
+//                 }
+//             }
+//             teacher.nic  = floatingNIC.value;
+//             teacher.dob = floatingDOB.value;
+//
+//             if(old_teacher != null && teacher.nic != old_teacher.nic){
+//                 //setUpdate(txtStuNIC);
+//                 floatingNIC.style.border = "2px solid orange";
+//                 //setUpdate(floatingDOB);
+//                 floatingDOB.style.border = "2px solid orange";
+//             }
+//             else{
+//                 //setValid(txtStuNIC);
+//                 floatingNIC.style.border = "2px solid green";
+//                 //setValid(floatingDOB);
+//                 floatingDOB.style.border = "2px solid green";
+//
+//             }
+//         }
+//         else{
+//             teacher.nic  = null;
+//             teacher.dob = null;
+//             floatingDOB.value = "";
+//             //setInvalid(txtStuNIC);
+//             floatingNIC.style.border = "2px solid red";
+//         }
+//     }
+//     else{
+//         teacher.nic  = null;
+//         teacher.dob = null;
+//         floatingDOB.value = "";
+//         //setInvalid(txtStuNIC);
+//         floatingNIC.style.border = "2px solid red";
+//
+//     }
+// }
+
+
 function nicFieldValidator(){
-    let nic_pattern = new RegExp('^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$')
+    var NICNo = $("#floatingNIC").val();
+    var dayText = 0;
+    var year = "";
+    var month = "";
+    var day = "";
+    var gender = "";
+    if (NICNo.length != 10 && NICNo.length != 12) {
+        teacher.nic = null;
+        floatingNIC.style.borderBottom = "2px solid red";
+    } else if (NICNo.length == 10 && !$.isNumeric(NICNo.substr(0, 9))) {
+        teacher.nic = null;
+        floatingNIC.style.borderBottom = "2px solid red";
+    }
+    else {
+        console.log("valid nic")
+        // Year
+        if (NICNo.length == 10) {
+            year = "19" + NICNo.substr(0, 2);
+            dayText = parseInt(NICNo.substr(2, 3));
+        } else {
+            year = NICNo.substr(0, 4);
+            dayText = parseInt(NICNo.substr(4, 3));
+        }
 
-    if(floatingNIC.value != ""){
-        if(nic_pattern.test(floatingNIC.value)){
+        // Gender
+        if (dayText > 500) {
+            gender = "Female";
+            dayText = dayText - 500;
+        } else {
+            gender = "Male";
+        }
 
-            if(floatingNIC.value.length == 10){
-                nic="19"+floatingNIC.value.substring(0,5)+"0"+floatingNIC.value.substring(5,9);
+        // Day Digit Validation
+        if (dayText < 1 && dayText > 366) {
+            teacher.nic = null;
+            floatingNIC.style.borderBottom = "2px solid red";
+        } else {
 
-
-            }else{
-                nic = floatingNIC.value
+            //Month
+            if (dayText > 335) {
+                day = dayText - 335;
+                month = "12";
+            }
+            else if (dayText > 305) {
+                day = dayText - 305;
+                month = "11";
+            }
+            else if (dayText > 274) {
+                day = dayText - 274;
+                month = "10";
+            }
+            else if (dayText > 244) {
+                day = dayText - 244;
+                month = "09";
+            }
+            else if (dayText > 213) {
+                day = dayText - 213;
+                month = "08";
+            }
+            else if (dayText > 182) {
+                day = dayText - 182;
+                month = "07";
+            }
+            else if (dayText > 152) {
+                day = dayText - 152;
+                month = "06";
+            }
+            else if (dayText > 121) {
+                day = dayText - 121;
+                month = "05";
+            }
+            else if (dayText > 91) {
+                day = dayText - 91;
+                month = "04";
+            }
+            else if (dayText > 60) {
+                day = dayText - 60;
+                month = "03";
+            }
+            else if (dayText < 32) {
+                month = "01";
+                day = dayText;
+            }
+            else if (dayText > 31) {
+                day = dayText - 31;
+                month = "02";
             }
 
-            let empBirtyear = nic.substring(0,4);
-            let empBirthday = nic.substring(4,7);
-
-
-            let empdob = new Date(empBirtyear)
-
-            if(parseInt(empBirtyear) % 4 == 0){
-                empdob.setDate(empdob.getDate()-1 + parseInt(empBirthday))
+            if (day<10){
+                floatingDOB.value = (year+"-"+month+"-"+0+day);
             }else{
-                empdob.setDate(empdob.getDate()-2 + parseInt(empBirthday))
+                floatingDOB.value = (year+"-"+month+"-"+day);
             }
 
-
-            floatingDOB.value = getDateFormat("date",empdob);
 
             //update part
             teacher.nic = floatingNIC.value
@@ -263,19 +456,9 @@ function nicFieldValidator(){
 
             }
 
-
-
-        }else{
-            teacher.nic = null;
-            floatingNIC.style.borderBottom = "2px solid red";
         }
-    }else{
-        teacher.nic = null;
-        floatingNIC.style.borderBottom = "2px solid red";
-
     }
 }
-
 
 //function for check errors
 const checkErrors = () =>{
@@ -313,13 +496,13 @@ const checkErrors = () =>{
     }
 
     if(teacher.dob == null){
-        errors = errors+"Please enter Teacher DOB..<br>";
+        errors = errors+"Please enter correct NIC to get DOB..<br>";
         floatingDOB.style.borderBottom="2px solid red";
     }
 
     if(teacher.te_password == null){
         errors = errors+"Please enter Teacher Password..<br>";
-        floatingDOB.style.borderBottom="2px solid red";
+        floatingTPassword.style.borderBottom="2px solid red";
     }
 
     if(teacher.teacher_status_id == null){

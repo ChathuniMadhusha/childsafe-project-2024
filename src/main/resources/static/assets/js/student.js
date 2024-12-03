@@ -211,6 +211,13 @@ const refreshForm = () =>{
     //disable update button
     disabledButton(true,false);
 
+    let mindate = new Date("2000-01-01");
+    let maxdate = new Date("2006-12-31");
+
+// Set min and max date on the input field
+    floatingDOB.min = getDateFormat("date", mindate);
+    floatingDOB.max = getDateFormat("date", maxdate);
+-
     //dissable status field
     $('#floatingSelect').prop('disabled', true);
 

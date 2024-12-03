@@ -199,7 +199,7 @@ const refreshForm = () =>{
     class_status = httpGetRequest("/classimplestatus/findall")
 
     //auto select value
-    fillSelectField(floatingSelectClassStatus,"",class_status,"name","In-active");
+    fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");
     classimplementation.class_status_id = JSON.parse(floatingSelectClassStatus.value);
 
 

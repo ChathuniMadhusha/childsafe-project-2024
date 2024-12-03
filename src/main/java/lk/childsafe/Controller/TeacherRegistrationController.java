@@ -51,11 +51,17 @@ public class TeacherRegistrationController {
     @Transactional
     public String addTeacherregistration(@RequestBody TeacherRegistration teacherRegistration){
 
+        TeacherRegistration activereg = teacherregistrationDao.getClassByCourse_code(teacherRegistration.getClass_implementation_id().getClass_code());
+
+        if (activereg != null) {
+            // Parent with student ID exists and is active
+            return "Registration insert not complete : Active Teacher ID is already linked to Selected Class";
+        }
         try{
 
             //set auto value
-            //teacherRegistration.setTeacher_reg_code(teacherregistrationDao.nexTeRegCode());
-            teacherRegistration.setTeacher_reg_code("TEC0001");
+            teacherRegistration.setTeacher_reg_code(teacherregistrationDao.nexTeRegCode());
+
 
             //save
             teacherregistrationDao.save(teacherRegistration);

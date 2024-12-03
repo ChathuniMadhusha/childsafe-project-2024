@@ -21,6 +21,6 @@ public class TeacherRegStatusController {
     TeacherRegStatusRepository teacherregstatusDao;
 
     @GetMapping(value = "/findall", produces = "application/json")
-    public List<TeacherRegStatus> teacherRegStatuses() {return teacherregstatusDao.findAll();}
+    public List<TeacherRegStatus> teacherRegStatuses() {return teacherregstatusDao.findByIdNot(3);}
 
 }
