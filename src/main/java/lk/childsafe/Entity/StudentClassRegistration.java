@@ -36,4 +36,9 @@ public class StudentClassRegistration {
     private StudentRegStatus stu_registration_status_id;
 
 
+    public StudentClassRegistration(Long id){
+        this.stu_class_code = id.toString();
+    }
+
+
 }

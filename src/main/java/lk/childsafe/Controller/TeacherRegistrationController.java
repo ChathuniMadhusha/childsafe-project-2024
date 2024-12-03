@@ -46,6 +46,19 @@ public class TeacherRegistrationController {
         return teacherregistrationDao.getReferenceById(id);
     }
 
+    //register wela inna teacherta ta adalawa eya reg wela inna classes count eka
+    @GetMapping(value = "/getclassaccorteacher",params = "teacherid",produces = "application/json")
+    public TeacherRegistration getclassaccorteac(@RequestParam("teacherid")Integer teacherid){
+        return teacherregistrationDao.getClassbyTeacher(teacherid);
+    }
+
+
+    //get register class list according to teacher
+    @GetMapping(value = "/getclasslistaccorteac",params = "teacherid",produces = "application/json")
+    public List<TeacherRegistration> getclasslisttea(@RequestParam("teacherid")Integer teacherid){
+        return teacherregistrationDao.getClassListByTeacher(teacherid);
+    }
+
 
     @PostMapping
     @Transactional

@@ -33,5 +33,10 @@ public class TeacherRegistration {
     private TeacherRegStatus teacher_reg_status_id;
 
 
+    public TeacherRegistration(Long id){
+        this.teacher_reg_code = id.toString();
+    }
+
+
 
 }

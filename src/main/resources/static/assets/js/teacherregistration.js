@@ -38,7 +38,7 @@ const getFisrtName = () => {
 
 
     if(floatingTID.value != ""){
-        let tid_pattern = new RegExp('^TE[0-9]{4}[1-9]$')
+        let tid_pattern = new RegExp('^TE[0-9]{6}$')
         if(tid_pattern.test(floatingTID.value)){
             let tecode = floatingTID.value;
             te = httpGetRequest("/teacher/getbyteacherid?teacherid="+tecode);
@@ -213,7 +213,7 @@ const refreshForm = () =>{
     tereg_status = httpGetRequest("/teacherregstatus/findall")
 
     //auto select value
-    fillSelectField(floatingSelectStatus,"",tereg_status,"name","In-Active");
+    fillSelectField(floatingSelectStatus,"",tereg_status,"name","Active");
     teacherregistration.teacher_reg_status_id = JSON.parse(floatingSelectStatus.value);
 
     //clear value after refesh

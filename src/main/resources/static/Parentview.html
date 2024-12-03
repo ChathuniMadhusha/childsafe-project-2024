@@ -258,7 +258,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1 style="color: #4d1354">Dashboard</h1>
+      <h1 style="color: #4d1354" ></h1>
 
     </div><!-- End Page Title -->
 
@@ -270,7 +270,7 @@
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-4 col-md-12">
               <div class="card info-card sales-card">
                 <div class="card-body">
                 </div>
@@ -328,15 +328,17 @@
   // }
 
 
-
-  let stuCount = httpGetRequest("/student/activestudent")
-  regStudent.innerText = stuCount.studentid;
-
-  let ClCount = httpGetRequest("/classImplementation/activeClasses")
-  classCount.innerText = ClCount.class_code;
-
-  let teaCount = httpGetRequest("/teacher/activeTeachers")
-  staffCount.innerText = teaCount.teacherid;
+  // let stuName = httpGetRequest("/student/findall")
+  // studentName.innerText = stuName.stidentid;
+  //
+  // let stuCount = httpGetRequest("/student/activestudent")
+  // regStudent.innerText = stuCount.studentid;
+  //
+  // let ClCount = httpGetRequest("/classImplementation/activeClasses")
+  // classCount.innerText = ClCount.class_code;
+  //
+  // let teaCount = httpGetRequest("/teacher/activeTeachers")
+  // staffCount.innerText = teaCount.teacherid;
 
 
 </script>

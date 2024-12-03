@@ -46,6 +46,20 @@ public class StuClzRegController {
         return stuClzRegDao.getReferenceById(id);
     }
 
+
+    //register wela inna student ta adalawa eya reg wela inna classes count eka
+    @GetMapping(value = "/getclassaccorstu",params = "studentid",produces = "application/json")
+    public StudentClassRegistration getclassaccorstu(@RequestParam("studentid")Integer studentid){
+        return stuClzRegDao.getClassbyStudent(studentid);
+    }
+
+    //get register class list according to student
+    @GetMapping(value = "/getclasslistaccorstu",params = "studentid",produces = "application/json")
+    public List<StudentClassRegistration> getclassliststu(@RequestParam("studentid")Integer studentid){
+        return stuClzRegDao.getClass(studentid);
+    }
+
+
     @PostMapping
     public String addReg(@RequestBody StudentClassRegistration studentClassRegistration){
 
