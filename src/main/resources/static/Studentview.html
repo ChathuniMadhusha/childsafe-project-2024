@@ -314,10 +314,14 @@
                   <h5 class="card-title" style="color: #4d1354">All Registered Class List</h5>
                   <div class="d-flex align-items-center">
                     <div class="form-floating mb-6">
-                   <select class="form-select" id="floatingSelectClass" aria-label="State">-->
+                   <select onchange="getAttendance();" class="form-select" id="floatingSelectClass" aria-label="State">-->
                     <option selected>Select Class</option>
                     </select>
+
+                      <input type="text" disabled>
                     </div>
+<!--                    <button style="margin-left: 10px" class="btn btn-info" onclick="getAttendance();">My Attendance</button>-->
+
                     <div class="ps-3">
                       <h6 id="classCount" style="color: #4d1354"></h6>
                     </div>
@@ -350,11 +354,12 @@
         <div class="card-body">
           <h5 class="card-title" style="color: #4d1354">Attendance</h5>
           <!-- Smal tables -->
-          <table class="table table-sm" id="tblAttendanceMark">
+          <table class="table table-sm" id="tblAttendanceReportTable">
             <thead>
             <tr>
               <th scope="col">#</th>
               <th sscope="col">Date</th>
+              <th scope="col">Fisrt Name</th>
               <th scope="col">Class Name</th>
               <th scope="col">Present or Absent</th>
             </tr>
@@ -388,6 +393,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+<script src="assets/js/studentView.js"></script>
 
 <script>
 

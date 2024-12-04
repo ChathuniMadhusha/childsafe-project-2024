@@ -1,6 +1,5 @@
 package lk.childsafe.Controller;
 
-import jakarta.transaction.Transactional;
 import lk.childsafe.Dao.*;
 import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +53,21 @@ public class ParentController {
     public Parent getParentByQPId(@RequestParam("id") Integer id){
         return parentDao.getReferenceById(id);
     }
+
+
+
+    //get mapping for get studentcount according to parent
+    @GetMapping(value = "/getstudentcount",params = "parentid",produces = "application/json")
+    public Parent getclassaccorstu(@RequestParam("parentid")Integer parentid){
+        return parentDao.getStudentCount(parentid);
+    }
+
+//    //get mapping for get student list according to parent
+    @GetMapping(value = "/getstudentList",params = "parentid",produces = "application/json")
+    List<Parent> getstudentlist(@RequestParam("parentid")Integer parentid){
+        return parentDao.getStudentList(parentid);
+    }
+
 
     //get parent by NIC
     @GetMapping (value = "/getbynic",produces = "application/json")

@@ -53,4 +53,9 @@ public class Parent {
     @JoinColumn(name = "student_id",referencedColumnName = "id")
     private Student student_id;
 
+    public Parent(Long id){
+        this.address = id.toString();
+    }
+
+
 }
