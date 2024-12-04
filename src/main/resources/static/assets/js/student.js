@@ -38,7 +38,8 @@ const refreshTable = () =>{
     //     }
     // }
 
-
+    //To add jquery table
+    $('#std_table').dataTable();
 
 
 

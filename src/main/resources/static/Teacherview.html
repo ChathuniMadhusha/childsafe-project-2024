@@ -34,6 +34,9 @@
 <!--Link Dashboard and common js-->
   <script src="assets/js/common.js"></script>
   <script src="/assets/js/dashboard.js"></script>
+  <script src="/assets/js/teacherview.js"></script>
+
+
   <link rel="stylesheet" href="assets/fontawesom/css/all.css">
 
   <!-- =======================================================
@@ -312,9 +315,10 @@
                   <h5 class="card-title" style="color: #4d1354">All Registered Class List</h5>
                   <div class="d-flex align-items-center">
                     <div class="form-floating mb-6">
-                      <select class="form-select" id="floatingSelectClass" aria-label="State">-->
+                      <select onchange="getTableDetails()" class="form-select" id="floatingSelectClass" aria-label="State">-->
                         <option selected>Select Class</option>
                       </select>
+                      <label for="floatingSelectClass">Class name</label>
                     </div>
                     <div class="ps-3">
                       <h6 id="classCount" style="color: #4d1354"></h6>
@@ -338,12 +342,14 @@
             <thead>
             <tr>
               <th scope="col">#</th>
-              <th sscope="col">Date</th>
+              <th scope="col">Date</th>
               <th scope="col">Class Name</th>
-              <th scope="col">Perecentage</th>
+              <th scope="col">Present Count</th>
+              <th scope="col">Absent Count</th>
+              <th scope="col">Present Percentage</th>
             </tr>
             </thead>
-            <tbody id="ttttbody">
+            <tbody id="tbl_body">
             </tbody>
           </table>
           <!-- End small tables -->
@@ -371,36 +377,6 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
-<script>
-
-  // let activeclasses = httpGetRequest("/classImplementation/activeClasses")
-  // if(Array.isArray(activeclasses)){
-  //   let classNamesText = activeclasses.map(classimplementation => classimplementation.class_name).join('\n');
-  //   activeClassList.innerText = classNamesText;
-  // } else {
-  //   activeClassList.innerText = 'No active classes available';
-  // }
-
-
-  let loggeduser = httpGetRequest("/loguser")
-  if(loggeduser != null){
-    teacherFName.innerText = "Hello.." + loggeduser.teacher.first_name + " " + loggeduser.teacher.last_name;
-    teacherID.innerText = loggeduser.teacher.teacherid;
-  }
-
-  let registerClassCount = httpGetRequest("/teacherregistration/getclassaccorteacher?teacherid="+loggeduser.teacher.id);
-  regClassCount.innerText = registerClassCount.teacher_reg_code;
-
-  getregistrationaccorteacher = httpGetRequest("/teacherregistration/getclasslistaccorteac?teacherid="+loggeduser.teacher.id)
-  fillSelectField(floatingSelectClass, "Select Class Name", getregistrationaccorteacher, 'class_implementation_id.class_name', '');
-
-
-
-
-</script>
-
-
 </body>
 
 </html>

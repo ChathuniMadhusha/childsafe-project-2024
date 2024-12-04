@@ -59,6 +59,7 @@ public class WebConfig {
                             requestMatchers("/createaccount").permitAll().
                             requestMatchers("/accessdenied").permitAll().
                             requestMatchers("/createadmin").permitAll().
+                            requestMatchers("/dashboard").hasAnyAuthority("Admin").
                             requestMatchers("/teacher").hasAnyAuthority("Admin").
                             requestMatchers("/student").hasAnyAuthority("Admin").
                             requestMatchers("/parent").hasAnyAuthority("Admin").
@@ -76,7 +77,7 @@ public class WebConfig {
                 .logoutSuccessUrl("/login")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/error");
+                .accessDeniedPage("/accessdenied");
         return http.build();
     }
 

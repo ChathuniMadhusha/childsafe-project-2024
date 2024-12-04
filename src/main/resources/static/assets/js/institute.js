@@ -29,7 +29,8 @@ const refreshTable = () =>{
         }
     }
 
-
+    //To add jquery table
+    $('#ins_table').dataTable();
 }
 
 

@@ -29,6 +29,9 @@ const refreshTable = () =>{
         }
     }
 
+    //To add jquery table
+    $('#tchr_table').dataTable();
+
 }
 
 const formReFill = (obj) =>{

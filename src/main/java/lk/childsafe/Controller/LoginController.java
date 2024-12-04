@@ -84,7 +84,7 @@ public class LoginController {
         return loginUi;
     }
 
-    @GetMapping(value = "/error")
+    @GetMapping(value = "/accessdenied")
     public ModelAndView accessDenied(){
         ModelAndView accessdenied = new ModelAndView();
         accessdenied.setViewName("404.html");

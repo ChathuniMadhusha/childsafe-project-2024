@@ -8,6 +8,13 @@ function refreshBrowser() {
     loggeduser = httpGetRequest("/loguser")
     if(loggeduser.teacher == null){
         $("#sidebar").removeAttr("hidden");
+        // Select the existing stylesheet link
+        let stylesheet = document.querySelector('link[href="assets/css/stylenew.css"]');
+
+        // Change the href to the new stylesheet
+        if (stylesheet) {
+            stylesheet.href = "assets/css/style.css";
+        }
     }
 }
 
@@ -34,6 +41,8 @@ const refreshTable = () =>{
     //     }
     // }
 
+    //To add data table
+    $('#attendance_tbl').dataTable();
 }
 
 

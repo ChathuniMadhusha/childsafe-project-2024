@@ -28,6 +28,8 @@ const refreshTable = () =>{
             stucls_tbl.children[1].children[index].children[5].children[0].disabled = true;
         }
     }
+    //To add jquery table
+    $('#stucls_tbl').dataTable();
 
 
 

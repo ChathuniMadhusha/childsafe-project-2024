@@ -30,6 +30,9 @@ const refreshTable = () =>{
         }
     }
 
+    //To add data table
+    $('#classimple_table').dataTable();
+
 }
 
 
