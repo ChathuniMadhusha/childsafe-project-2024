@@ -45,7 +45,6 @@
 
     <!-- Datatable -->
     <link rel="stylesheet" type="text/css" href="assets/Resourse/Datatables/datatables.min.css">
-
     <script type="text/javascript" src="assets/Resourse/Datatables/datatables.min.js"></script>
 
     <!--font awesome-->
@@ -479,7 +478,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="color: #4d1354">Teacher Registration Table</h5>
                         <!-- Table with stripped rows -->
-                        <table class="table datatable" id="teacherregistration_tbl">
+                        <table class="table" id="teacherregistration_tbl">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -490,6 +489,8 @@
                                 <th scope="col">Modify</th>
                             </tr>
                             </thead>
+                            <tbody id="tbl_body">
+                            </tbody>
 
                         </table>
                         <!-- End Table with stripped rows -->

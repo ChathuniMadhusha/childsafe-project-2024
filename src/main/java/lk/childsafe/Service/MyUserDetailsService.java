@@ -33,9 +33,9 @@ public class MyUserDetailsService implements UserDetailsService {
             // Check role and status
             boolean status = false;
             if (logeduser.getRole_id().getId() == 1) { // Student
-                status = logeduser.getStudent_id().getStudent_status_id().getId() == 1;
+                status = logeduser.getStudent_id().getStudent_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 2) { // Teacher
-                status = logeduser.getTeacher_id().getTeacher_status_id().getId() == 1;
+                status = logeduser.getTeacher_id().getTeacher_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 3) { // Parent
                 status = logeduser.getParent_id().getParent_status_id().getId() == 1;
             } else {

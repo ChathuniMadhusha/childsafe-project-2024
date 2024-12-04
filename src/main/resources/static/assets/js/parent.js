@@ -29,6 +29,9 @@ const refreshTable = () =>{
         }
     }
 
+    //To add jquery table
+    $('#prnt_table').dataTable();
+
 }
 
 const formReFill = (obj) =>{

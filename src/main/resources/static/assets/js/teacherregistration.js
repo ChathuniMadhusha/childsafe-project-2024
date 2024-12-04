@@ -30,6 +30,9 @@ const refreshTable = () =>{
         }
     }
 
+    //To add jquery table
+    $('#teacherregistration_tbl').dataTable();
+
 
 }
 
