@@ -40,7 +40,7 @@ public class StuClzRegController {
         return stuClzRegDao.findAll();
     }
 
-    //get mapping service for get student by given quary variable id[/student/getbyid?id=1]
+    //get mapping service for get student by given quary variable id[/student/getbyid?id=1]// for refill
     @GetMapping(value = "/getbyid" , produces = "application/json")
     public StudentClassRegistration getRegByQPId(@RequestParam("id") Integer id){
         return stuClzRegDao.getReferenceById(id);

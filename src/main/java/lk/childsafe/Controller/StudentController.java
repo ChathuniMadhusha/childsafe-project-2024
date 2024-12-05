@@ -182,4 +182,11 @@ public class StudentController {
 
     }
 
+
+    //get mapping service for get student list by parent NIC]
+    @GetMapping(value = "/getStByParenetNIC" , produces = "application/json")
+    public List<Student> getStudentByNIC(@RequestParam("nic") String nic){
+        return studentDao.getStByNic(nic);
+    }
+
 }

@@ -51,6 +51,8 @@ public class WebConfig {
                             requestMatchers("/teachermodel").permitAll().
                             requestMatchers("/teacherstatus/**").permitAll().
                             requestMatchers("/parentmodel").permitAll().
+                            requestMatchers("/student/getbystudentno/**").permitAll().
+                            requestMatchers("/parent/**").permitAll().
                             requestMatchers(HttpMethod.POST, "/parent").permitAll().
                             requestMatchers(HttpMethod.POST, "/student").permitAll().
                             requestMatchers(HttpMethod.POST, "/teacher").permitAll().

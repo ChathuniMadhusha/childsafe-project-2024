@@ -37,6 +37,10 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     @Query(value = "select new Student(count(s.id)) from Student s where s.student_status_id.id =1")
     Student findActiveStudent();
 
+    //filtering query for get student list by parent nic
+    @Query(value = "select s from Student s where s.id in (select p.student_id.id from Parent p where p.nic=?1)")
+    List<Student> getStByNic(String nic);
+
 
 
 }

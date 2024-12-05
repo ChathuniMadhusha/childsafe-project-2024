@@ -58,7 +58,7 @@ public class ParentController {
 
     //get mapping for get studentcount according to parent
     @GetMapping(value = "/getstudentcount",params = "parentid",produces = "application/json")
-    public Parent getclassaccorstu(@RequestParam("parentid")Integer parentid){
+    public Parent getclassaccorstu(@RequestParam("parentid")String parentid){
         return parentDao.getStudentCount(parentid);
     }
 
