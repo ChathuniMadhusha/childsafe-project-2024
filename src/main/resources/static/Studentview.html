@@ -314,11 +314,19 @@
                   <h5 class="card-title" style="color: #4d1354">All Registered Class List</h5>
                   <div class="d-flex align-items-center">
                     <div class="form-floating mb-6">
-                   <select onchange="getAttendance();" class="form-select" id="floatingSelectClass" aria-label="State">-->
-                    <option selected>Select Class</option>
-                    </select>
+                      <div class="row">
+                        <div class="col-7">
+                          <select onchange="getAttendance();" class="form-select" id="floatingSelectClass" aria-label="State">-->
+                            <option selected>Select Class</option>
+                          </select>
+                        </div>
+                       <div class="col-5">
+                         <input id="precentage" type="text" disabled>
+                       </div>
 
-                      <input id="precentage" type="text" disabled>
+
+                      </div>
+
                     </div>
 <!--                    <button style="margin-left: 10px" class="btn btn-info" onclick="getAttendance();">My Attendance</button>-->
 

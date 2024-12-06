@@ -22,16 +22,12 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     @Query(value = "select s from Student s where s.studentid = ?1 and s.student_status_id.id != 3")
     Student getByStudentnoforclass(String studentno);
 
-
     //check duplicate with find student by given student name without quary
     Student findStudentByStudentid(String name);
-
-
 
     //filtering query for get student list
     @Query(value = "select new Student(s.id, s.studentid, s.first_name) from Student s where s.id in (select scr.student_id.id from StudentClassRegistration scr where scr.class_implementation_id.class_code=?1 and scr.stu_registration_status_id.id=1)")
     List<Student> getBySession(Integer cid);
-
 
     //Dash bord eke card wlata data ganna
     @Query(value = "select new Student(count(s.id)) from Student s where s.student_status_id.id =1")
