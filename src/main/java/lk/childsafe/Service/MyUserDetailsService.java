@@ -37,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService {
             } else if (logeduser.getRole_id().getId() == 2) { // Teacher
                 status = logeduser.getTeacher_id().getTeacher_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 3) { // Parent
-                status = logeduser.getParent_id().getParent_status_id().getId() == 1;
+                status = logeduser.getParent_id().getParent_status_id().getId() != 2;
             } else {
                 status = true; // Admin role default to active
             }

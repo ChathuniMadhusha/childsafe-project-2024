@@ -49,6 +49,8 @@ const formReFill = (obj) =>{
     floatingMobile.value=parent.mobile_number;
     floatingPPassword.value=parent.te_password;
     floatingStid.value=parent.student_id.studentid;
+    stuName.value=parent.student_id.first_name;
+
 
     //set value in to select feild
     fillSelectField(floatingSelect,"",statuss,"name",parent.parent_status_id.name);

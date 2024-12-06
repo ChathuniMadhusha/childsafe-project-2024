@@ -218,7 +218,7 @@ const refreshForm = () =>{
 // Set min and max date on the input field
     floatingDOB.min = getDateFormat("date", mindate);
     floatingDOB.max = getDateFormat("date", maxdate);
--
+
     //dissable status field
     $('#floatingSelect').prop('disabled', true);
 

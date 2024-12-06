@@ -146,8 +146,17 @@ public class ParentController {
         Parent extparent = parentDao.getReferenceById(parent.getId());
         if(extparent != null){
             try {
+                List<Parent> extParentList = parentDao.getParentByNic(parent.getNic());
+                if (extParentList.size() > 1) {
+                    for (Parent p : extParentList) {
+                        p.setParent_status_id(parentstatusDao.getReferenceById(2));
+                        parentDao.save(p);
+                    }
+                }else {
+                    extparent.setParent_status_id(parentstatusDao.getReferenceById(2));
+                }
 
-                extparent.setParent_status_id(parentstatusDao.getReferenceById(2));
+
                 parentDao.save(extparent);
 
                 return "0";

@@ -34,7 +34,7 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     Student findActiveStudent();
 
     //filtering query for get student list by parent nic
-    @Query(value = "select s from Student s where s.id in (select p.student_id.id from Parent p where p.nic=?1)")
+    @Query(value = "select s from Student s where s.id in (select p.student_id.id from Parent p where p.nic=?1 and p.parent_status_id.id=1)")
     List<Student> getStByNic(String nic);
 
 

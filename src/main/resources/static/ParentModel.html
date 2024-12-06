@@ -66,7 +66,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #4d1354;">Parent Sign-Up Form</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" onclick="window.location.replace('/login')" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12">
@@ -108,7 +108,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input onkeyup="textFieldValidator(floatingTextarea,'','parent','address','old_parent')" type="text" class="form-control" id="floatingTextarea"
+                                                    <input onkeyup="textFieldValidator(floatingTextarea,'^[A-Z0-9][A-Za-z0-9/\\-, ]{2,}$','parent','address','old_parent')" type="text" class="form-control" id="floatingTextarea"
                                                            placeholder="Your Name">
                                                     <label for="floatingTextarea">Address <span style="color: red">*</span></label>
                                                 </div>
@@ -161,8 +161,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="buttonAddMc()" type="submit" class="btn btn-primary" id="addbtn" style="background-color: #4d1354; color: white;">Create Acount</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="window.location.replace('/login')">Close</button>
+                        <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn" style="border-radius: 50rem !important">Create Acount</button>
+                        <button type="button" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important" data-bs-dismiss="modal" onclick="window.location.replace('/login')">Close</button>
                     </div>
                 </div>
             </div>

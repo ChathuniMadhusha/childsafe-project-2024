@@ -10,6 +10,20 @@ function refreshBrowser() {
 
 }
 
+//check log user for redirect home
+function checkLogUser(){
+    console.log("Check")
+    if (loggeduser.student != null){
+        window.location.href = '/studentview';
+    } else if(loggeduser.teacher != null){
+        window.location.href = '/teacherview';
+    } else if(loggeduser.parent != null){
+        window.location.href = '/parentview';
+    }else{
+        window.location.href = '/dashboard';
+    }
+}
+
 
 function setUserProfileDetails(){
 
