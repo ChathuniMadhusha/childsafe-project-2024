@@ -420,24 +420,40 @@
 
                                                     <!-- Floating Labels Form -->
                                                     <form onsubmit="return false" class="row g-3">
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-5">
                                                             <div class="form-floating mb-3">
                                                                 <select onchange="selectValidater(floatingSelectGrade,'','classimplementation','grade_id','old_classimplementation'); getClassName(); "  class="form-select" id="floatingSelectGrade" aria-label="State">
                                                                     <option selected>Select Grade</option>
 
                                                                 </select>
+
                                                                 <label for="floatingSelectGrade">Grade <span style="color: red">*</span></label>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-1">
+                                                            <button data-bs-toggle="modal" data-bs-target="#editeGrade"
+                                                                    target="editeGrade"
+                                                                    style="background-color: #4d1354; border-radius: 25px"><i
+                                                                    class="fa-solid fa-plus" style="color: white"></i></button>
+                                                        </div>
 
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-5">
                                                             <div class="form-floating mb-3">
                                                                 <select onchange="selectValidater(floatingSelectSubject,'','classimplementation','subject_id','old_classimplementation');getClassName(); " class="form-select" id="floatingSelectSubject" aria-label="State">
                                                                     <option selected>Select Subject</option>
 
                                                                 </select>
+
+
                                                                 <label for="floatingSelectSubject">Subject <span style="color: red">*</span></label>
                                                             </div>
+                                                        </div>
+
+                                                        <div class="col-md-1">
+                                                            <button data-bs-toggle="modal" data-bs-target="#editeSubject"
+                                                                    target="editeSubject"
+                                                                    style="background-color: #4d1354; border-radius: 25px"><i
+                                                                    class="fa-solid fa-plus" style="color: white"></i></button>
                                                         </div>
 
                                                         <div class="col-md-6">
@@ -579,6 +595,91 @@
 
 
     </section>
+
+
+    <div class="modal" id="editeGrade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #4d1354; color: white">
+                    <h3>Add Grade</h3>
+                </div>
+                <div class="modal-body">
+                    <br><br>
+                    <div class="row">
+                        <div class="col-12" style="padding-left: 20px; padding-right: 20px">
+                            <div class="mb-3">
+                                <label for="txtGrade" class="form-label">
+                                    <h6><b>&nbsp&nbspGrade : </b>
+                                    </h6>
+                                </label>
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control formcontrol"
+                                           id="txtGrade" data-bs-toggle="tooltip"
+                                           data-bs-placement="top" title=""
+                                           onkeyup="textFieldValidator(txtGrade,'','grade','name','oldgrade');"
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnClose" data-bs-dismiss="modal"
+                            style="background-color: #4d1354; border-radius: 15px; color: white; border: none; padding: 9px 30px;">
+                        <i class="fa-solid fa-xmark"></i>&nbsp&nbspClose
+                    </button>
+                    <button class="btnAddDuration" onclick="buttonAddGradeMc();"
+                            style="background-color: #4d1354; border-radius: 15px; color: white; border: none; padding: 9px 30px;">
+                        <i class="fa-regular fa-up"></i>&nbsp&nbspAdd
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editeSubject">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #4d1354; color: white">
+                    <h3>Add Subject</h3>
+                </div>
+                <div class="modal-body">
+                    <br><br>
+                    <div class="row">
+                        <div class="col-12" style="padding-left: 20px; padding-right: 20px">
+                            <div class="mb-3">
+                                <label for="txtGrade" class="form-label">
+                                    <h6><b>&nbsp&nbspSubject : </b>
+                                    </h6>
+                                </label>
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control formcontrol"
+                                           id="txtSubject" data-bs-toggle="tooltip"
+                                           data-bs-placement="top" title=""
+                                           onkeyup="textFieldValidator(txtSubject,'','subject','name','oldsubject');"
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnClose" data-bs-dismiss="modal"
+                            style="background-color: #4d1354; border-radius: 15px; color: white; border: none; padding: 9px 30px;">
+                        <i class="fa-solid fa-xmark"></i>&nbsp&nbspClose
+                    </button>
+                    <button class="btnAddDuration" onclick="buttonAddSubjectMc();"
+                            style="background-color: #4d1354; border-radius: 15px; color: white; border: none; padding: 9px 30px;">
+                        <i class="fa-regular fa-up"></i>&nbsp&nbspAdd
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     </div>

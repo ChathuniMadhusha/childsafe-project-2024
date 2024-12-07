@@ -5,6 +5,8 @@ window.addEventListener('load', refreshBrowser);
 function refreshBrowser() {
     refreshTable();
     refreshForm();
+    refreshGradeForm();
+    refreshSubjectForm();
 }
 
 //define refresh table
@@ -34,6 +36,286 @@ const refreshTable = () =>{
     $('#classimple_table').dataTable();
 
 }
+
+const refreshSubjectForm = () => {
+
+    subject = new Object();
+    oldsubject = null;
+
+    txtSubject.value = "";
+
+    setStyle("1px solid #ced4da");
+}
+
+const checkSubject = () =>{
+
+    let errors = "";
+
+    if(subject.name == null){
+        errors = errors+"Please enter Subject..<br>";
+        txtSubject.style.borderBottom="2px solid red";
+    }
+
+    return errors;
+
+}
+
+
+const buttonAddSubjectMc = () =>{
+
+    let errors = checkSubject();
+
+
+    if(errors == ""){
+
+        //Show the confirmation box when the Add button is clicked
+        iziToast.show({
+            theme: 'dark',
+            title: "Are You Sure To Add following Subject ..?",
+            message: "Subject " + subject.name,
+            layout: 2,
+            position: 'topCenter',
+            overlay: true,
+            timeout: false,
+            close:false,
+            closeOnEscape: false,
+            progressBar: false,
+            buttons: [
+                ['<button><b>Yes</b></button>', function (instance, toast) {
+                    // Do something when the "Yes" button is clicked
+
+                    let post_server_responce;
+
+                    $.ajax("/subject",{
+                        async : false,
+                        type:"POST",//Method
+                        data:JSON.stringify(subject),//data that pass to backend
+                        contentType:"application/json",
+                        success:function(succsessResData,successStatus,resObj){
+                            post_server_responce = succsessResData;
+                        },error:function (errorResOb,errorStatus,errorMsg){
+                            post_server_responce = errorMsg;
+                        }
+                    })
+                    if(post_server_responce == "0"){
+
+                        iziToast.success({
+                            theme: 'dark',
+                            title: 'Subject Add Successfully',
+                            position: 'topRight',
+                            overlay: true,
+                            displayMode: 'once',
+                            zindex: 2000,
+                            animateInside: true,
+                            closeOnEscape:true,
+                            timeout: 2000,
+                            closeOnClick: true,
+
+                        });
+                        refreshSubjectForm();
+                        refreshForm();
+
+                    }else{
+                        iziToast.error({
+
+                            title: 'An error occurred',
+                            message: post_server_responce,
+                            position: 'topRight',
+                            overlay: true,
+                            closeOnEscape: false,
+                            close: true,
+                            layout: 2,
+                            displayMode: 'once',
+                            zindex: 2000,
+                            animateInside: true,
+                            buttons: [
+                                ['<button><b>OK</b></button>', function (instance, toast) {
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                }, true]
+                            ]
+                        });
+
+
+                    }
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }, true],
+                ['<button>No</button>', function (instance, toast) {
+                    // Do something when the "No" button is clicked
+                    iziToast.warning({
+                        title: 'Cancel',
+                    })
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }]
+            ]
+        });
+
+
+    }else{
+        iziToast.error({
+            title: 'You Have Following Error',
+            message: errors,
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 2000,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+
+    }
+}
+
+
+
+
+const refreshGradeForm = () => {
+
+    grade = new Object();
+    oldgrade = null;
+
+    txtGrade.value = "";
+
+    setStyle("1px solid #ced4da");
+}
+
+
+
+const checkGrade = () =>{
+
+    let errors = "";
+
+    if(grade.name == null){
+        errors = errors+"Please enter Grade..<br>";
+        txtGrade.style.borderBottom="2px solid red";
+    }
+
+    return errors;
+
+}
+
+
+const buttonAddGradeMc = () =>{
+
+    let errors = checkGrade();
+
+
+    if(errors == ""){
+
+        //Show the confirmation box when the Add button is clicked
+        iziToast.show({
+            theme: 'dark',
+            title: "Are You Sure To Add following Grade ..?",
+            message: "Grade " + grade.name,
+            layout: 2,
+            position: 'topCenter',
+            overlay: true,
+            timeout: false,
+            close:false,
+            closeOnEscape: false,
+            progressBar: false,
+            buttons: [
+                ['<button><b>Yes</b></button>', function (instance, toast) {
+                    // Do something when the "Yes" button is clicked
+
+                    let post_server_responce;
+
+                    $.ajax("/grade",{
+                        async : false,
+                        type:"POST",//Method
+                        data:JSON.stringify(grade),//data that pass to backend
+                        contentType:"application/json",
+                        success:function(succsessResData,successStatus,resObj){
+                            post_server_responce = succsessResData;
+                        },error:function (errorResOb,errorStatus,errorMsg){
+                            post_server_responce = errorMsg;
+                        }
+                    })
+                    if(post_server_responce == "0"){
+
+                        iziToast.success({
+                            theme: 'dark',
+                            title: 'Grade Add Successfully',
+                            position: 'topRight',
+                            overlay: true,
+                            displayMode: 'once',
+                            zindex: 2000,
+                            animateInside: true,
+                            closeOnEscape:true,
+                            timeout: 2000,
+                            closeOnClick: true,
+
+                        });
+                        refreshGradeForm();
+                        refreshForm();
+
+                    }else{
+                        iziToast.error({
+
+                            title: 'An error occurred',
+                            message: post_server_responce,
+                            position: 'topRight',
+                            overlay: true,
+                            closeOnEscape: false,
+                            close: true,
+                            layout: 2,
+                            displayMode: 'once',
+                            zindex: 2000,
+                            animateInside: true,
+                            buttons: [
+                                ['<button><b>OK</b></button>', function (instance, toast) {
+                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                }, true]
+                            ]
+                        });
+
+
+                    }
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }, true],
+                ['<button>No</button>', function (instance, toast) {
+                    // Do something when the "No" button is clicked
+                    iziToast.warning({
+                        title: 'Cancel',
+                    })
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }]
+            ]
+        });
+
+
+    }else{
+        iziToast.error({
+            title: 'You Have Following Error',
+            message: errors,
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 2000,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+
+    }
+}
+
+
+
 
 
 
