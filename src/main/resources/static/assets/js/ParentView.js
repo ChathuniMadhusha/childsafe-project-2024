@@ -64,28 +64,28 @@ const getAttendance = () => {
 
     fillTable (tblAttendanceReportTable, attendancereport, display_property_list,display_property_datatype,formRefill, rowDelete, rowView,false);
 
-    // const result = calculatePresencePercentage(attendancereport);
-    // if (attendancereport != ""){
-    //     precentage.value = Math.round(Number(result.presentPercentage))+"%";
-    // }else {precentage.value = ""}
+    const result = calculatePresencePercentage(attendancereport);
+    if (attendancereport != ""){
+        precentage.value = Math.round(Number(result.presentPercentage))+"%";
+    }else {precentage.value = ""}
 
 
 
 }
 
-// const calculatePresencePercentage = (attendanceReport) => {
-//     const totalClassDays = attendanceReport.length;
-//     const presentDays = attendanceReport.filter(record =>
-//         record.present_or_absent === "Present"
-//     ).length;
-//
-//     const presentPercentage = (presentDays / totalClassDays) * 100;
-//     return {
-//         totalClassDays,
-//         presentDays,
-//         presentPercentage: presentPercentage.toFixed(2)
-//     };
-// }
+const calculatePresencePercentage = (attendanceReport) => {
+    const totalClassDays = attendanceReport.length;
+    const presentDays = attendanceReport.filter(record =>
+        record.present_or_absent === "Present"
+    ).length;
+
+    const presentPercentage = (presentDays / totalClassDays) * 100;
+    return {
+        totalClassDays,
+        presentDays,
+        presentPercentage: presentPercentage.toFixed(2)
+    };
+}
 
 const formRefill = () => {
 
