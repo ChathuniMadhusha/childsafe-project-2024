@@ -29,6 +29,12 @@ public class TeacherController {
     RoleRepository roleDao;
 
     @Autowired
+    TeacherRegistrationRepository teacherRegistrationDao;
+
+    @Autowired
+    TeacherRegStatusRepository teacherRegStatusDao;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //Load UI
@@ -101,10 +107,29 @@ public class TeacherController {
     @PutMapping
     @Transactional
     public String putTeacher(@RequestBody Teacher teacher){
-        //check privilage
+
 
         //save operate
         try {
+
+            //class registration In-active when student In-active
+            List<TeacherRegistration> extTeClzRegList= teacherRegistrationDao.getTeacherClassRegistrationsByTeID(teacher.getId());
+            if (extTeClzRegList != null && teacher.getTeacher_status_id().getId() == 2) {
+                for (TeacherRegistration tr : extTeClzRegList) {
+                    tr.setTeacher_reg_status_id(teacherRegStatusDao.getReferenceById(2));
+                    teacherRegistrationDao.save(tr);
+                }
+            }
+
+            //class registration Active when teacher Active
+            if (extTeClzRegList != null && teacher.getTeacher_status_id().getId() == 1) {
+                for (TeacherRegistration tr : extTeClzRegList) {
+                    tr.setTeacher_reg_status_id(teacherRegStatusDao.getReferenceById(1));
+                    teacherRegistrationDao.save(tr);
+                }
+            }
+
+
             teacherDao.save(teacher);
             return "0";
         }catch(Exception e){
@@ -118,6 +143,15 @@ public class TeacherController {
         Teacher extteacher = teacherDao.getReferenceById(teacher.getId());
         if(extteacher != null){
             try {
+
+                //class registration In-active when student In-active
+                List<TeacherRegistration> extTeClzRegList= teacherRegistrationDao.getTeacherClassRegistrationsByTeID(teacher.getId());
+                if (extTeClzRegList != null) {
+                    for (TeacherRegistration tr : extTeClzRegList) {
+                        tr.setTeacher_reg_status_id(teacherRegStatusDao.getReferenceById(3));
+                        teacherRegistrationDao.save(tr);
+                    }
+                }
 
                 extteacher.setTeacher_status_id(teacherstatusDao.getReferenceById(3));
                 teacherDao.save(extteacher);

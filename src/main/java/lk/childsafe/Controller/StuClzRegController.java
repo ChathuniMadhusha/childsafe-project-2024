@@ -96,12 +96,12 @@ public class StuClzRegController {
     //Update section
     @PutMapping
     public String putReg(@RequestBody StudentClassRegistration studentClassRegistration){
-        StudentClassRegistration activereg = stuClzRegDao.findduplicateregByStID(studentClassRegistration.getStudent_id().getStudentid(),studentClassRegistration.getClass_implementation_id().getClass_code());
-
-        if (activereg != null) {
-            // Parent with student ID exists and is active
-            return "Registration insert not complete: Student ID is already linked to Selected Class";
-        }
+//        StudentClassRegistration activereg = stuClzRegDao.findduplicateregByStID(studentClassRegistration.getStudent_id().getStudentid(),studentClassRegistration.getClass_implementation_id().getClass_code());
+//
+//        if (activereg != null) {
+//            // Parent with student ID exists and is active
+//            return "Registration insert not complete: Student ID is already linked to Selected Class";
+//        }
         //save operate
         try {
             stuClzRegDao.save(studentClassRegistration);

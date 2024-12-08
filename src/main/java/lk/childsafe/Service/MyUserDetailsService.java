@@ -1,7 +1,9 @@
 package lk.childsafe.Service;
 
 import jakarta.transaction.Transactional;
+import lk.childsafe.Dao.ParentRepository;
 import lk.childsafe.Dao.UserRepository;
+import lk.childsafe.Entity.Parent;
 import lk.childsafe.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +24,9 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     UserRepository userDao;
 
+    @Autowired
+    ParentRepository parentDao;
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {//link with WebConfig Username parameter
@@ -30,14 +35,24 @@ public class MyUserDetailsService implements UserDetailsService {
 
         if (logeduser != null) {
 
-            // Check role and status
+            // Check role
             boolean status = false;
             if (logeduser.getRole_id().getId() == 1) { // Student
                 status = logeduser.getStudent_id().getStudent_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 2) { // Teacher
                 status = logeduser.getTeacher_id().getTeacher_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 3) { // Parent
-                status = logeduser.getParent_id().getParent_status_id().getId() != 2;
+                List<Parent> extParent = parentDao.getParentByNic(logeduser.getUsername());
+                if (extParent.size() > 1){
+                    for (Parent p : extParent) {
+                        if (p.getParent_status_id().getId() == 1) {
+                            status = true;
+                        }
+                    }
+                }else {
+                    status = logeduser.getParent_id().getParent_status_id().getId() == 1;
+                }
+
             } else {
                 status = true; // Admin role default to active
             }

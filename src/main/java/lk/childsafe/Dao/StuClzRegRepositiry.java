@@ -15,18 +15,26 @@ import java.util.List;
 public interface StuClzRegRepositiry extends JpaRepository <StudentClassRegistration,Integer>{
 
     //query for get next teacherid
-    @Query(value = "SELECT CONCAT('ST-REG-', LPAD(COALESCE(SUBSTRING_INDEX(MAX(tr.teacher_reg_code), '-', -1) + 1, 1),5,'0')) FROM childsafe.teacher_registration as tr;",nativeQuery = true)
+    @Query(value = "SELECT CONCAT('ST-REG-', LPAD(COALESCE(SUBSTRING_INDEX(MAX(tr.stu_class_code), '-', -1) + 1, 1),5,'0')) FROM childsafe.stu_class_registration as tr;",nativeQuery = true)
     String nexTeCode();
 
     //duplicate
     @Query("SELECT sc FROM StudentClassRegistration sc WHERE sc.student_id.studentid = :studentid AND sc.class_implementation_id.class_code = :class_code AND sc.stu_registration_status_id.id!=2")
     StudentClassRegistration findduplicateregByStID(@Param("studentid") String studentid, @Param("class_code") String class_code);
 
-    @Query(value = "select new StudentClassRegistration (count(cr.id)) from StudentClassRegistration cr where cr.stu_registration_status_id.id =1 and cr.student_id.id=?1")
+    @Query(value = "select new StudentClassRegistration (count(cr.id)) from StudentClassRegistration cr where cr.stu_registration_status_id.id =1 and cr.student_id.student_status_id.id=1 and cr.student_id.id=?1")
     StudentClassRegistration getClassbyStudent(Integer student_id);
 
-    @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.student_id.id=?1 and stureg.stu_registration_status_id.id=1")
+    @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.student_id.id=?1 and stureg.stu_registration_status_id.id=1 and stureg.student_id.student_status_id.id=1")
     List<StudentClassRegistration> getClass(Integer studentno);
 
+
+
+
+
+
+    //query for get student clz reg list for given student id(this is for update student clz reg status according to student status)
+    @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.student_id.id=?1")
+    List<StudentClassRegistration> getStudentClassRegistrationsByStID(Integer id);
 
 }
