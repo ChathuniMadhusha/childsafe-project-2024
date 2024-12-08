@@ -16,6 +16,8 @@ function refreshBrowser() {
             stylesheet.href = "assets/css/style.css";
         }
     }
+
+     session = "default";
 }
 
 //define refresh table
@@ -114,84 +116,6 @@ const rowView = (obj) =>{
 }
 
 
-// const rowDelete = (obj) => {
-//     //Show the confirmation box when the delete button is clicked
-//     iziToast.show({
-//         theme: 'dark',
-//         title: 'Are you sure to delete the following Storage Device...?',
-//         message: "Class Name: " + obj.class_name ,
-//         layout: 2,
-//         position: 'topCenter',
-//         overlay: true,
-//         timeout: false,
-//         close:false,
-//         closeOnEscape: false,
-//         progressBar: false,
-//         buttons: [
-//             ['<button><b>Yes</b></button>', function (instance, toast) {
-//                 // Do something when the "Yes" button is clicked
-//
-//                 let delete_server_responce;
-//
-//                 $.ajax("/classImplementation",{
-//                     async : false,
-//                     type:"DELETE",//Method
-//                     data:JSON.stringify(obj),//data that pass to backend
-//                     contentType:"application/json",
-//                     success:function(succsessResData,successStatus,resObj){
-//                         delete_server_responce = succsessResData;
-//                     },error:function (errorResOb,errorStatus,errorMsg){
-//                         delete_server_responce = errorMsg;
-//                     }
-//                 })
-//                 if(delete_server_responce == "0"){
-//                     iziToast.success({
-//                         theme: 'dark',
-//                         title: 'Class Deleted',
-//                         position: 'topRight',
-//                         overlay: true,
-//                         displayMode: 'once',
-//                         zindex: 999,
-//                         animateInside: true,
-//                         closeOnEscape:true,
-//                         timeout: 2000,
-//                         closeOnClick: true,
-//
-//                     });
-//                     refreshTable();
-//                 }else{
-//                     iziToast.error({
-//                         title: 'An error occurred',
-//                         message: delete_server_responce,
-//                         position: 'topRight',
-//                         overlay: true,
-//                         closeOnEscape: false,
-//                         close: true,
-//                         layout: 2,
-//                         displayMode: 'once',
-//                         zindex: 999,
-//                         animateInside: true,
-//                         buttons: [
-//                             ['<button><b>OK</b></button>', function (instance, toast) {
-//                                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//                             }, true]
-//                         ]
-//                     });
-//                 }
-//                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//
-//             }, true],
-//             ['<button>No</button>', function (instance, toast) {
-//                 // Do something when the "No" button is clicked
-//                 iziToast.warning({
-//                     title: 'Cancel',
-//                 })
-//                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-//             }]
-//         ]
-//     });
-// }
-
 // const rowView = (obj) =>{
 //     // printclass = new Object();
 //     // printclass = httpGetRequest("/classImplementation/getbyid?id="+obj.id);
@@ -248,6 +172,7 @@ const refreshForm = () =>{
 
 
 const getStudentListByClassRegistration = () => {
+    divShowTotalRegCount.innerText = "";
     divShowPresentCount.innerText = "";
     divShowAbsentCount.innerText = "";
     let tbody = tblAttendanceMark.children[1];
@@ -390,121 +315,140 @@ const getStudentListByClassRegistration = () => {
 }
 
 
-// const getStudentListByClassRegistration = () => {
-//
-//     divShowPresentCount.innerText = "";
-//     divShowAbsentCount.innerText = "";
-//
-//     let studentListByCRegistration = httpGetRequest("/student/byclregistration?cid=" + (floatingClasscode.value))
-//     console.log(studentListByCRegistration);
-//     let tableBody = tblAttendanceMark.children[1]
-//     tableBody.innerHTML = "";
-//     // tableBody.style.pointerEvents = "none";
-//     absentCount = 0;
-//     if (old_attendance == null) {
-//         if (studentListByCRegistration.length != 0) {
-//
-//             divShowTotalRegCount.innerText = studentListByCRegistration.length;
-//             divShowPresentCount.innerText = 0;
-//             divShowAbsentCount.innerText = studentListByCRegistration.length;;
-//
-//             attendance.reg_count = studentListByCRegistration.length;
-//
-//             absentCount = studentListByCRegistration.length;
-//
-//             attendance.attendance_has_students = new Array();
-//             for (let index in studentListByCRegistration) {
-//                 let attendStu = new Object();
-//                 attendStu.student_id = studentListByCRegistration[index];
-//                 attendStu.present_or_absent = false;
-//                 attendance.attendance_has_students.push(attendStu);
-//             }
-//         }
-//     } else {
-//         absentCount = attendance.absent_count;
-//     }
-//
-//     for (let index in attendance.attendance_has_students) {
-//         let tr = document.createElement("tr");
-//         tr.id = attendance.attendance_has_students[index].student_id.id;
-//
-//         let indTd = document.createElement("td");
-//         indTd.innerText = parseInt(index) + 1;
-//         tr.appendChild(indTd);
-//
-//         let regTd = document.createElement("td");
-//         regTd.innerText = attendance.attendance_has_students[index].student_id.studentid;
-//         tr.appendChild(regTd);
-//
-//         let nameTd = document.createElement("td");
-//         nameTd.innerText = attendance.attendance_has_students[index].student_id.first_name;
-//         tr.appendChild(nameTd);
-//
-//         let checkTd = document.createElement("td");
-//         let checkBox = document.createElement("input");
-//         let checkBoxlable = document.createElement("label");
-//         checkBoxlable.innerText = "Absent";
-//         checkBoxlable.classList.add("form-check-label");
-//         checkBoxlable.classList.add("ml-2");
-//
-//         checkBox.type = "checkbox";
-//         checkBox.classList.add("form-check-input");
-//
-//         checkBox.onchange = function () {
-//             console.log("kkkkk");
-//             let attendindex = attendance.attendance_has_students.map(e => e.student_id.id).indexOf(parseInt(this.parentNode.parentNode.id))
-//
-//             if (this.checked) {
-//                 attendance.attendance_has_students[attendindex].present_or_absent = true;
-//                 this.parentNode.children[1].innerText = "Present";
-//                 absentCount = parseInt(absentCount) - 1;
-//             } else {
-//                 attendance.attendance_has_students[attendindex].present_or_absent = false;
-//                 this.parentNode.children[1].innerText = "Absent";
-//                 absentCount = parseInt(absentCount) + 1;
-//             }
-//
-//             attendance.absent_count = absentCount;
-//             attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
-//             divShowPresentCount.innerText = attendance.present_count;
-//             divShowAbsentCount.innerText = attendance.absent_count;
-//
-//         }
-//
-//         if (old_attendance != null) {
-//             console.log("hhhh")
-//              console.log(old_attendance);
-//             if (attendance.attendance_has_students[index].present_or_absent == true) {
-//                 checkBox.checked = true;
-//                 divShowAbsentCount.innerText = parseInt(absentCount);
-//                 attendance.absent_count = parseInt(absentCount);
-//                 attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
-//                 divShowPresentCount.innerText = attendance.present_count;
-//
-//             }
-//         }
-//
-//         checkTd.appendChild(checkBox);
-//         checkTd.appendChild(checkBoxlable);
-//         tr.appendChild(checkTd);
-//
-//         tableBody.appendChild(tr);
-//     }
-//
-// }
-
 
 const enableCheckBox = () => {
 
-    console.log("000");
-    ttttbody.style.pointerEvents = "auto";
+    let errors = checkErrors();
 
+
+    if(errors == ""){
+        //Show the confirmation box when the Add button is clicked
+        iziToast.show({
+            theme: 'dark',
+            title: "Are You Sure to Start the Session ..?",
+            position: 'topCenter',
+            overlay: true,
+            timeout: false,
+            close:false,
+            closeOnEscape: false,
+            progressBar: false,
+            buttons: [
+                ['<button><b>Yes</b></button>', function (instance, toast) {
+                    // Do something when the "Yes" button is clicked
+                    ttttbody.style.pointerEvents = "auto";
+                    iziToast.success({
+                        theme: 'dark',
+                        title: 'Session Start',
+                        position: 'topRight',
+                        overlay: true,
+                        displayMode: 'once',
+                        zindex: 2000,
+                        animateInside: true,
+                        closeOnEscape:true,
+                        timeout: 2000,
+                        closeOnClick: true,
+                    });
+                    session = "start"
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+
+                }, true],
+                ['<button>No</button>', function (instance, toast) {
+                    // Do something when the "No" button is clicked
+                    iziToast.warning({
+                        title: 'Cancel',
+                    })
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }]
+            ]
+        });
+
+
+    }else{
+        iziToast.error({
+            title: 'You Have Following Error',
+            message: errors,
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 2000,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+
+    }
 }
 
 
 const disableCheckBox = () => {
 
-    ttttbody.style.pointerEvents = "none";
+    if (session == "start"){
+        //Show the confirmation box when the Add button is clicked
+        iziToast.show({
+            theme: 'dark',
+            title: "Are You Sure to End the Session ..?",
+            position: 'topCenter',
+            overlay: true,
+            timeout: false,
+            close:false,
+            closeOnEscape: false,
+            progressBar: false,
+            buttons: [
+                ['<button><b>Yes</b></button>', function (instance, toast) {
+                    // Do something when the "Yes" button is clicked
+                    ttttbody.style.pointerEvents = "none";
+                    iziToast.success({
+                        theme: 'dark',
+                        title: 'Session End',
+                        position: 'topRight',
+                        overlay: true,
+                        displayMode: 'once',
+                        zindex: 2000,
+                        animateInside: true,
+                        closeOnEscape:true,
+                        timeout: 2000,
+                        closeOnClick: true,
+
+                    });
+                    session = "complete";
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                }, true],
+                ['<button>No</button>', function (instance, toast) {
+                    // Do something when the "No" button is clicked
+                    iziToast.warning({
+                        title: 'Cancel',
+                    })
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }]
+            ]
+        });
+    }else {
+        iziToast.error({
+            title: 'Please Start Session',
+            position: 'topCenter',
+            overlay: true,
+            closeOnEscape: false,
+            close: true,
+            layout: 2,
+            displayMode: 'once',
+            zindex: 2000,
+            animateInside: true,
+            buttons: [
+                ['<button><b>OK</b></button>', function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                }, true]
+            ]
+        });
+    }
+
 
 }
 
@@ -542,98 +486,119 @@ const checkErrors = () =>{
 
 }
 
+
+
 const buttonAddMc = () =>{
 
-        console.log(attendance);
+    console.log(attendance);
     let errors = checkErrors();
 
 
     if(errors == ""){
 
-        //Show the confirmation box when the Add button is clicked
-        iziToast.show({
-            theme: 'dark',
-            title: "Are You Sure To Following Attendance ..?",
-            message: "Prsent Count: " + attendance.present_count,
-            layout: 2,
-            position: 'topCenter',
-            overlay: true,
-            timeout: false,
-            close:false,
-            closeOnEscape: false,
-            progressBar: false,
-            buttons: [
-                ['<button><b>Yes</b></button>', function (instance, toast) {
-                    // Do something when the "Yes" button is clicked
+        if(session=="complete"){
+            //Show the confirmation box when the Add button is clicked
+            iziToast.show({
+                theme: 'dark',
+                title: "Are You Sure To Following Attendance ..?",
+                message: "Prsent Count: " + attendance.present_count,
+                layout: 2,
+                position: 'topCenter',
+                overlay: true,
+                timeout: false,
+                close:false,
+                closeOnEscape: false,
+                progressBar: false,
+                buttons: [
+                    ['<button><b>Yes</b></button>', function (instance, toast) {
+                        // Do something when the "Yes" button is clicked
 
-                    let post_server_responce;
+                        let post_server_responce;
 
-                    $.ajax("/attendance",{
-                        async : false,
-                        type:"POST",//Method
-                        data:JSON.stringify(attendance),//data that pass to backend
-                        contentType:"application/json",
-                        success:function(succsessResData,successStatus,resObj){
-                            post_server_responce = succsessResData;
-                        },error:function (errorResOb,errorStatus,errorMsg){
-                            post_server_responce = errorMsg;
+                        $.ajax("/attendance",{
+                            async : false,
+                            type:"POST",//Method
+                            data:JSON.stringify(attendance),//data that pass to backend
+                            contentType:"application/json",
+                            success:function(succsessResData,successStatus,resObj){
+                                post_server_responce = succsessResData;
+                            },error:function (errorResOb,errorStatus,errorMsg){
+                                post_server_responce = errorMsg;
+                            }
+                        })
+                        console.log(attendance)
+                        if(post_server_responce == "0"){
+
+                            iziToast.success({
+                                theme: 'dark',
+                                title: 'Attendance Add Successfully',
+                                position: 'topRight',
+                                overlay: true,
+                                displayMode: 'once',
+                                zindex: 2000,
+                                animateInside: true,
+                                closeOnEscape:true,
+                                timeout: 2000,
+                                closeOnClick: true,
+
+                            });
+                            refreshTable();
+                            refreshForm();
+
+
+                        }else{
+                            iziToast.error({
+
+                                title: 'An error occurred',
+                                message: post_server_responce,
+                                position: 'topRight',
+                                overlay: true,
+                                closeOnEscape: false,
+                                close: true,
+                                layout: 2,
+                                displayMode: 'once',
+                                zindex: 2000,
+                                animateInside: true,
+                                buttons: [
+                                    ['<button><b>OK</b></button>', function (instance, toast) {
+                                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                    }, true]
+                                ]
+                            });
+
+
                         }
-                    })
-                    console.log(attendance)
-                    if(post_server_responce == "0"){
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
-                        iziToast.success({
-                            theme: 'dark',
-                            title: 'Attendance Add Successfully',
-                            position: 'topRight',
-                            overlay: true,
-                            displayMode: 'once',
-                            zindex: 2000,
-                            animateInside: true,
-                            closeOnEscape:true,
-                            timeout: 2000,
-                            closeOnClick: true,
-
-                        });
-                        refreshTable();
-                        refreshForm();
-
-
-                    }else{
-                        iziToast.error({
-
-                            title: 'An error occurred',
-                            message: post_server_responce,
-                            position: 'topRight',
-                            overlay: true,
-                            closeOnEscape: false,
-                            close: true,
-                            layout: 2,
-                            displayMode: 'once',
-                            zindex: 2000,
-                            animateInside: true,
-                            buttons: [
-                                ['<button><b>OK</b></button>', function (instance, toast) {
-                                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                                }, true]
-                            ]
-                        });
-
-
-                    }
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                }, true],
-                ['<button>No</button>', function (instance, toast) {
-                    // Do something when the "No" button is clicked
-                    iziToast.warning({
-                        title: 'Cancel',
-                    })
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                }]
-            ]
-        });
-
+                    }, true],
+                    ['<button>No</button>', function (instance, toast) {
+                        // Do something when the "No" button is clicked
+                        iziToast.warning({
+                            title: 'Cancel',
+                        })
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }]
+                ]
+            });
+        }else{
+            iziToast.error({
+                title: 'Please Create Session before complete the Add',
+                message: errors,
+                position: 'topCenter',
+                overlay: true,
+                closeOnEscape: false,
+                close: true,
+                layout: 2,
+                displayMode: 'once',
+                zindex: 2000,
+                animateInside: true,
+                buttons: [
+                    ['<button><b>OK</b></button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    }, true]
+                ]
+            });
+        }
 
     }else{
         iziToast.error({

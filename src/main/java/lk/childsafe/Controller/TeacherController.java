@@ -112,7 +112,7 @@ public class TeacherController {
         //save operate
         try {
 
-            //class registration In-active when student In-active
+            //class registration In-active when Teavher In-active
             List<TeacherRegistration> extTeClzRegList= teacherRegistrationDao.getTeacherClassRegistrationsByTeID(teacher.getId());
             if (extTeClzRegList != null && teacher.getTeacher_status_id().getId() == 2) {
                 for (TeacherRegistration tr : extTeClzRegList) {

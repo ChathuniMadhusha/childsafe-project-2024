@@ -37,4 +37,9 @@ public interface StuClzRegRepositiry extends JpaRepository <StudentClassRegistra
     @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.student_id.id=?1")
     List<StudentClassRegistration> getStudentClassRegistrationsByStID(Integer id);
 
+    //query for get student clz reg list for given class id(this is for update student clz reg status according to class status)
+    @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.class_implementation_id.id=?1")
+    List<StudentClassRegistration> getStudentClassRegistrationsByClzID(Integer id);
+
+
 }

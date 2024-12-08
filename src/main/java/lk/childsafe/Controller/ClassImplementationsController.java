@@ -1,14 +1,8 @@
 package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
-import lk.childsafe.Dao.ClassImpleStatusRepository;
-import lk.childsafe.Dao.ClassImplementationsRepository;
-import lk.childsafe.Dao.InstituteRepository;
-import lk.childsafe.Dao.InstitutestatusRepository;
-import lk.childsafe.Entity.ClassImplementation;
-import lk.childsafe.Entity.Institute;
-import lk.childsafe.Entity.Student;
-import lk.childsafe.Entity.Teacher;
+import lk.childsafe.Dao.*;
+import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +20,19 @@ public class ClassImplementationsController {
 
     @Autowired
     private ClassImpleStatusRepository classimplementationstatusDao;
+
+    @Autowired
+    StuClzRegRepositiry stuClzRegDao;
+
+    @Autowired
+    StuClzStatusRepositiry stuClzStatusDao;
+
+    @Autowired
+    TeacherRegistrationRepository teacherRegistrationDao;
+
+    @Autowired
+    TeacherRegStatusRepository teacherRegStatusDao;
+
 
     //Load UI
     @GetMapping(value = "")
@@ -129,12 +136,48 @@ public class ClassImplementationsController {
     public String putClass(@RequestBody ClassImplementation classImplementation){
 
 
-        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_name());
-        if(extclassimplementation != null){
-            return "Cannot add this Class : Class name already exist";
-        }
+//        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_name());
+//        if(extclassimplementation != null){
+//            return "Cannot add this Class : Class name already exist";
+//        }
         //save operate
         try {
+
+            //student class registration In-active when Class In-active
+            List<StudentClassRegistration> extStClzRegList= stuClzRegDao.getStudentClassRegistrationsByClzID(classImplementation.getId());
+            if (extStClzRegList != null && classImplementation.getClass_status_id().getId() == 2) {
+                for (StudentClassRegistration scr : extStClzRegList) {
+                    scr.setStu_registration_status_id(stuClzStatusDao.getReferenceById(3));
+                    stuClzRegDao.save(scr);
+                }
+            }
+
+            //student class registration Active when Class Active
+            if (extStClzRegList != null && classImplementation.getClass_status_id().getId() == 1) {
+                for (StudentClassRegistration scr : extStClzRegList) {
+                    scr.setStu_registration_status_id(stuClzStatusDao.getReferenceById(1));
+                    stuClzRegDao.save(scr);
+                }
+            }
+
+            //teacher class registration In-active when Class In-active
+            List<TeacherRegistration> extTeClzRegList= teacherRegistrationDao.getTeacherClassRegistrationsByClzId(classImplementation.getId());
+            if (extTeClzRegList != null && classImplementation.getClass_status_id().getId() == 2) {
+                for (TeacherRegistration tr : extTeClzRegList) {
+                    tr.setTeacher_reg_status_id(teacherRegStatusDao.getReferenceById(2));
+                    teacherRegistrationDao.save(tr);
+                }
+            }
+
+            //teacher class registration Active when Class Active
+            if (extTeClzRegList != null && classImplementation.getClass_status_id().getId() == 1) {
+                for (TeacherRegistration tr : extTeClzRegList) {
+                    tr.setTeacher_reg_status_id(teacherRegStatusDao.getReferenceById(1));
+                    teacherRegistrationDao.save(tr);
+                }
+            }
+
+
             classimplementationDao.save(classImplementation);
             return "0";
         }catch(Exception e){
@@ -149,6 +192,24 @@ public class ClassImplementationsController {
         ClassImplementation extclassimplement = classimplementationDao.getReferenceById(classImplementation.getId());
         if(extclassimplement != null){
             try {
+                //student class registration Delete when Class delete
+                List<StudentClassRegistration> extStClzRegList= stuClzRegDao.getStudentClassRegistrationsByClzID(classImplementation.getId());
+                if (extStClzRegList != null) {
+                    for (StudentClassRegistration scr : extStClzRegList) {
+                        scr.setStu_registration_status_id(stuClzStatusDao.getReferenceById(2));
+                        stuClzRegDao.save(scr);
+                    }
+                }
+
+                //teacher class registration delete when Class delete
+                List<TeacherRegistration> extTeClzRegList= teacherRegistrationDao.getTeacherClassRegistrationsByClzId(classImplementation.getId());
+                if (extTeClzRegList != null) {
+                    for (TeacherRegistration tr : extTeClzRegList) {
+                        tr.setTeacher_reg_status_id(teacherRegStatusDao.getReferenceById(3));
+                        teacherRegistrationDao.save(tr);
+                    }
+                }
+
 
                 extclassimplement.setClass_status_id(classimplementationstatusDao.getReferenceById(3));
                 classimplementationDao.save(extclassimplement);
