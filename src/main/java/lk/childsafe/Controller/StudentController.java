@@ -1,14 +1,8 @@
 package lk.childsafe.Controller;
 
 import jakarta.transaction.Transactional;
-import lk.childsafe.Dao.RoleRepository;
-import lk.childsafe.Dao.StudentRepositiry;
-import lk.childsafe.Dao.StudentstatusRepositiry;
-import lk.childsafe.Dao.UserRepository;
-import lk.childsafe.Entity.LogUser;
-import lk.childsafe.Entity.ParentStatus;
-import lk.childsafe.Entity.Student;
-import lk.childsafe.Entity.User;
+import lk.childsafe.Dao.*;
+import lk.childsafe.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +26,18 @@ public class StudentController {
 
     @Autowired
     RoleRepository roleDao;
+
+    @Autowired
+    StuClzRegRepositiry stuClzRegDao;
+
+    @Autowired
+    StuClzStatusRepositiry stuClzStatusDao;
+
+    @Autowired
+    ParentRepository parentDao;
+
+    @Autowired
+    ParentstatusRepository parentstatusDao;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -121,15 +127,43 @@ public class StudentController {
     @PutMapping
     @Transactional
     public String putStudent(@RequestBody Student student){
-        //check privilage
 
-            //save operate
+        //save operate
         try {
+            //class registration In-active when student In-active
+            List<StudentClassRegistration> extStClzRegList= stuClzRegDao.getStudentClassRegistrationsByStID(student.getId());
+            if (extStClzRegList != null && student.getStudent_status_id().getId() == 2) {
+                for (StudentClassRegistration scr : extStClzRegList) {
+                        scr.setStu_registration_status_id(stuClzStatusDao.getReferenceById(3));
+                        stuClzRegDao.save(scr);
+                }
+            }
+
+            //class registration Active when student Active
+            if (extStClzRegList != null && student.getStudent_status_id().getId() == 1) {
+                for (StudentClassRegistration scr : extStClzRegList) {
+                    scr.setStu_registration_status_id(stuClzStatusDao.getReferenceById(1));
+                    stuClzRegDao.save(scr);
+                }
+            }
+
+            //Parent registration In-active when student In-active
+            Parent extParent = parentDao.getByStudent_id(student.getId());
+            if (extParent != null && student.getStudent_status_id().getId() == 2) {
+                extParent.setParent_status_id(parentstatusDao.getReferenceById(3));
+                parentDao.save(extParent);
+            }
+
+            //Parent registration Active when student Active
+            if (extParent != null && student.getStudent_status_id().getId() == 1) {
+                extParent.setParent_status_id(parentstatusDao.getReferenceById(1));
+                parentDao.save(extParent);
+            }
                 studentDao.save(student);
                 return "0";
-            }catch(Exception e){
-                return "Student Update not complete :" + e.getMessage();
-            }
+        }catch(Exception e){
+            return "Student Update not complete :" + e.getMessage();
+        }
     }
 
     //create delete mapping
@@ -138,6 +172,21 @@ public class StudentController {
             Student extstudent = studentDao.getReferenceById(student.getId());
             if(extstudent != null){
                 try {
+                    //class registration delete when student delete
+                    List<StudentClassRegistration> extStClzRegList= stuClzRegDao.getStudentClassRegistrationsByStID(student.getId());
+                    if (extStClzRegList != null) {
+                        for (StudentClassRegistration scr : extStClzRegList) {
+                            scr.setStu_registration_status_id(stuClzStatusDao.getReferenceById(2));
+                            stuClzRegDao.save(scr);
+                        }
+                    }
+
+                    //Parent delete when student Delete
+                    Parent extParent = parentDao.getByStudent_id(student.getId());
+                    if (extParent != null) {
+                        extParent.setParent_status_id(parentstatusDao.getReferenceById(2));
+                        parentDao.save(extParent);
+                    }
 
                     extstudent.setStudent_status_id(studentstatusDao.getReferenceById(3));
                     studentDao.save(extstudent);

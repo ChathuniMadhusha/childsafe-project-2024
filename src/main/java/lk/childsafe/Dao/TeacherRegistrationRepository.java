@@ -32,4 +32,9 @@ public interface TeacherRegistrationRepository extends JpaRepository <TeacherReg
     List<TeacherRegistration> getClassListByTeacher(Integer teacherid);
 
 
+    //query for get teacher clz reg list for given teacher id(this is for update teacher clz reg status according to teacher status)
+    @Query(value = "SELECT tr FROM TeacherRegistration tr where tr.teacher_id.id=?1")
+    List<TeacherRegistration> getTeacherClassRegistrationsByTeID(Integer id);
+
+
 }

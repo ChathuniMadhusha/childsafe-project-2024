@@ -357,7 +357,7 @@ const buttonAddMc = () =>{
 
                         iziToast.success({
                             theme: 'dark',
-                            title: 'Institute Add Successfully',
+                            title: 'Teacher Registration Add Successfully',
                             position: 'topRight',
                             overlay: true,
                             displayMode: 'once',

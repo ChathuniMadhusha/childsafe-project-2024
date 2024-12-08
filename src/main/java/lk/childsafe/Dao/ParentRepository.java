@@ -23,7 +23,7 @@ public interface ParentRepository extends JpaRepository <Parent,Integer>{
 //    @Query(value = "SELECT count(student_id) FROM childsafe.parent as p where p.id=?1", nativeQuery = true)
 //    Parent getStudentCount(Integer parentid);
 
-    @Query(value = "select new Parent (count(p.student_id)) from Parent p where  p.nic=?1 and p.parent_status_id.id=1")
+    @Query(value = "select new Parent (count(p.student_id)) from Parent p where  p.nic=?1 and p.parent_status_id.id=1 and p.student_id.student_status_id.id=1")
     Parent getStudentCount(String parentid);
 
 
@@ -31,5 +31,9 @@ public interface ParentRepository extends JpaRepository <Parent,Integer>{
     List<Parent> getStudentList(Integer parentid);
 
     List<Parent> getParentByNic(String nic);
+
+    //get parent by student id
+    @Query(value = "SELECT p FROM Parent p where p.student_id.id=?1")
+    Parent getByStudent_id(Integer id);
 }
 
