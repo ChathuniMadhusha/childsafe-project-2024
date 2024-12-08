@@ -36,12 +36,13 @@ const refreshTable = () =>{
     fillTable(attendance_tbl,attendance,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
 
 
-    // for (let index in attendance){
-    //     if (attendance[index].class_status_id.name == "Deleted"){
-    //         classimple_table.children[1].children[index].children[5].children[2].disabled = true;
-    //         classimple_table.children[1].children[index].children[5].children[0].disabled = true;
-    //     }
-    // }
+    //hide delete
+    for (let index in attendance){
+
+        attendance_tbl.children[1].children[index].children[5].children[2].style.display="none";
+
+
+    }
 
     //To add data table
     $('#attendance_tbl').dataTable();
@@ -83,7 +84,10 @@ const formReFill = (obj) =>{
 
 
     floatingDate.value=attendance.date;
+
     floatingClasscode.value=attendance.class_implementation_id.class_code;
+    $('#floatingClasscode').prop('disabled', true);
+
     floatingCName.value=attendance.class_implementation_id.class_name;
 
 
@@ -97,12 +101,11 @@ const formReFill = (obj) =>{
     divShowAbsentCount.innerText = attendance.absent_count;
     getStudentListByClassRegistration();
 
-    enableCheckBox();
-
     setStyle("2px solid green")
 
 
     disabledButton(false,true);
+    $('#basicModal').modal('show')
 
 }
 
@@ -340,7 +343,7 @@ const enableCheckBox = () => {
                         theme: 'dark',
                         title: 'Session Start',
                         position: 'topRight',
-                        overlay: true,
+                        overlay: false,
                         displayMode: 'once',
                         zindex: 2000,
                         animateInside: true,
@@ -408,7 +411,7 @@ const disableCheckBox = () => {
                         theme: 'dark',
                         title: 'Session End',
                         position: 'topRight',
-                        overlay: true,
+                        overlay: false,
                         displayMode: 'once',
                         zindex: 2000,
                         animateInside: true,
@@ -533,7 +536,7 @@ const buttonAddMc = () =>{
                                 theme: 'dark',
                                 title: 'Attendance Add Successfully',
                                 position: 'topRight',
-                                overlay: true,
+                                overlay: false,
                                 displayMode: 'once',
                                 zindex: 2000,
                                 animateInside: true,
@@ -582,7 +585,7 @@ const buttonAddMc = () =>{
             });
         }else{
             iziToast.error({
-                title: 'Please Create Session before complete the Add',
+                title: 'Please Complete the Session Before Add',
                 message: errors,
                 position: 'topCenter',
                 overlay: true,
@@ -664,87 +667,109 @@ const buttonUpdateMC = () =>{
     if (errors == ""){
         let updates = checkUpdates();
         if(updates != ""){
-            //Show the confirmation box when the Add button is clicked
-            iziToast.show({
-                theme: 'dark',
-                title: "Are You Sure Update Following Attendance?",
-                message: updates,
-                layout: 2,
-                position: 'topCenter',
-                overlay: true,
-                timeout: false,
-                close:false,
-                closeOnEscape: false,
-                progressBar: false,
-                buttons: [
-                    ['<button><b>Yes</b></button>', function (instance, toast) {
-                        // Do something when the "Yes" button is clicked
 
-                        let update_server_responce;
+            if (session == "complete"){
+                //Show the confirmation box when the Add button is clicked
+                iziToast.show({
+                    theme: 'dark',
+                    title: "Are You Sure Update Following Attendance?",
+                    message: updates,
+                    layout: 2,
+                    position: 'topCenter',
+                    overlay: true,
+                    timeout: false,
+                    close:false,
+                    closeOnEscape: false,
+                    progressBar: false,
+                    buttons: [
+                        ['<button><b>Yes</b></button>', function (instance, toast) {
+                            // Do something when the "Yes" button is clicked
 
-                        $.ajax("/attendance",{
-                            async : false,
-                            type:"PUT",//Method
-                            data:JSON.stringify(attendance),//data that pass to backend
-                            contentType:"application/json",
-                            success:function(succsessResData,successStatus,resObj){
-                                update_server_responce = succsessResData;
-                            },error:function (errorResOb,errorStatus,errorMsg){
-                                update_server_responce = errorMsg;
+                            let update_server_responce;
+
+                            $.ajax("/attendance",{
+                                async : false,
+                                type:"PUT",//Method
+                                data:JSON.stringify(attendance),//data that pass to backend
+                                contentType:"application/json",
+                                success:function(succsessResData,successStatus,resObj){
+                                    update_server_responce = succsessResData;
+                                },error:function (errorResOb,errorStatus,errorMsg){
+                                    update_server_responce = errorMsg;
+                                }
+                            })
+                            if(update_server_responce == "0"){
+
+                                iziToast.success({
+                                    theme: 'dark',
+                                    title: 'Class Update Successfully',
+                                    position: 'topRight',
+                                    overlay: false,
+                                    displayMode: 'once',
+                                    zindex: 2000,
+                                    animateInside: true,
+                                    closeOnEscape:true,
+                                    timeout: 2000,
+                                    closeOnClick: true,
+
+                                });
+                                refreshTable();
+                                refreshForm();
+
+                            }else{
+                                iziToast.error({
+
+                                    title: 'An error occurred',
+                                    message: update_server_responce,
+                                    position: 'topRight',
+                                    overlay: true,
+                                    closeOnEscape: false,
+                                    close: true,
+                                    layout: 2,
+                                    displayMode: 'once',
+                                    zindex: 2000,
+                                    animateInside: true,
+                                    buttons: [
+                                        ['<button><b>OK</b></button>', function (instance, toast) {
+                                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                                        }, true]
+                                    ]
+                                });
+
+
                             }
-                        })
-                        if(update_server_responce == "0"){
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
-                            iziToast.success({
-                                theme: 'dark',
-                                title: 'Class Update Successfully',
-                                position: 'topRight',
-                                overlay: true,
-                                displayMode: 'once',
-                                zindex: 2000,
-                                animateInside: true,
-                                closeOnEscape:true,
-                                timeout: 2000,
-                                closeOnClick: true,
+                        }, true],
+                        ['<button>No</button>', function (instance, toast) {
+                            // Do something when the "No" button is clicked
+                            iziToast.warning({
+                                title: 'Cancel',
+                            })
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        }]
+                    ]
+                });
+            }else{
+                iziToast.error({
+                    title: 'Please Complete the Session Before Add',
+                    message: errors,
+                    position: 'topCenter',
+                    overlay: true,
+                    closeOnEscape: false,
+                    close: true,
+                    layout: 2,
+                    displayMode: 'once',
+                    zindex: 2000,
+                    animateInside: true,
+                    buttons: [
+                        ['<button><b>OK</b></button>', function (instance, toast) {
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        }, true]
+                    ]
+                });
+            }
 
-                            });
-                            refreshTable();
-                            refreshForm();
-
-                        }else{
-                            iziToast.error({
-
-                                title: 'An error occurred',
-                                message: update_server_responce,
-                                position: 'topRight',
-                                overlay: true,
-                                closeOnEscape: false,
-                                close: true,
-                                layout: 2,
-                                displayMode: 'once',
-                                zindex: 2000,
-                                animateInside: true,
-                                buttons: [
-                                    ['<button><b>OK</b></button>', function (instance, toast) {
-                                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                                    }, true]
-                                ]
-                            });
-
-
-                        }
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                    }, true],
-                    ['<button>No</button>', function (instance, toast) {
-                        // Do something when the "No" button is clicked
-                        iziToast.warning({
-                            title: 'Cancel',
-                        })
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                    }]
-                ]
-            });
         }else {
             iziToast.warning({
                 title: 'Nothing To Update',
