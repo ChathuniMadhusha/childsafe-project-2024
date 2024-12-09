@@ -188,6 +188,9 @@ const refreshForm = () =>{
     //set style to default
     setStyle("1px solid #ced4da")
 
+    //dissable status field
+    $('#floatingSelectInsStatus').prop('disabled', true);
+
 //disable update button
     disabledButton(true,false);
 

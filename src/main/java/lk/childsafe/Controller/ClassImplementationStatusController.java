@@ -21,6 +21,6 @@ public class ClassImplementationStatusController {
     ClassImpleStatusRepository classimplementationstatusDao;
 
     @GetMapping(value = "/findall", produces = "application/json")
-    public List<ClassImplementationStatus> classImplementationStatuses() {return classimplementationstatusDao.findAllByIdIsNot(3);}
+    public List<ClassImplementationStatus> classImplementationStatuses() {return classimplementationstatusDao.findAll();}
 
 }

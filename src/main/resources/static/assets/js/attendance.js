@@ -115,35 +115,30 @@ const rowDelete = (obj) =>{
 }
 
 const rowView = (obj) =>{
+    printclass = new Object();
+    printclass = httpGetRequest("/attendance/getbyid?id="+obj.id);
 
+    td_date.innerHTML = printclass.date;
+    td_cname.innerHTML = printclass.class_implementation_id.class_name;
+    td_ccode.innerHTML = printclass.class_implementation_id.class_code;
+    td_reg.innerHTML = printclass.reg_count;
+    td_pre.innerHTML = printclass.absent_count
+    td_abb.innerHTML = printclass.present_count;
+    td_cSta.innerHTML = printclass.class_implementation_id.class_status_id.name;
+    $('#attViewModel').modal('show')
 }
 
-
-// const rowView = (obj) =>{
-//     // printclass = new Object();
-//     // printclass = httpGetRequest("/classImplementation/getbyid?id="+obj.id);
-//     //
-//     // td_classname.innerHTML = printclass.class_name;
-//     // td_classcode.innerHTML = printclass.class_code;
-//     //
-//     // td_grade.innerHTML = printclass.grade_id.name;
-//     // td_subject.innerHTML = printclass.subject_id.name;
-//     // td_institute.innerHTML = printclass.institute_implementation_id.inst_name;
-//     // td_classstatus.innerHTML = printclass.class_status_id.name;
-//     // $('#ClassViewModel').modal('show')
-// }
-
-// const studentPrintModel = () => {
-//     let newWindow = window.open();
-//     newWindow.document.write(
-//         '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
-//         +"<h2>Storage Details</h2>"
-//         + storagePrintTbl.outerHTML);
-//     //newWindow.print();
-//     setTimeout(function() {
-//         newWindow.print();
-//     },1000)
-// }
+const attPrintModel = () => {
+    let newWindow = window.open();
+    newWindow.document.write(
+        '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
+        +"<h2>Attendance Details</h2>"
+        + tablePrintTbl.outerHTML);
+    //newWindow.print();
+    setTimeout(function() {
+        newWindow.print();
+    },1000)
+}
 
 
 //form
