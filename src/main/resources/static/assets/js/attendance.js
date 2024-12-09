@@ -33,8 +33,15 @@ const refreshTable = () =>{
     let display_property_datatype = ["object","text","text","text"]
 
     //calling fillTable function
-    fillTable(attendance_tbl,attendance,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
+    fillTable(attendance_tbl,attendance,display_property_list,display_property_datatype,formReFill,rowView,true)
 
+
+    // for (let index in attendance){
+    //     if (attendance[index].class_status_id.name == "Deleted"){
+    //         classimple_table.children[1].children[index].children[5].children[2].disabled = true;
+    //         classimple_table.children[1].children[index].children[5].children[0].disabled = true;
+    //     }
+    // }
 
     // for (let index in attendance){
     //     if (attendance[index].class_status_id.name == "Deleted"){
@@ -107,9 +114,7 @@ const formReFill = (obj) =>{
 }
 
 
-const rowDelete = (obj) =>{
 
-}
 
 const rowView = (obj) =>{
 
