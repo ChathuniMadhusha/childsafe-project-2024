@@ -23,8 +23,8 @@ function refreshBrowser() {
 //define refresh table
 const refreshTable = () =>{
     //array for store processor data
-    attendance = new Array();
-    attendance=httpGetRequest("/attendance/findall")
+    attendances = new Array();
+    attendances=httpGetRequest("/attendance/findall")
 
     //create display property list
     let display_property_list = ["class_implementation_id.class_name","date","present_count","absent_count"]
@@ -33,11 +33,11 @@ const refreshTable = () =>{
     let display_property_datatype = ["object","text","text","text"]
 
     //calling fillTable function
-    fillTable(attendance_tbl,attendance,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
+    fillTable(attendance_tbl,attendances,display_property_list,display_property_datatype,formReFill,rowDelete,rowView,true)
 
 
     //hide delete
-    for (let index in attendance){
+    for (let index in attendances){
 
         attendance_tbl.children[1].children[index].children[5].children[2].style.display="none";
 
@@ -81,6 +81,8 @@ const formReFill = (obj) =>{
 
     attendance = httpGetRequest("/attendance/getbyid?id="+obj.id)
     old_attendance = httpGetRequest("/attendance/getbyid?id="+obj.id)
+    console.log(attendance);
+    console.log(old_attendance);
 
 
     floatingDate.value=attendance.date;
@@ -170,6 +172,149 @@ const refreshForm = () =>{
 
 
 const getStudentListByClassRegistration = () => {
+    divShowTotalRegCount.innerText = "";
+    divShowPresentCount.innerText = "";
+    divShowAbsentCount.innerText = "";
+    let tbody = tblAttendanceMark.children[1];
+    tbody.innerHTML="";
+    let studentListByCRegistration = httpGetRequest("/student/byclregistration?cid=" + (floatingClasscode.value))
+    console.log(studentListByCRegistration);
+    let tableBody =  tblAttendanceMark.children[1]
+
+    tableBody.style.pointerEvents = "none";
+
+
+    absentCount = 0;
+    if(studentListByCRegistration.length != 0){
+        divShowTotalRegCount.innerText = studentListByCRegistration.length;
+        divShowPresentCount.innerText = 0;
+        divShowAbsentCount.innerText = studentListByCRegistration.length;;
+
+        attendance.reg_count = studentListByCRegistration.length;
+        attendance.present_count = 0;
+        attendance.absent_count = studentListByCRegistration.length;
+
+        if(old_attendance == null){
+
+            attendance.attendance_has_students = new Array();
+            for(let index in studentListByCRegistration) {
+
+                let attestu = new Object();
+
+                attestu.student_id = studentListByCRegistration[index];
+                attestu.present_or_absent = false;
+
+                attendance.attendance_has_students.push(attestu);
+
+                console.log(attendance.attendance_has_students);
+            }
+
+        } else {
+            absentCount = attendance.absent_count;
+        }
+
+        absentCount = attendance.attendance_has_students.length;
+        for(let index in attendance.attendance_has_students){
+
+            let tr = document.createElement("tr");
+            //list eke inn plaweniyage id eka gannwa
+            tr.id = attendance.attendance_has_students[index].student_id.id;
+
+            let intTD = document.createElement("td");
+            intTD.innerText=parseInt(index) + 1;
+            tr.appendChild(intTD);
+
+            let stunoTD = document.createElement("td");
+            stunoTD.innerText=attendance.attendance_has_students[index].student_id.studentid;
+            tr.appendChild(stunoTD);
+
+            let callingTD = document.createElement("td");
+            callingTD.innerText=attendance.attendance_has_students[index].student_id.first_name;
+            tr.appendChild(callingTD);
+
+            let checkTD = document.createElement("td");
+            let checkBox = document.createElement("input");
+            let checkBoxLabel = document.createElement("label");
+            if(attendance.attendance_has_students[index].present_or_absent){
+                checkBoxLabel.innerText = "Present ";
+
+            }else {
+                checkBoxLabel.innerText = "Absent ";
+            }
+
+            checkBoxLabel.classList.add("form-check-label");
+            checkBoxLabel.classList.add("ms-2");
+            checkBoxLabel.classList.add("fw-bold");
+
+            checkBox.type = "checkbox";
+            checkBox.classList.add("form-check-input");
+
+
+            checkBox.onchange = function () {
+                console.log("kkkk");
+                let attendindex = attendance.attendance_has_students.map(e => e.student_id.id).indexOf(parseInt(this.parentNode.parentNode.id));
+                if(this.checked){
+                    attendance.attendance_has_students[attendindex].present_or_absent = true;
+                    this.parentNode.children[1].innerText = "Present";
+                    absentCount = parseInt(absentCount)-1;
+
+
+                }else{
+                    attendance.attendance_has_students[attendindex].present_or_absent = false;
+                    this.parentNode.children[1].innerText = "Absent";
+                    absentCount = parseInt(absentCount)+1;
+
+                }
+
+                divShowAbsentCount.innerText = parseInt(absentCount);
+                attendance.absent_count = parseInt(absentCount);
+                attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+                divShowPresentCount.innerText = attendance.present_count;
+
+            }
+
+            if(attendance.attendance_has_students[index].present_or_absent){
+                checkBox.checked = false;
+                absentCount = parseInt(absentCount)-1;
+
+            }
+
+            if (old_attendance != null) {
+                console.log("hhhh")
+                console.log(old_attendance);
+                if (attendance.attendance_has_students[index].present_or_absent == true) {
+                    checkBox.checked = true;
+                }
+
+                attendance.absent_count = absentCount;
+                attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+                divShowPresentCount.innerText = attendance.present_count;
+                divShowAbsentCount.innerText = attendance.absent_count;
+
+            }
+
+            if (old_attendance != null) {
+                console.log("hhhh")
+                console.log(old_attendance);
+                if (attendance.attendance_has_students[index].present_or_absent == true) {
+                    checkBox.checked = true;
+                    divShowAbsentCount.innerText = parseInt(absentCount);
+                    attendance.absent_count = parseInt(absentCount);
+                    attendance.present_count = parseInt(attendance.reg_count)-parseInt(attendance.absent_count);
+                    divShowPresentCount.innerText = attendance.present_count;
+
+                }
+            }
+            checkTD.appendChild(checkBox);
+            checkTD.appendChild(checkBoxLabel);
+            tr.appendChild(checkTD);
+
+            tableBody.appendChild(tr);
+        }
+    }
+}
+
+const getStudentListByClassRegistrationRefil = () => {
     divShowTotalRegCount.innerText = "";
     divShowPresentCount.innerText = "";
     divShowAbsentCount.innerText = "";
