@@ -85,23 +85,23 @@ const formReFill = (obj) =>{
     console.log(old_attendance);
 
 
-    floatingDate.value=attendance.date;
+    floatingDate.value=obj.date;
 
-    floatingClasscode.value=attendance.class_implementation_id.class_code;
+    floatingClasscode.value=obj.class_implementation_id.class_code;
     $('#floatingClasscode').prop('disabled', true);
 
-    floatingCName.value=attendance.class_implementation_id.class_name;
+    floatingCName.value=obj.class_implementation_id.class_name;
 
 
 
-    divShowTotalRegCount.innerText = attendance.reg_count;
+    divShowTotalRegCount.innerText = obj.reg_count;
 
 
-    divShowPresentCount.innerText = attendance.present_count;
+    divShowPresentCount.innerText = obj.present_count;
 
 
-    divShowAbsentCount.innerText = attendance.absent_count;
-    getStudentListByClassRegistration();
+    divShowAbsentCount.innerText = obj.absent_count;
+    getStudentListByClassRegistrationRefil();
 
     setStyle("2px solid green")
 
@@ -315,13 +315,10 @@ const getStudentListByClassRegistration = () => {
 }
 
 const getStudentListByClassRegistrationRefil = () => {
-    divShowTotalRegCount.innerText = "";
-    divShowPresentCount.innerText = "";
-    divShowAbsentCount.innerText = "";
+
     let tbody = tblAttendanceMark.children[1];
     tbody.innerHTML="";
     let studentListByCRegistration = httpGetRequest("/student/byclregistration?cid=" + (floatingClasscode.value))
-    console.log(studentListByCRegistration);
     let tableBody =  tblAttendanceMark.children[1]
 
     tableBody.style.pointerEvents = "none";
@@ -329,13 +326,11 @@ const getStudentListByClassRegistrationRefil = () => {
 
     absentCount = 0;
     if(studentListByCRegistration.length != 0){
-        divShowTotalRegCount.innerText = studentListByCRegistration.length;
-        divShowPresentCount.innerText = 0;
-        divShowAbsentCount.innerText = studentListByCRegistration.length;;
 
-        attendance.reg_count = studentListByCRegistration.length;
-        attendance.present_count = 0;
-        attendance.absent_count = studentListByCRegistration.length;
+
+        attendance.reg_count =  divShowTotalRegCount.innerText;
+        attendance.present_count = divShowPresentCount.innerText;
+        attendance.absent_count = divShowAbsentCount.innerText
 
         if(old_attendance == null){
 
