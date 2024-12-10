@@ -57,6 +57,11 @@ const refreshForm = () =>{
     divShowPresentCount.innerHTML = "";
     divShowAbsentCount.innerHTML = "";
 
+    let maxdate = new Date();
+    let formattedDate = maxdate.toISOString().split('T')[0];
+
+    floatingDate.max = formattedDate;
+
 }
 
 const getStudentListByClassRegistration = () => {
