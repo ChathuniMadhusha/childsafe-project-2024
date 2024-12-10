@@ -323,9 +323,9 @@ const buttonAddGradeMc = () =>{
 const getClassName = () => {
 
     var name = "";
-
+    var today = new Date();
     if(classimplementation.institute_implementation_id != null && classimplementation.grade_id != null && classimplementation.subject_id != null){
-        name = classimplementation.institute_implementation_id.inst_name + " " + "-" + " " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name ;
+        name = classimplementation.institute_implementation_id.inst_name + " " + "-" + " " + classimplementation.grade_id.name + " " + classimplementation.subject_id.name + " " +"-" + " " + today.getFullYear()  ;
     }
 
     floatingCName.value = name;
@@ -476,9 +476,19 @@ const rowView = (obj) =>{
 
 const refreshForm = () =>{
     classimplementation = new Object();
-    old_classimplementation = null;
+    old_classimplementation = null
+
+    console.log(classimplementation);
 
     //create array for fill select element
+
+    // class_status = new Array();
+    // class_status = httpGetRequest("/classimplestatus/findall")
+    //
+    // //auto select value
+    // fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");
+    // classimplementation.class_status_id = JSON.parse(floatingSelectClassStatus.value);
+
 
     class_status = new Array();
     class_status = httpGetRequest("/classimplestatus/findactive")

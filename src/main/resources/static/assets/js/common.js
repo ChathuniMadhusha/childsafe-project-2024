@@ -344,6 +344,8 @@ const fillTable = (tableid,dataList,propertyList,dataTypeList,modifyFunction,del
 
 }
 
+
+
 const getDataFromObject = (obj,propertyPath) => {
     //console.log(obj);
     //console.log(propertyPath);
