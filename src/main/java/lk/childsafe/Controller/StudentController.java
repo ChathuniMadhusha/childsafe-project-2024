@@ -77,6 +77,11 @@ public class StudentController {
 
     public String addStudent(@RequestBody Student student){
 
+        Student extStudent = studentDao.getStudentsByEmail(student.getEmail());
+        if (extStudent != null){
+            return "Student already exists : Please use different email address";
+        }
+
         try{
                 //set auto value
             
@@ -128,8 +133,36 @@ public class StudentController {
     @Transactional
     public String putStudent(@RequestBody Student student){
 
+        Student extStudent = studentDao.getStudentsByEmail(student.getEmail());
+        if (extStudent != null){
+
+            if (extStudent.getId() != student.getId()){
+                return "Student already exists : Please use different email address";
+            }
+
+
+        }
         //save operate
         try {
+
+            Student extstu = studentDao.getReferenceById(student.getId());
+
+            //Check weather password is change or not--> iF changed set new password
+            if (bCryptPasswordEncoder.matches(extstu.getSt_password(), student.getSt_password())) {
+                System.out.println("password not changed");
+
+
+            }else{
+               //student.setSt_password(extstu.getSt_password());
+                student.setSt_password(bCryptPasswordEncoder.encode(student.getSt_password()));
+                studentDao.save(student);
+
+                User logExtUser = userDao.findUserByUsername(student.getEmail());
+                logExtUser.setPassword(student.getSt_password());
+                userDao.save(logExtUser);
+                System.out.println("password changed");
+            }
+
             //class registration In-active when student In-active
             List<StudentClassRegistration> extStClzRegList= stuClzRegDao.getStudentClassRegistrationsByStID(student.getId());
             if (extStClzRegList != null && student.getStudent_status_id().getId() == 2) {
@@ -160,7 +193,11 @@ public class StudentController {
                 parentDao.save(extParent);
             }
                 studentDao.save(student);
+
+
                 return "0";
+
+
         }catch(Exception e){
             return "Student Update not complete :" + e.getMessage();
         }
@@ -211,7 +248,7 @@ public class StudentController {
         try {
             //password eka change krla submit klham eka saved password ekamda kiyla blna oni
             //isselama existing userwa ganna oni
-            Student extStu = studentDao.getReferenceById(logUser.getStudent().getId()); // id eka deela object eka gennagnwa
+            Student extStu = studentDao.getReferenceById(logUser.getStudent().getId());
 
             extStu.setFirst_name(logUser.getStudent().getFirst_name());
             extStu.setLast_name(logUser.getStudent().getLast_name());
@@ -219,9 +256,6 @@ public class StudentController {
             extStu.setAddress(logUser.getStudent().getAddress());
             extStu.setMobile_number(logUser.getStudent().getMobile_number());
 
-
-            //dena password eka encode krla eyatama set krla save krnwa
-            //user.setPassword(passwordEncoder.encode(user.getPassword()));
             studentDao.save(extStu);
             return "Ok";
         } catch (Exception e) {

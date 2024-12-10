@@ -491,11 +491,12 @@ const refreshForm = () =>{
 
 
     class_status = new Array();
-    class_status = httpGetRequest("/classimplestatus/findall")
+    class_status = httpGetRequest("/classimplestatus/findactive")
 
     //auto select value
     fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");
     classimplementation.class_status_id = JSON.parse(floatingSelectClassStatus.value);
+
 
 
     class_grade = new Array();
@@ -534,7 +535,7 @@ const refreshForm = () =>{
     disabledButton(true,false);
 
     //dissable status field
-    $('#floatingSelectClassStatus').prop('disabled', true);
+    //$('#floatingSelectClassStatus').prop('disabled', true);
 
 }
 

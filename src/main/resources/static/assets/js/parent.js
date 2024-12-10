@@ -14,7 +14,7 @@ const refreshTable = () =>{
     parents=httpGetRequest("/parent/findall")
 
     //create display property list
-    let display_property_list = ["first_name","nic","mobile_number","student_id.studentid","parent_status_id.name"]
+    let display_property_list = ["nic","first_name","mobile_number","student_id.studentid","parent_status_id.name"]
 
     //cretae display property type list
     let display_property_datatype = ["text","text","text","object","object"]

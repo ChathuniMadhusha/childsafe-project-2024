@@ -38,5 +38,6 @@ public interface StudentRepositiry extends JpaRepository <Student,Integer>{
     List<Student> getStByNic(String nic);
 
 
-
+    //check duplicate mail
+    Student getStudentsByEmail(String email);
 }

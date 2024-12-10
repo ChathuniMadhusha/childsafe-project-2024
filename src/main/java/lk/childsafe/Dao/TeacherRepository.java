@@ -20,4 +20,8 @@ public interface TeacherRepository extends JpaRepository <Teacher,Integer>{
     //Dash bord eke card wlata data ganna
     @Query(value = "select new Teacher (count(t.id)) from Teacher t where t.teacher_status_id.id =1")
     Teacher findActiveTeacher();
+
+
+    //Check duplicate by email
+    Teacher getTeacherByEmail(String email);
 }

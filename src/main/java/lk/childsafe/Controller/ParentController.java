@@ -128,7 +128,17 @@ public class ParentController {
     //Update section
     @PutMapping
     public String putParent(@RequestBody Parent parent){
-        //check privilage
+        Parent activeParent = parentDao.findActiveParentByStudentid(parent.getStudent_id().getStudentid());
+
+
+        if (activeParent != null) {
+
+            if (activeParent.getId() != parent.getId()) {
+                // Parent with student ID exists and is active
+                return "Parent Update  not complete: Student ID is already linked to an active parent";
+            }
+
+        }
 
         //save operate
         try {

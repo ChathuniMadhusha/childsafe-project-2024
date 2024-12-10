@@ -75,6 +75,11 @@ public class TeacherController {
     @Transactional
     public String addTeacher(@RequestBody Teacher teacher){
 
+        Teacher extTE = teacherDao.getTeacherByEmail(teacher.getEmail());
+        if (extTE != null){
+            return "Teacher already exists : Please use different email address";
+        }
+
         try{
 
             //set auto value
@@ -108,6 +113,14 @@ public class TeacherController {
     @Transactional
     public String putTeacher(@RequestBody Teacher teacher){
 
+        Teacher extTE = teacherDao.getTeacherByEmail(teacher.getEmail());
+        if (extTE != null){
+
+            if (extTE.getId() != teacher.getId()){
+                return "Teacher already exists : Please use different email address";
+            }
+
+        }
 
         //save operate
         try {

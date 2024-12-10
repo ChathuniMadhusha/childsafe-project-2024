@@ -123,7 +123,17 @@ public class TeacherRegistrationController {
     @PutMapping
     @Transactional
     public String putTeacherReg(@RequestBody TeacherRegistration teacherRegistration){
-        //check privilage
+
+        TeacherRegistration activereg = teacherregistrationDao.getClassByCourse_code(teacherRegistration.getClass_implementation_id().getClass_code());
+
+        if (activereg != null) {
+            if (activereg.getId() != teacherRegistration.getId()) {
+                // Parent with student ID exists and is active
+                return "Update not complete : Active Teacher ID is already linked to Selected Class";
+            }
+        }
+
+
 
         //save operate
         try {

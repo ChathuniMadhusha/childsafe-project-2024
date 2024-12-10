@@ -14,6 +14,7 @@ import java.util.List;
 public interface ClassImplementationsRepository extends JpaRepository <ClassImplementation,Integer>{
 
 
+    //check duplicate entry
     @Query(value = "select cl from ClassImplementation cl where cl.class_name = ?1 and cl.class_status_id.id = 1")
     ClassImplementation getClassByCourse_code(String class_code);
 
