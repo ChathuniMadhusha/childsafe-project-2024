@@ -39,8 +39,10 @@ public class MyUserDetailsService implements UserDetailsService {
             boolean status = false;
             if (logeduser.getRole_id().getId() == 1) { // Student
                 status = true;
+                // status = logeduser.getStudent_id().getStudent_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 2) { // Teacher
                 status = true;
+                //  status = logeduser.getTeacher_id().getTeacher_status_id().getId() != 3;
             } else if (logeduser.getRole_id().getId() == 3) { // Parent
                 List<Parent> extParent = parentDao.getParentByNic(logeduser.getUsername());
                 if (extParent.size() > 1){

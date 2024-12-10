@@ -178,6 +178,12 @@ const refreshForm = () =>{
     divShowPresentCount.innerHTML = "";
     divShowAbsentCount.innerHTML = "";
 
+    floatingDate
+    let maxdate = new Date();
+    let formattedDate = maxdate.toISOString().split('T')[0];
+
+    floatingDate.max = formattedDate;
+
 }
 
 

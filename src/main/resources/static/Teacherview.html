@@ -37,6 +37,11 @@
   <script src="/assets/js/teacherview.js"></script>
 
 
+  <!--iziToast-->
+  <link rel="stylesheet" href="assets/Resourse/iziToast-master/dist/css/iziToast.min.css">
+  <script src="assets/Resourse/iziToast-master/dist/js/iziToast.min.js"></script>
+
+
   <link rel="stylesheet" href="assets/fontawesom/css/all.css">
 
   <!-- =======================================================
@@ -337,7 +342,7 @@
       <div class="row">
         <div class="col-10"></div>
         <div class="d-grid gap-2 col-2 mx-auto mb-1">
-          <button type="button" class="btn" onclick="window.location.replace('/attendance')" style="background-color: #4d1354; color: white">
+          <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#basicModal" style="background-color: #4d1354; color: white">
             Mark Student Attendance
           </button>
         </div>
@@ -347,7 +352,7 @@
         <div class="card-body">
           <h5 class="card-title" style="color: #4d1354">Attendance</h5>
           <!-- Smal tables -->
-          <table class="table table-sm" id="tblAttendanceMark">
+          <table class="table table-sm" id="tblAttendanceMarks">
             <thead>
             <tr>
               <th scope="col">#</th>
@@ -365,6 +370,123 @@
         </div>
       </div>
 
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="basicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color: #4d1354">Attendance Form</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+
+                      <!-- Floating Labels Form -->
+                      <form onsubmit="return false" class="row g-3">
+                        <div class="col-md-6">
+                          <div class="form-floating">
+                            <input type="date" onchange="dateFeildValidate(floatingDate,'','attendance','date','old_attendance')" class="form-control" id="floatingDate"
+                                   placeholder="Your Name">
+                            <label for="floatingDate">Date <span style="color: red">*</span></label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="col-md-10">
+                            <div class="form-floating">
+                              <input type="text" class="form-control" id="floatingClasscode"
+                                     placeholder="Class code">
+                              <label for="floatingClasscode">Class Code <span style="color: red">*</span></label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-2">
+                            <button   class="btn btn-primary" onclick="getClassName();  getStudentListByClassRegistration();" style="background-color: #4d1354; color: white">Check</button>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-floating">
+                            <input disabled type="text" class="form-control" id="floatingCName"
+                                   placeholder="Class Name">
+                            <label for="floatingCName">Class Name <span style="color: red">*</span></label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="row mt-2">
+                            <div class="col-6 fw-bold">Total Reg Count :</div>
+                            <div class="col-6" id="divShowTotalRegCount"></div>
+                          </div>
+
+                          <div class="row mt-2">
+                            <div class="col-6 fw-bold">Present Count :</div>
+                            <div class="col-6" id="divShowPresentCount"></div>
+                          </div>
+
+                          <div class="row mt-2">
+                            <div class="col-6 fw-bold">Absent Count :</div>
+                            <div class="col-6" id="divShowAbsentCount"></div>
+                          </div>
+                        </div>
+
+                        <div class="text-center">
+                          <button   class="btn btn-primary" onclick="enableCheckBox();" style="background-color: #4d1354; color: white">Start Session</button>
+                          <button   class="btn btn-primary" onclick="disableCheckBox();" style="background-color: #4d1354; color: white">End Session</button>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">List of Student</h5>
+                            <!-- Smal tables -->
+                            <table class="table table-sm" id="tblAttendanceMark">
+                              <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th sscope="col">Studend id</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Present or Absent</th>
+                              </tr>
+                              </thead>
+                              <tbody id="ttttbody">
+
+                              </tbody>
+                            </table>
+                            <!-- End small tables -->
+                          </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="text-center">
+
+
+
+
+                        </div>
+                      </form><!-- End floating Labels Form -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn" style="border-radius: 50rem !important">Add Attendance</button>
+              <button type="submit" onclick="buttonUpdateMC()" class="btn btn-outline-warning" id="updatebtn" style="border-radius: 50rem !important">Update Attendance</button>
+              <button type="submit" onclick="" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
+              <!--  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+            </div>
+          </div>
+        </div>
+      </div>
 
     </section>
 
