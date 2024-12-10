@@ -161,13 +161,6 @@ const refreshForm = () =>{
     floatingDate.value="";
     floatingClasscode.value="";
     floatingCName.value="";
-    ttttbody.innerHTML = "";
-
-
-    //set style to default
-    setStyle("1px solid #ced4da")
-
-    disabledButton(true,false);
 
     divShowTotalRegCount.innerHTML = "";
     divShowPresentCount.innerHTML = "";
@@ -175,6 +168,17 @@ const refreshForm = () =>{
 
 }
 
+
+const btnClearForm = () => {
+    //  //clear value after refesh
+    divShowTotalRegCount.innerHTML = "";
+    divShowPresentCount.innerHTML = "";
+    divShowAbsentCount.innerHTML = "";
+    floatingDate.value="";
+    floatingClasscode.value="";
+    floatingCName.value="";
+    ttttbody.innerHTML = "";
+}
 
 const getStudentListByClassRegistration = () => {
     divShowTotalRegCount.innerText = "";
