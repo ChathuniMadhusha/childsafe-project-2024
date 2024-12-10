@@ -77,6 +77,11 @@ public class StudentController {
 
     public String addStudent(@RequestBody Student student){
 
+        Student extStudent = studentDao.getStudentsByEmail(student.getEmail());
+        if (extStudent != null){
+            return "Student already exists : Please use different email address";
+        }
+
         try{
                 //set auto value
             
@@ -128,6 +133,15 @@ public class StudentController {
     @Transactional
     public String putStudent(@RequestBody Student student){
 
+        Student extStudent = studentDao.getStudentsByEmail(student.getEmail());
+        if (extStudent != null){
+
+            if (extStudent.getId() != student.getId()){
+                return "Student already exists : Please use different email address";
+            }
+
+
+        }
         //save operate
         try {
             //class registration In-active when student In-active

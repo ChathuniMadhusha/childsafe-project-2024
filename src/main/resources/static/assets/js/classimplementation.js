@@ -481,7 +481,7 @@ const refreshForm = () =>{
     //create array for fill select element
 
     class_status = new Array();
-    class_status = httpGetRequest("/classimplestatus/findall")
+    class_status = httpGetRequest("/classimplestatus/findactive")
 
     //auto select value
     fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");

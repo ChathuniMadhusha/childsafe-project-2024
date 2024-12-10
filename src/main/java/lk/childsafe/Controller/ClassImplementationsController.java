@@ -136,11 +136,14 @@ public class ClassImplementationsController {
     public String putClass(@RequestBody ClassImplementation classImplementation){
 
 
-//        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_name());
-//        if(extclassimplementation != null){
-//            return "Cannot add this Class : Class name already exist";
-//        }
-        //save operate
+        ClassImplementation extclassimplementation = classimplementationDao.getClassByCourse_code(classImplementation.getClass_name());
+        if(extclassimplementation != null){
+            if (extclassimplementation.getId() != classImplementation.getId()) {
+                return "Cannot Update this Class : Class name already exist";
+            }
+
+        }
+
         try {
 
             //student class registration In-active when Class In-active

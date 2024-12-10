@@ -20,6 +20,16 @@ function refreshBrowser() {
      session = "default";
 }
 
+//check log user for redirect home
+function checkLogUser(){
+    console.log("Check")
+    if(loggeduser.teacher != null){
+        window.location.href = '/teacherview';
+    } else{
+        window.location.href = '/dashboard';
+    }
+}
+
 //define refresh table
 const refreshTable = () =>{
     //array for store processor data

@@ -80,6 +80,8 @@ const formReFill = (obj) =>{
     floatingTID.value=teacherregistration.teacher_id.teacherid;
     teacherName.value=teacherregistration.teacher_id.first_name;
 
+    tereg_status = httpGetRequest("/teacherregstatus/findall")
+
 
     // //set value in to select feild
     fillSelectField(floatingSelectStatus,"",tereg_status,"name",teacherregistration.teacher_reg_status_id.name);
@@ -214,11 +216,11 @@ const refreshForm = () =>{
 
 
     tereg_status = new Array();
-    tereg_status = httpGetRequest("/teacherregstatus/findall")
+    tereg_status = httpGetRequest("/teacherregstatus/findactive")
 
     //auto select value
     fillSelectField(floatingSelectStatus,"",tereg_status,"name","Active");
-    teacherregistration.teacher_reg_status_id = JSON.parse(floatingSelectStatus.value);
+
 
     //clear value after refesh
     floatingTID.value="";
@@ -231,7 +233,7 @@ const refreshForm = () =>{
     //set style to default
     setStyle("1px solid #ced4da")
     //dissable status field
-    $('#floatingSelectStatus').prop('disabled', true);
+    // $('#floatingSelectStatus').prop('disabled', true);
     disabledButton(true,false);
 
 }
