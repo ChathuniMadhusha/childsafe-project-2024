@@ -199,6 +199,19 @@ const refreshForm = () =>{
 
 }
 
+
+const btnClearForm = () => {
+
+    floatingFName.value="";
+    floatingLName.value="";
+    //Dissable update button
+    disabledButton(true,false);
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+
+}
+
 const findStudentID = () => {
 
 
