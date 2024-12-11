@@ -144,6 +144,21 @@ public class ParentController {
 
         //save operate
         try {
+
+            List<Parent> extParentList = parentDao.getParentByNic(parent.getNic());
+            if (extParentList.size() > 1) {
+                for (Parent p : extParentList) {
+                    p.setFirst_name(parent.getFirst_name());
+                    p.setLast_name(parent.getLast_name());
+                    p.setAddress(parent.getAddress());
+                    p.setEmail(parent.getEmail());
+                    p.setMobile_number(parent.getMobile_number());
+                    parentDao.save(p);
+                }
+            }
+
+
+
             //Check weather password is change or not--> iF changed set new password
             if (!(extPr.getPr_password().equals(parent.getPr_password()))) {
                 parent.setPr_password(bCryptPasswordEncoder.encode(parent.getPr_password()));
