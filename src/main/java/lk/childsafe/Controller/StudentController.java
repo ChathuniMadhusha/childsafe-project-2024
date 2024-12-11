@@ -240,8 +240,7 @@ public class StudentController {
     public String userupdate(@RequestBody LogUser logUser) {
 
         try {
-            //password eka change krla submit klham eka saved password ekamda kiyla blna oni
-            //isselama existing userwa ganna oni
+
             Student extStu = studentDao.getReferenceById(logUser.getStudent().getId());
 
             extStu.setFirst_name(logUser.getStudent().getFirst_name());

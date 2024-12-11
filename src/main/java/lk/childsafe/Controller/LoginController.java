@@ -142,7 +142,7 @@ public class LoginController {
             if (forgetUser.getCurrunt_password() != "" && forgetUser.getNew_password() != "" && forgetUser.getRe_new_password()!= "") {
                 if (bCryptPasswordEncoder.matches(forgetUser.getCurrunt_password(), logExtUser.getPassword())) {
 
-                    if (bCryptPasswordEncoder.matches(logExtUser.getPassword(), forgetUser.getNew_password())) {
+                    if (bCryptPasswordEncoder.matches(forgetUser.getNew_password(),logExtUser.getPassword())) {
                         return "User change password not completed: password same as previous password";
                     }else {
                         if (Objects.equals(forgetUser.getNew_password(), forgetUser.getRe_new_password())) {
@@ -154,7 +154,7 @@ public class LoginController {
                         }
                     }
                 }else{
-                    return "User password change not completed: current password is no correct";
+                    return "User password change not completed: current password is not correct";
                 }
             } else {
                 return "Error Password Change;";
