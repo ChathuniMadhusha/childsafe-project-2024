@@ -29,18 +29,57 @@ function setUserNavbar(){
 
 
 function logoutMC(){
-    let userconfirm = window.confirm("are you suer want to log out...? \n");
-    if(userconfirm){
-        window.location.replace("/logout")
-    }else {
-        if (loggeduser.student != null){
-            window.location.href = '/studentview';
-        } else if(loggeduser.teacher != null){
-            window.location.href = '/teacherview';
-        } else if(loggeduser.parent != null){
-            window.location.href = '/parentview';
-        }else{
-            window.location.href = '/dashboard';
-        }
-    }
+
+
+    //Show the confirmation box when the Add button is clicked
+    iziToast.show({
+        theme: 'dark',
+        title: "are you suer want to log out...?",
+        position: 'topCenter',
+        overlay: true,
+        timeout: false,
+        close:false,
+        closeOnEscape: false,
+        progressBar: false,
+        buttons: [
+            ['<button><b>Yes</b></button>', function (instance, toast) {
+                // Do something when the "Yes" button is clicked
+                window.location.replace("/logout")
+
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+            }, true],
+            ['<button>No</button>', function (instance, toast) {
+                // Do something when the "No" button is clicked
+                if (loggeduser.student != null){
+                    window.location.href = '/studentview';
+                } else if(loggeduser.teacher != null){
+                    window.location.href = '/teacherview';
+                } else if(loggeduser.parent != null){
+                    window.location.href = '/parentview';
+                }else{
+                    window.location.href = '/dashboard';
+                }
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            }]
+        ]
+    });
+
+
+
+    //
+    // let userconfirm = window.confirm("are you suer want to log out...? \n");
+    // if(userconfirm){
+    //     window.location.replace("/logout")
+    // }else {
+    //     if (loggeduser.student != null){
+    //         window.location.href = '/studentview';
+    //     } else if(loggeduser.teacher != null){
+    //         window.location.href = '/teacherview';
+    //     } else if(loggeduser.parent != null){
+    //         window.location.href = '/parentview';
+    //     }else{
+    //         window.location.href = '/dashboard';
+    //     }
+    // }
 }

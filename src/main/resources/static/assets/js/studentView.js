@@ -19,7 +19,7 @@ const getAttendance = () => {
 
     const result = calculatePresencePercentage(attendancereport);
     if (attendancereport != ""){
-        precentage.value = "Present Percentage:"+Math.round(Number(result.presentPercentage))+"%";
+        precentage.value = "Present Percentage : "+Math.round(Number(result.presentPercentage))+"%";
     }else {precentage.value = ""}
 
 
