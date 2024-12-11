@@ -87,21 +87,21 @@ public class ClassImplementationsController {
             return "Cannot add this Class : Class name already exist";
         }
         try{
-            //tyena last code number eka gannwa
+            //get last code number
             String lastCode = classimplementationDao.getNextNumber();
             String nextCode = "";
 
-            //ada date eka gannawa
+            //get today date
             LocalDate nowDate = LocalDate.now();
 
-            //eeka enne int agayak nisa eka string wlata harawa gannwa
+            //that integer number convert into string
             String nowYearLastTwo = String.valueOf(nowDate.getYear()).substring(2,4);
 
             System.out.println(lastCode);
             System.out.println(lastCode.substring(0,2));
 
-            //awasana number ekak tynwda nadda kiyla check krnwa
-            //tynwnm......
+            //cheking to see if there is  final number or not
+            //if there is a final number..
             if(lastCode != null ||  !lastCode.equals("")){
                 //24001
                 String lastCodeLastTwo = lastCode.substring(0,2);

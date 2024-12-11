@@ -174,7 +174,7 @@ const studentPrintModel = () => {
     newWindow.document.write(
         '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
         +"<h2>Student Details</h2>"
-        + tablePrintTbl.outerHTML);
+        + studentPrintTbl.outerHTML);
     //newWindow.print();
     setTimeout(function() {
         newWindow.print();
@@ -236,6 +236,22 @@ function setStyle(style){
 
 
 }
+
+const btnClearForm = () => {
+
+    //clear value after refesh
+    floatingFName.value="";
+    floatingLName.value="";
+    floatingDOB.value="";
+    floatingEmail.value="";
+    floatingTextarea.value="";
+    floatingMobile.value="";
+    floatingSPassword.value="";
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+}
+
 
 //function for check errors
 const checkErrors = () =>{

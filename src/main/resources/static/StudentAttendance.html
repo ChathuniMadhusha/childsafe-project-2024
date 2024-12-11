@@ -430,18 +430,21 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <div class="col-md-10">
+<!--                                                <div class="col-md-10">-->
                                                     <div class="form-floating">
                                                         <input type="text" class="form-control" id="floatingClasscode"
                                                                placeholder="Class code">
                                                         <label for="floatingClasscode">Class Code <span style="color: red">*</span></label>
-                                                    </div>
+
+<!--                                                    </div>-->
+
                                                 </div>
+
                                             </div>
 
                                             <div class="col-md-2">
 <!--                                                <div class="col-md-2">-->
-                                                    <button   class="btn btn-primary" onclick="getClassName();  getStudentListByClassRegistration();" style="background-color: #4d1354; color: white">Check</button>
+                                            <button   class="btn btn-primary" onclick="getClassName();  getStudentListByClassRegistration();" style="background-color: #4d1354; color: white">Check</button>
 <!--                                                </div>-->
                                             </div>
 
@@ -516,7 +519,7 @@
                     <div class="modal-footer">
                         <button onclick="buttonAddMc()" type="submit" class="btn btn-outline-success" id="addbtn" style="border-radius: 50rem !important">Add Attendance</button>
                         <button type="submit" onclick="buttonUpdateMC()" class="btn btn-outline-warning" id="updatebtn" style="border-radius: 50rem !important">Update Attendance</button>
-                        <button type="submit" onclick="" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
+                        <button type="submit" onclick="btnClearForm()" class="btn btn-outline-danger" id="" style="border-radius: 50rem !important">Clear</button>
                         <!--  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
                     </div>
                 </div>
