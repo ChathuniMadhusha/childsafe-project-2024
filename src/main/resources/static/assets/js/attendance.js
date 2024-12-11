@@ -17,7 +17,7 @@ function refreshBrowser() {
         }
     }
 
-     session = "default";
+    session = "default";
 }
 
 //check log user for redirect home
@@ -64,18 +64,18 @@ const getClassName = () =>{
 
     if(floatingClasscode.value != ""){
 
-            let classcode = floatingClasscode.value;
-            classname = httpGetRequest("/classImplementation/getbyclassname?class_name="+classcode);
+        let classcode = floatingClasscode.value;
+        classname = httpGetRequest("/classImplementation/getbyclassname?class_name="+classcode);
 
-            if (classname !=""){
-                floatingCName.value = classname.class_name;
-                attendance.class_implementation_id = classname;
-                floatingClasscode.style.borderBottom = "2px solid green";
-            }else {
-                floatingClasscode.style.borderBottom = "2px solid red";
-                attendance.class_implementation_id = null;
-                floatingCName.value = "";
-            }
+        if (classname !=""){
+            floatingCName.value = classname.class_name;
+            attendance.class_implementation_id = classname;
+            floatingClasscode.style.borderBottom = "2px solid green";
+        }else {
+            floatingClasscode.style.borderBottom = "2px solid red";
+            attendance.class_implementation_id = null;
+            floatingCName.value = "";
+        }
     }else{
         attendance.class_implementation_id = null;
         floatingClasscode.style.borderBottom = "2px solid red";
@@ -166,6 +166,13 @@ const refreshForm = () =>{
     floatingDate.value="";
     floatingClasscode.value="";
     floatingCName.value="";
+    ttttbody.innerHTML = "";
+
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+
+    disabledButton(true,false);
 
     divShowTotalRegCount.innerHTML = "";
     divShowPresentCount.innerHTML = "";
@@ -181,7 +188,7 @@ const refreshForm = () =>{
 
 
 const btnClearForm = () => {
-    //  //clear value after refesh
+
     divShowTotalRegCount.innerHTML = "";
     divShowPresentCount.innerHTML = "";
     divShowAbsentCount.innerHTML = "";
@@ -189,7 +196,13 @@ const btnClearForm = () => {
     floatingClasscode.value="";
     floatingCName.value="";
     ttttbody.innerHTML = "";
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+
 }
+
+
 
 const getStudentListByClassRegistration = () => {
     divShowTotalRegCount.innerText = "";

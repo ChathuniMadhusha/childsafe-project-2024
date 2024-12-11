@@ -40,6 +40,23 @@ const refreshForm = () =>{
 
 }
 
+const btnClearForm = () => {
+    //clear value after refesh
+    floatingFName.value="";
+    floatingLName.value="";
+    floatingDOB.value="";
+    floatingNIC.value="";
+    floatingEmail.value="";
+    floatingTextarea.value="";
+    floatingMobile.value="";
+    floatingTPassword.value="";
+
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+}
+
+
 function setStyle(style){
     floatingFName.style.borderBottom=style;
     floatingNIC.style.borderBottom=style;

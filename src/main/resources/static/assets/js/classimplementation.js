@@ -459,17 +459,22 @@ const rowView = (obj) =>{
     $('#ClassViewModel').modal('show')
 }
 
-// const studentPrintModel = () => {
-//     let newWindow = window.open();
-//     newWindow.document.write(
-//         '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
-//         +"<h2>Storage Details</h2>"
-//         + storagePrintTbl.outerHTML);
-//     //newWindow.print();
-//     setTimeout(function() {
-//         newWindow.print();
-//     },1000)
-// }
+
+
+const classPrintModel = () => {
+    let newWindow = window.open();
+    newWindow.document.write(
+        '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
+        +"<h2>Class Details</h2>"
+        + ClassPrintTbl.outerHTML);
+    //newWindow.print();
+    setTimeout(function() {
+        newWindow.print();
+    },1000)
+}
+
+
+
 
 
 //form
@@ -479,15 +484,6 @@ const refreshForm = () =>{
     old_classimplementation = null
 
     console.log(classimplementation);
-
-    //create array for fill select element
-
-    // class_status = new Array();
-    // class_status = httpGetRequest("/classimplestatus/findall")
-    //
-    // //auto select value
-    // fillSelectField(floatingSelectClassStatus,"",class_status,"name","Active");
-    // classimplementation.class_status_id = JSON.parse(floatingSelectClassStatus.value);
 
 
     class_status = new Array();
@@ -538,6 +534,19 @@ const refreshForm = () =>{
     //$('#floatingSelectClassStatus').prop('disabled', true);
 
 }
+
+const btnClearForm = () => {
+    //clear value after refesh
+    floatingSelectGrade.value="";
+    floatingSelectSubject.value="";
+    floatingCName.value="";
+    floatingSelectInstitute.value="";
+    floatingSelectClassStatus.value="";
+    //set style to default
+    setStyle("1px solid #ced4da")
+}
+
+
 
 function setStyle(style){
     floatingSelectGrade.style.borderBottom=style;

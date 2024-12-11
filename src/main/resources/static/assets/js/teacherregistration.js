@@ -188,18 +188,17 @@ const rowView = (obj) =>{
     $('#teacherRegViewModel').modal('show')
 }
 
-// const studentPrintModel = () => {
-//     let newWindow = window.open();
-//     newWindow.document.write(
-//         '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
-//         +"<h2>Storage Details</h2>"
-//         + storagePrintTbl.outerHTML);
-//     //newWindow.print();
-//     setTimeout(function() {
-//         newWindow.print();
-//     },1000)
-// }
-
+const teacherRegPrintModel = () => {
+    let newWindow = window.open();
+    newWindow.document.write(
+        '<link rel="stylesheet" href="Resourse/bootstrap/css/bootstrap.min.css">'+'<script src="Resourse/Jquary/jquary.js"></script>'
+        +"<h2>Teacher Registration Details</h2>"
+        + teacherRegPrintTbl.outerHTML);
+    //newWindow.print();
+    setTimeout(function() {
+        newWindow.print();
+    },1000)
+}
 
 //form
 
@@ -236,6 +235,18 @@ const refreshForm = () =>{
     // $('#floatingSelectStatus').prop('disabled', true);
     disabledButton(true,false);
 
+}
+
+
+const btnClearForm = () => {
+    //clear value after refesh
+    floatingTID.value="";
+    floatingSelectClassCode.value="";
+    floatingSelectStatus.value="";
+    teacherName.value="";
+
+    //set style to default
+    setStyle("1px solid #ced4da")
 }
 
 

@@ -211,6 +211,24 @@ const refreshForm = () =>{
 
 }
 
+const btnClearForm = () => {
+    //clear value after refesh
+    floatingFName.value="";
+    floatingLName.value="";
+    floatingDOB.value="";
+    floatingNIC.value="";
+    floatingEmail.value="";
+    floatingTextarea.value="";
+    floatingMobile.value="";
+    floatingTPassword.value="";
+
+    //set style to default
+    setStyle("1px solid #ced4da")
+}
+
+
+
+
 function setStyle(style){
     floatingFName.style.borderBottom=style;
     floatingNIC.style.borderBottom=style;
@@ -224,130 +242,9 @@ function setStyle(style){
 
 }
 
-// function nicFieldValidator(){
-//     let nic_pattern = new RegExp('^(([0-9]{9}[V|v|X|x])|([0-9]{12}))$')
-//
-//     if(floatingNIC.value != ""){
-//         if(nic_pattern.test(floatingNIC.value)){
-//
-//             if(floatingNIC.value.length == 10){
-//                 nic="19"+floatingNIC.value.substring(0,5)+"0"+floatingNIC.value.substring(5,9);
-//
-//
-//             }else{
-//                 nic = floatingNIC.value
-//             }
-//
-//             let empBirtyear = nic.substring(0,4);
-//             let empBirthday = nic.substring(4,7);
-//
-//
-//             let empdob = new Date(empBirtyear)
-//
-//             if(parseInt(empBirtyear) % 4 == 0){
-//                 empdob.setDate(empdob.getDate()-1 + parseInt(empBirthday))
-//             }else{
-//                 empdob.setDate(empdob.getDate()-2 + parseInt(empBirthday))
-//             }
-//
-//
-//             floatingDOB.value = getDateFormat("date",empdob);
-//
-//             //update part
-//             teacher.nic = floatingNIC.value
-//             teacher.dob = floatingDOB.value;
-//
-//             if(old_teacher != null && teacher.nic != old_teacher.nic){
-//                 floatingNIC.style.borderBottom = "2px solid orange";
-//                 floatingDOB.style.borderBottom = "2px solid orange";
-//             }else{
-//                 floatingNIC.style.borderBottom = "2px solid green";
-//                 floatingDOB.style.borderBottom = "2px solid green";
-//
-//             }
-//
-//
-//
-//         }else{
-//             teacher.nic = null;
-//             floatingNIC.style.borderBottom = "2px solid red";
-//         }
-//     }else{
-//         teacher.nic = null;
-//         floatingNIC.style.borderBottom = "2px solid red";
-//
-//     }
-// }
 
-// function nicFieldValidator(){
-//     let nicpattern  = new RegExp('^(([0-9]{9}[VvXx])|([2,1][9,0][0,7,8,9][0-9]{9}))$');
-//     if(floatingNIC.value != ""){
-//         if(nicpattern.test(floatingNIC.value)){
-//
-//             if (floatingNIC.value.length == 10) {
-//                 nic = "19" + floatingNIC.value.substring(0,5) + "0" +  floatingNIC.value.substring(5,9);
-//             } else {
-//                 nic = floatingNIC.value;
-//             }
-//
-//             let techerBYera = nic.substring(0,4);
-//
-//
-//             let techerBDay = nic.substring(4,7);
-//
-//
-//             let dob = new Date(techerBYera);
-//
-//
-//             if(techerBYera%4 == 0){
-//                 //adika awuruddak nm
-//                 dob.setDate(techerBDay);
-//                 floatingDOB.value = getCurrentDate("date",dob);
-//             }else {
-//                 if(techerBDay <= 59){
-//                     dob.setDate(techerBDay);
-//                     floatingDOB.value = getCurrentDate("date",dob);
-//                 }else if(techerBDay == 60){
-//                     floatingDOB.value = techerBYera+"-02-29";
-//                 }else {
-//                     dob.setDate( parseInt(techerBDay)-1);
-//                     floatingDOB.value = getCurrentDate("date",dob);
-//                 }
-//             }
-//             teacher.nic  = floatingNIC.value;
-//             teacher.dob = floatingDOB.value;
-//
-//             if(old_teacher != null && teacher.nic != old_teacher.nic){
-//                 //setUpdate(txtStuNIC);
-//                 floatingNIC.style.border = "2px solid orange";
-//                 //setUpdate(floatingDOB);
-//                 floatingDOB.style.border = "2px solid orange";
-//             }
-//             else{
-//                 //setValid(txtStuNIC);
-//                 floatingNIC.style.border = "2px solid green";
-//                 //setValid(floatingDOB);
-//                 floatingDOB.style.border = "2px solid green";
-//
-//             }
-//         }
-//         else{
-//             teacher.nic  = null;
-//             teacher.dob = null;
-//             floatingDOB.value = "";
-//             //setInvalid(txtStuNIC);
-//             floatingNIC.style.border = "2px solid red";
-//         }
-//     }
-//     else{
-//         teacher.nic  = null;
-//         teacher.dob = null;
-//         floatingDOB.value = "";
-//         //setInvalid(txtStuNIC);
-//         floatingNIC.style.border = "2px solid red";
-//
-//     }
-// }
+
+
 
 
 function nicFieldValidator(){
