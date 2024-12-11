@@ -22,10 +22,11 @@ public interface StuClzRegRepositiry extends JpaRepository <StudentClassRegistra
     @Query("SELECT sc FROM StudentClassRegistration sc WHERE sc.student_id.studentid = :studentid AND sc.class_implementation_id.class_code = :class_code AND sc.stu_registration_status_id.id!=2")
     StudentClassRegistration findduplicateregByStID(@Param("studentid") String studentid, @Param("class_code") String class_code);
 
-    @Query(value = "select new StudentClassRegistration (count(cr.id)) from StudentClassRegistration cr where cr.stu_registration_status_id.id =1 and cr.student_id.student_status_id.id=1 and cr.student_id.id=?1")
+    //ge count for Student view
+    @Query(value = "select new StudentClassRegistration (count(cr.id)) from StudentClassRegistration cr where cr.student_id.id=?1")
     StudentClassRegistration getClassbyStudent(Integer student_id);
 
-    @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.student_id.id=?1 and stureg.stu_registration_status_id.id=1 and stureg.student_id.student_status_id.id=1")
+    @Query(value = "SELECT stureg FROM StudentClassRegistration stureg where stureg.student_id.id=?1")
     List<StudentClassRegistration> getClass(Integer studentno);
 
 

@@ -128,9 +128,9 @@ public class ParentController {
     //Update section
     @PutMapping
     public String putParent(@RequestBody Parent parent){
+
+
         Parent activeParent = parentDao.findActiveParentByStudentid(parent.getStudent_id().getStudentid());
-
-
         if (activeParent != null) {
 
             if (activeParent.getId() != parent.getId()) {
@@ -140,8 +140,23 @@ public class ParentController {
 
         }
 
+        Parent extPr = parentDao.getParentByNicAndAccountreq(parent.getNic());
+
         //save operate
         try {
+            //Check weather password is change or not--> iF changed set new password
+            if (!(extPr.getPr_password().equals(parent.getPr_password()))) {
+                parent.setPr_password(bCryptPasswordEncoder.encode(parent.getPr_password()));
+                parentDao.save(parent);
+
+                User logExtUser = userDao.findUserByUsername(parent.getNic());
+                logExtUser.setPassword(parent.getPr_password());
+                userDao.save(logExtUser);
+
+            }
+
+
+
             parentDao.save(parent);
             return "0";
         }catch(Exception e){

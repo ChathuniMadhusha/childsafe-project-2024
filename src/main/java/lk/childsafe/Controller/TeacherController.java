@@ -125,6 +125,18 @@ public class TeacherController {
         //save operate
         try {
 
+            //Check weather password is change or not--> iF changed set new password
+            if (!(extTE.getTe_password().equals(teacher.getTe_password()))) {
+                teacher.setTe_password(bCryptPasswordEncoder.encode(teacher.getTe_password()));
+                teacherDao.save(teacher);
+
+                User logExtUser = userDao.findUserByUsername(teacher.getEmail());
+                logExtUser.setPassword(teacher.getTe_password());
+                userDao.save(logExtUser);
+
+
+            }
+
             //class registration In-active when Teavher In-active
             List<TeacherRegistration> extTeClzRegList= teacherRegistrationDao.getTeacherClassRegistrationsByTeID(teacher.getId());
             if (extTeClzRegList != null && teacher.getTeacher_status_id().getId() == 2) {

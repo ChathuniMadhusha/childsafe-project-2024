@@ -77,6 +77,7 @@ public class StudentController {
 
     public String addStudent(@RequestBody Student student){
 
+
         Student extStudent = studentDao.getStudentsByEmail(student.getEmail());
         if (extStudent != null){
             return "Student already exists : Please use different email address";
@@ -140,27 +141,20 @@ public class StudentController {
                 return "Student already exists : Please use different email address";
             }
 
-
         }
         //save operate
         try {
 
-            Student extstu = studentDao.getReferenceById(student.getId());
-
             //Check weather password is change or not--> iF changed set new password
-            if (bCryptPasswordEncoder.matches(extstu.getSt_password(), student.getSt_password())) {
-                System.out.println("password not changed");
-
-
-            }else{
-               //student.setSt_password(extstu.getSt_password());
+            if (!(extStudent.getSt_password().equals(student.getSt_password()))) {
                 student.setSt_password(bCryptPasswordEncoder.encode(student.getSt_password()));
                 studentDao.save(student);
 
                 User logExtUser = userDao.findUserByUsername(student.getEmail());
                 logExtUser.setPassword(student.getSt_password());
                 userDao.save(logExtUser);
-                System.out.println("password changed");
+
+
             }
 
             //class registration In-active when student In-active

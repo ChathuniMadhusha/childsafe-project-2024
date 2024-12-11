@@ -8,6 +8,7 @@ function refreshBrowser(){
 
 const getAttendance = () => {
 
+    //get data for attaendance report table
     attendancereport = httpGetRequest("/attendancereport/byclassandstu?class_implementation_id="+JSON.parse(floatingSelectClass.value).class_implementation_id.id+"&student_id="+loggeduser.student.id);
     console.log(attendancereport)
 

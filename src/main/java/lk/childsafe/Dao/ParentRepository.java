@@ -35,5 +35,9 @@ public interface ParentRepository extends JpaRepository <Parent,Integer>{
     //get parent by student id
     @Query(value = "SELECT p FROM Parent p where p.student_id.id=?1")
     Parent getByStudent_id(Integer id);
+
+    //get parent for password edit to admin
+    @Query(value = "SELECT p FROM Parent p where p.nic=?1 and p.accountreq=true")
+    Parent getParentByNicAndAccountreq(String nic);
 }
 

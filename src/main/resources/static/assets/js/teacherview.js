@@ -525,6 +525,11 @@ const refreshForm1 = () => {
     getregistrationaccorteacher = httpGetRequest("/teacherregistration/getclasslistaccorteac?teacherid=" + loggeduser.teacher.id)
     fillSelectField(floatingSelectClass, "Select Class Name", getregistrationaccorteacher, 'class_implementation_id.class_name', '');
 
+    if(loggeduser.teacher.teacher_status_id.id == 1){
+        console.log("active teacher")
+        $("#markAttBt").show();
+    }
+
 }
 
 function getTableDetails(){

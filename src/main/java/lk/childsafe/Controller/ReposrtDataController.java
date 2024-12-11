@@ -33,7 +33,7 @@ public class ReposrtDataController {
 
 
 
-    //attendancereport/bydate?batch_id=3&date='2024-07-11'
+    //get student attendance report for student view
     @GetMapping(value = "/attendancereport/byclassandstu", params = {"class_implementation_id","student_id"} ,produces = "application/json")
     public List<AttendanceReport> attendancereport(@RequestParam("class_implementation_id") String class_implementation_id,
                                                        @RequestParam("student_id") String student_id){

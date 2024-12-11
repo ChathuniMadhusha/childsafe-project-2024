@@ -46,7 +46,7 @@ public class TeacherRegistrationController {
         return teacherregistrationDao.getReferenceById(id);
     }
 
-    //register wela inna teacherta ta adalawa eya reg wela inna classes count eka
+    //get class registraion cout according to teacher
     @GetMapping(value = "/getclassaccorteacher",params = "teacherid",produces = "application/json")
     public TeacherRegistration getclassaccorteac(@RequestParam("teacherid")Integer teacherid){
         return teacherregistrationDao.getClassbyTeacher(teacherid);
